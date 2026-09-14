@@ -112,6 +112,8 @@
 
 ## 4. Công nghệ: đề xuất → khả thi
 
+> **Phương án triển khai đã chọn: LLM API.** Mọi thành phần cần hiểu, sinh hoặc đánh giá nội dung (đánh giá năng lực, sinh roadmap, bài tập và gợi ý, bóc tách CV và JD, so khớp, phỏng vấn thử, trợ lý) gọi mô hình ngôn ngữ lớn qua API với đầu ra ép JSON schema; không huấn luyện mô hình. Sandbox, STT/TTS, crawler và CSDL giữ nguyên như bảng dưới. Các thuật toán tất định ở mục 6 là **đề xuất bổ sung**: thay thế hoặc kiểm tra chéo từng bước LLM khi cần giảm chi phí, tăng nhất quán hoặc giải thích kết quả. Chi tiết cách LLM API đảm nhiệm từng lõi nằm trong `core/01`, `core/02`, `core/03` (mục 3 của mỗi tài liệu) và `BAO-CAO-DE-TAI-DEVROOM.md` mục 4.
+
 **Tiêu chí khả thi**: setup < 1 ngày · chạy được trên laptop/VPS nhỏ · không cần dữ liệu train sẵn · có free tier hoặc mã nguồn mở · tài liệu đủ nhiều.
 
 ### 4.1 Học thích ứng
@@ -186,6 +188,7 @@
 
 | Lớp | Chọn |
 |---|---|
+| Phương án lõi | LLM API (Claude Sonnet 5 chính, Haiku 4.5 việc nhẹ và hàng loạt; thay được bằng GPT/Gemini), đầu ra ép JSON schema |
 | Frontend | Next.js · TypeScript · Tailwind · shadcn/ui |
 | UI đặc thù | Monaco (editor) · React Flow (roadmap) · dnd-kit (CV builder) · Recharts |
 | Backend | FastAPI (Python 3.12) · WebSocket native |
@@ -204,7 +207,9 @@
 
 ---
 
-## 6. Thuật toán & cách xử lý cho tính năng Core
+## 6. Thuật toán đề xuất bổ sung cho tính năng Core
+
+Các thuật toán dưới đây là phương án bổ sung cho từng bước LLM API đã chọn ở mục 4: dùng làm fallback khi mô hình lỗi, kiểm tra chéo kết quả mô hình, hoặc thay thế ở bước cần chi phí thấp và kết quả nhất quán. Toàn bộ đã được cài đặt trong demo tĩnh.
 
 **Chú giải mức độ**: 🟢 Xanh – dễ, công thức/rule rõ, 1–3 ngày · 🟡 Vàng – trung bình, cần tinh chỉnh hoặc dữ liệu · 🔴 Đỏ – khó, kết quả không chắc, phải có phương án dự phòng.
 

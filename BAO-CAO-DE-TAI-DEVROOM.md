@@ -51,57 +51,74 @@ Toàn bộ hệ thống dùng một từ điển kỹ năng thống nhất, xây
 
 | Lõi | Chức năng | Nguyên lý hoạt động |
 |---|---|---|
-| **C1. Đánh giá năng lực** | Đo trình độ từng kỹ năng qua bài test ngắn | Mỗi kỹ năng có một điểm năng lực, mỗi câu hỏi có một điểm độ khó. Hệ thống chọn câu có độ khó gần năng lực hiện tại; trả lời đúng thì năng lực tăng, sai thì giảm, biên độ điều chỉnh giảm dần. Dừng khi điểm ổn định |
-| **C2. Roadmap và bài tập thích ứng** | Sắp xếp học phần theo tiên quyết, chọn bài đúng độ khó, lên lịch ôn | Học phần tổ chức thành đồ thị có tiên quyết. Bài tập chọn trong dải độ khó quanh năng lực hiện tại, theo tag trùng kỹ năng thiếu. Lịch ôn giãn dần theo mức ghi nhớ |
-| **C3. Sandbox** | Chạy code người học trong môi trường cô lập | Container giới hạn CPU, bộ nhớ, thời gian, không có mạng. So kết quả với bộ test |
-| **C4. Xử lý CV** | Bóc tách kỹ năng, chấm điểm, gợi ý sửa | Đọc PDF/DOCX, nhận diện kỹ năng và kinh nghiệm, quy về từ điển chung. Chấm theo bộ tiêu chí. Sinh gợi ý sửa theo JD mục tiêu |
-| **C5. Thu thập JD và so khớp** | Thu JD từ ba nguồn, tính tỉ lệ khớp | Thu thập theo lịch hoặc theo yêu cầu, bóc tách kỹ năng, khử trùng lặp. Tỉ lệ khớp tính từ phần kỹ năng trùng có trọng số và độ tương đồng tổng thể giữa CV và JD |
-| **C6. Phỏng vấn thử** | Phỏng vấn bằng giọng nói, chấm điểm | Chuyển giọng nói thành văn bản, chấm theo khung STAR, quyết định hỏi thêm hay chuyển câu, đọc câu hỏi tiếp bằng giọng tổng hợp. Kết thúc có bảng điểm và kỹ năng yếu |
-| **C7. Vòng phản hồi** | Chuyển kết quả C5, C6 thành đề xuất học | Kỹ năng thiếu hoặc yếu được ánh xạ sang học phần tương ứng, tạo đề xuất chờ người học duyệt |
-| **C8. Trợ lý AI** | Trả lời về tiến độ, bước tiếp theo, việc phù hợp | Đọc dữ liệu của chính người dùng và trả lời có dẫn số liệu. Chỉ đọc, không sửa dữ liệu |
+| **C1. Đánh giá năng lực** | Đo trình độ từng kỹ năng qua bài test ngắn | Mô hình ngôn ngữ sinh câu hỏi theo kỹ năng và độ khó, chấm câu trả lời; kết quả các câu trước được đưa vào để điều chỉnh độ khó câu sau. Sau 15–20 câu trả về điểm năng lực 0–100 từng kỹ năng và danh sách kỹ năng thiếu |
+| **C2. Roadmap và bài tập thích ứng** | Sắp xếp học phần, chọn bài đúng độ khó, lên lịch ôn | Mô hình nhận catalog học phần của Lecturer, lộ trình mẫu và kỹ năng thiếu, trả roadmap có thứ tự kèm lý do; người học tự thêm, bớt. Hằng ngày mô hình chọn bài theo kỹ năng thiếu, chấm và gợi ý ba mức. Flashcard ôn theo khoảng cách cố định |
+| **C3. Sandbox** | Chạy code người học trong môi trường cô lập | Container giới hạn CPU, bộ nhớ, thời gian, không có mạng. So kết quả với bộ test. Mô hình chỉ sinh đề và bộ test |
+| **C4. Xử lý CV** | Bóc tách kỹ năng, chấm điểm, gợi ý sửa | Đọc PDF/DOCX ra văn bản; mô hình bóc tách kỹ năng, số năm, vai trò thành JSON gắn mã kỹ năng trong từ điển; chấm theo rubric; viết gợi ý sửa theo JD mục tiêu |
+| **C5. Thu thập JD và so khớp** | Thu JD từ ba nguồn, tính tỉ lệ khớp | Thu thập theo lịch, theo yêu cầu hoặc do Recruiter nhập; mô hình bóc tách kỹ năng; lọc trùng lặp. So khớp bằng cách đưa hồ sơ CV và JD dạng JSON cho mô hình trả tỉ lệ khớp, kỹ năng thiếu và lý do |
+| **C6. Phỏng vấn thử** | Phỏng vấn bằng giọng nói, chấm điểm | Chuyển giọng nói thành văn bản; mô hình đóng vai người phỏng vấn, chấm STAR theo rubric, quyết định hỏi thêm hay chuyển câu; đọc câu hỏi tiếp bằng giọng tổng hợp. Kết thúc có bảng điểm và kỹ năng yếu |
+| **C7. Vòng phản hồi** | Chuyển kết quả C5, C6 thành đề xuất học | Mô hình nhận kỹ năng thiếu hoặc yếu cùng catalog học phần, sinh đề xuất kèm lý do; người học nhận hoặc bỏ qua |
+| **C8. Trợ lý AI** | Trả lời về tiến độ, bước tiếp theo, việc phù hợp | Mô hình có công cụ đọc dữ liệu của chính người dùng và trả lời có dẫn số liệu. Chỉ đọc, không sửa dữ liệu |
 
-Các lõi C1, C2, C3, C7 là thuật toán tất định, không phụ thuộc mô hình AI. Các lõi C4, C5, C6, C8 có thành phần xử lý ngôn ngữ tự nhiên hoặc hội thoại.
+Trừ C3, mọi lõi đều gọi mô hình ngôn ngữ lớn qua API. Phương án, mô hình và chi phí từng lõi ở mục 4.
 
 ## 4. Phương án công nghệ
 
-Đề tài xem xét ba hướng triển khai. Phương án cuối cùng được xác định ở giai đoạn thiết kế chi tiết.
+Đề tài triển khai theo phương án **LLM API**: mọi thành phần cần hiểu, sinh hoặc đánh giá nội dung đều gọi mô hình ngôn ngữ lớn có sẵn qua API, không huấn luyện mô hình. Các thuật toán tất định đã thiết kế được trình bày ở mục 4.3 làm đề xuất bổ sung.
 
-### 4.1 Ba hướng
+### 4.1 Phương án chính: LLM API
 
-| Hướng | Nội dung | Ưu điểm | Hạn chế |
+Mô hình sử dụng: Claude Sonnet 5 cho tác vụ chính, Claude Haiku 4.5 cho tác vụ nhẹ và xử lý hàng loạt; có thể thay bằng GPT hoặc Gemini tương đương. Đầu ra luôn ép theo JSON schema, temperature 0. Chi phí tính theo giá công bố: Sonnet 5 là 2 USD mỗi triệu token vào và 10 USD mỗi triệu token ra; Haiku 4.5 là 1 và 5 USD.
+
+| Lõi | LLM API đảm nhiệm | Mô hình | Chi phí ước tính |
 |---|---|---|---|
-| **A. LLM API** | Gọi mô hình ngôn ngữ lớn có sẵn (Claude, GPT, Gemini) qua API cho mọi thành phần cần hiểu hoặc sinh văn bản | Chất lượng cao, hỗ trợ tiếng Việt tốt, không cần phần cứng mạnh, thời gian phát triển ngắn | Chi phí theo lượng sử dụng, phụ thuộc dịch vụ ngoài, kết quả có thể thay đổi giữa các lần gọi |
-| **B. Local** | Tự cài đặt thuật toán; dùng mô hình nhỏ chạy trên hạ tầng riêng: nhận diện thực thể, embedding, nhận dạng giọng nói, hoặc LLM mã nguồn mở (Qwen, Llama) | Không phát sinh chi phí theo lượt, không phụ thuộc ngoài, kiểm soát và giải thích được, khối lượng tự cài đặt lớn | Chất lượng hội thoại và xử lý văn bản tự do thấp hơn; cần GPU cho nhận dạng giọng nói thời gian thực hoặc LLM; công sức phát triển cao |
-| **C. Hybrid** | Thuật toán và mô hình nhỏ chạy local; chỉ gọi LLM API ở các thành phần local không đáp ứng được | Giữ phần tự cài đặt, chi phí thấp, chất lượng cao ở thành phần cần thiết | Phải xác định rõ ranh giới gọi API |
+| **C1. Đánh giá năng lực** | Sinh câu hỏi theo career, kỹ năng và độ khó; chấm câu trả lời; sau 15–20 câu ước lượng proficiency 0–100 từng kỹ năng và kỹ năng thiếu. Thích ứng độ khó bằng cách đưa kết quả các câu trước vào prompt | Sonnet 5 | 0,03–0,05 USD mỗi bài test |
+| **C2. Roadmap và bài tập** | Sinh roadmap từ catalog học phần của Lecturer, lộ trình mẫu và kỹ năng thiếu, chỉ được chọn học phần có trong catalog; chọn hoặc sinh bài tập hằng ngày, chấm, gợi ý ba mức; sinh flashcard. Lịch ôn dùng khoảng cách cố định 1, 3, 7, 14, 30 ngày | Sonnet 5 (roadmap), Haiku 4.5 (bài tập) | 0,01 USD mỗi roadmap; 0,002 USD mỗi bài tập |
+| **C3. Sandbox** | Chỉ sinh đề bài và bộ test. Việc chạy code vẫn dùng container cô lập | Haiku 4.5 | Không đáng kể |
+| **C4. Xử lý CV** | Bóc tách kỹ năng, số năm, vai trò thành JSON gắn mã kỹ năng trong từ điển; chấm theo rubric; viết gợi ý sửa theo JD mục tiêu | Sonnet 5 | 0,01–0,02 USD mỗi CV |
+| **C5. Thu thập JD và so khớp** | Bóc tách JD hàng loạt; so khớp theo cách đưa hồ sơ CV và JD dạng JSON cho mô hình chấm tỉ lệ khớp, kỹ năng thiếu và lý do; agent tìm JD trên web bằng công cụ tìm kiếm; phán xét cặp JD nghi trùng lặp | Haiku 4.5 (bóc tách, hàng loạt), Sonnet 5 (so khớp) | 0,001 USD mỗi JD; 0,005 USD mỗi lượt so khớp |
+| **C6. Phỏng vấn thử** | Nhận dạng giọng nói qua API; mô hình đóng vai người phỏng vấn theo JD hoặc career, chấm STAR theo rubric, quyết định hỏi thêm hay chuyển câu, sinh câu hỏi thêm; tổng hợp giọng nói qua API; cuối buổi tổng hợp kỹ năng yếu và chọn học phần từ catalog | Sonnet 5, Whisper, TTS | 0,05–0,10 USD mỗi buổi ba câu |
+| **C7. Vòng phản hồi** | Từ kỹ năng thiếu hoặc yếu và catalog học phần, sinh đề xuất học kèm lý do; người học nhận hoặc bỏ qua | Haiku 4.5 | Không đáng kể |
+| **C8. Trợ lý AI** | Mô hình có công cụ đọc tiến độ, roadmap, CV, việc đã so khớp của chính người dùng; chỉ đọc, không sửa | Sonnet 5 | 0,002 USD mỗi câu hỏi |
 
-### 4.2 Từng lõi theo từng hướng
+Ước tính tổng: 0,3–0,6 USD mỗi người dùng hoạt động mỗi tháng, chưa tính nhận dạng giọng nói.
 
-| Lõi | A. LLM API | B. Local | C. Hybrid |
+### 4.2 Thành phần không dùng LLM
+
+| Thành phần | Công nghệ |
+|---|---|
+| Chạy code | Piston hoặc Judge0, container giới hạn tài nguyên, không có mạng |
+| Nhận dạng và tổng hợp giọng nói | Whisper qua API; edge-tts hoặc OpenAI TTS |
+| Thu thập JD theo lịch | Crawler Playwright hoặc Crawlee, lưu HTML thô, khử trùng lặp sơ bộ bằng hash nội dung |
+| Lưu trữ | PostgreSQL, Redis, object storage; bảng nhật ký mọi lần gọi mô hình (token vào, ra, độ trễ, kết quả parse) |
+
+### 4.3 Đề xuất thuật toán bổ sung
+
+Các thuật toán sau đã được thiết kế chi tiết và cài đặt trong bản demo tĩnh. Chúng thay thế hoặc bổ sung cho từng bước LLM khi cần giảm chi phí, tăng tính nhất quán hoặc cần giải thích kết quả.
+
+| Thuật toán | Bổ sung cho bước | Lợi ích | Điều kiện áp dụng |
 |---|---|---|---|
-| **C1** | LLM tự đặt câu hỏi và chấm; kết quả không ổn định, khó đo lường | Thuật toán Elo kết hợp test thích ứng (CAT); không cần dữ liệu huấn luyện | Như B; LLM chỉ dùng một lần để gán độ khó ban đầu cho kho câu hỏi |
-| **C2** | LLM sinh lộ trình từ mô tả; khó đảm bảo ràng buộc tiên quyết | Đồ thị tiên quyết, sắp xếp topo, thuật toán ôn ngắt quãng SM-2 | Như B; LLM sinh gợi ý khi người học làm sai |
-| **C3** | Không áp dụng | Piston hoặc Judge0 | Như B |
-| **C4** | LLM bóc tách kỹ năng, chấm điểm và viết gợi ý sửa | PyMuPDF, từ điển ESCO, nhận diện thực thể (spaCy, GLiNER), chấm theo bộ quy tắc | Bóc tách và chấm điểm local; LLM viết gợi ý sửa và xử lý kỹ năng không khớp từ điển |
-| **C5** | LLM bóc tách kỹ năng từ JD; embedding qua API | Crawler, từ điển, embedding bge-m3, công thức so khớp tự cài đặt | Công thức so khớp và embedding local; LLM bóc tách kỹ năng từ JD và agent tìm việc trên web |
-| **C6** | Nhận dạng và tổng hợp giọng nói qua API; LLM đóng vai người phỏng vấn, hỏi thêm, chấm STAR | Whisper tự triển khai (PhoWhisper cho tiếng Việt), kho câu hỏi cố định, hỏi thêm theo quy tắc, chấm theo từ khóa, tổng hợp giọng Piper | Nhận dạng và tổng hợp giọng nói chọn theo hạ tầng; LLM đảm nhiệm hội thoại và chấm điểm |
-| **C7** | Logic tất định | Logic tất định | Logic tất định |
-| **C8** | LLM có công cụ đọc dữ liệu người dùng | Trả lời theo kịch bản từ khóa, hoặc LLM mã nguồn mở chạy local | Như A |
+| Elo kết hợp test thích ứng (CAT) | C1 ước lượng năng lực | Điểm năng lực có công thức, đo được sai số, không tốn token, tự hiệu chỉnh độ khó câu hỏi | Có kho câu hỏi gắn kỹ năng và độ khó |
+| Đồ thị tiên quyết và sắp xếp topo | C2 sinh roadmap | Luôn tôn trọng tiên quyết, cùng đầu vào cho cùng kết quả | Lecturer khai báo quan hệ tiên quyết giữa học phần |
+| Chọn bài theo dải Elo và tag | C2 bài tập hằng ngày | Không tốn token, độ khó bám sát năng lực | Bài tập có tag kỹ năng và độ khó |
+| Ôn ngắt quãng SM-2 | C2 lịch ôn flashcard | Khoảng cách ôn giãn theo mức nhớ thực tế thay vì cố định | Không cần điều kiện |
+| Chuẩn hóa kỹ năng ba tầng (tên, alias, độ tương đồng) | C4, C5 gắn mã kỹ năng | Không cần đưa từ điển vào prompt, xử lý được kỹ năng ngoài từ điển qua hàng đợi duyệt | Có bảng alias và embedding cho từ điển |
+| Chấm CV theo bộ quy tắc | C4 chấm điểm | Điểm giải thích được từng tiêu chí, không tốn token | Rubric cố định |
+| Công thức so khớp có trọng số kết hợp độ tương đồng vector | C5 so khớp | Xếp hạng 1 JD với hàng nghìn ứng viên bằng một truy vấn, không tốn token, nhất quán | Kỹ năng đã gắn mã, có embedding |
+| Khử trùng lặp bằng hash và độ tương đồng | C5 thu thập JD | Lọc trước khi gọi mô hình, giảm số lần gọi | Không cần điều kiện |
+| Chấm STAR theo quy tắc | C6 chấm điểm | Chạy khi mô hình lỗi, dùng kiểm tra chéo kết quả mô hình | Rubric có anchor |
+| Ánh xạ kỹ năng yếu sang học phần | C7 đề xuất | Tất định, không trùng lặp | Học phần gắn kỹ năng |
 
-### 4.3 So sánh
+### 4.4 Hạn chế của phương án LLM API và cách xử lý
 
-| Tiêu chí | A. LLM API | B. Local | C. Hybrid |
-|---|---|---|---|
-| Chất lượng trải nghiệm | Cao ở thành phần ngôn ngữ | Tốt ở thuật toán, hạn chế ở hội thoại | Cao ở thành phần cần thiết |
-| Chi phí vận hành | Theo lượng sử dụng, ước tính 0,2–0,5 USD mỗi người dùng mỗi tháng | Gần bằng không nếu có sẵn hạ tầng | Thấp |
-| Công sức phát triển | Thấp | Cao | Trung bình |
-| Phụ thuộc dịch vụ ngoài | Cao | Không | Thấp, có thể thay nhà cung cấp |
-| Hỗ trợ tiếng Việt | Tốt | Nhận dạng giọng nói cần PhoWhisper; LLM mã nguồn mở còn hạn chế | Như A ở thành phần gọi API |
-| Yêu cầu phần cứng | Máy thông thường | Cần GPU cho giọng nói thời gian thực hoặc LLM local | Máy thông thường |
-| Khối lượng tự cài đặt | Thấp | Cao | Cao ở lõi thuật toán |
-| Khả năng giải thích kết quả | Thấp | Cao | Cao ở lõi thuật toán |
-
-Chi phí ước tính theo giá công bố của các mô hình tầm trung, chưa bao gồm nhận dạng giọng nói.
+| Hạn chế | Cách xử lý |
+|---|---|
+| Kết quả có thể lệch giữa các lần gọi | Temperature 0, ép JSON schema, chấm hai lần khi độ tin cậy thấp, bộ golden set để đo định kỳ |
+| Chi phí tăng theo số lần gọi, nhất là so khớp 1 JD với nhiều ứng viên | Lọc sơ bằng giao kỹ năng trước, chỉ gọi mô hình cho nhóm đầu; hạn mức token theo người dùng |
+| Độ trễ 1–3 giây mỗi lần gọi | Gộp nhiều việc vào một lần gọi, cache phần prompt cố định, chạy nền các tác vụ hàng loạt |
+| Lỗi parse JSON, từ chối trả lời, quá hạn mức | Gọi lại một lần, sau đó rơi về thuật toán đề xuất tương ứng |
+| Khó giải thích vì sao ra điểm | Yêu cầu mô hình trả kèm bằng chứng trích từ đầu vào; đối chiếu với thuật toán đề xuất |
 
 ## 5. Kết luận
 
-DevRoom giải quyết bài toán học và tìm việc rời rạc của sinh viên IT bằng một chu trình khép kín, trong đó kết quả phỏng vấn thử và so khớp JD quay lại điều chỉnh lộ trình học, và năng lực đã kiểm chứng trở thành thông tin cho nhà tuyển dụng. Bốn trong tám lõi là thuật toán tất định, độc lập với lựa chọn công nghệ, nên có thể triển khai trước. Hiện đề tài đã hoàn thành sơ đồ nghiệp vụ, thiết kế các lõi và bản demo giao diện với các lõi thuật toán chạy trực tiếp trong trình duyệt, xem tại `anhnt-24.github.io/sieuduan_md`.
+DevRoom giải quyết bài toán học và tìm việc rời rạc của sinh viên IT bằng một chu trình khép kín, trong đó kết quả phỏng vấn thử và so khớp JD quay lại điều chỉnh lộ trình học, và năng lực đã kiểm chứng trở thành thông tin cho nhà tuyển dụng. Đề tài triển khai bằng LLM API để có chất lượng xử lý ngôn ngữ và hội thoại ngay từ đầu, đồng thời đề xuất bộ thuật toán tất định làm phương án bổ sung cho các bước cần chi phí thấp, kết quả nhất quán và giải thích được. Hiện đề tài đã hoàn thành sơ đồ nghiệp vụ, thiết kế các lõi theo cả hai phương án, và bản demo giao diện với các thuật toán đề xuất chạy trực tiếp trong trình duyệt, xem tại `anhnt-24.github.io/sieuduan_md`.

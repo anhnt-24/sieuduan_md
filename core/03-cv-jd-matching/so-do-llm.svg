@@ -1,0 +1,209 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" font-family="Helvetica Neue, Arial, sans-serif" fill="#1F2A44">
+  <defs>
+    <marker id="aN" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1F2A44"/></marker>
+    <marker id="aO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E8891C"/></marker>
+    <marker id="aB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F6FED"/></marker>
+    <marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6C5CE7"/></marker>
+    <marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0E9F8E"/></marker>
+    <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D93B3B"/></marker>
+    <marker id="aW" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E8A81C"/></marker>
+  </defs>
+  <rect width="1600" height="900" fill="#FFFFFF"/>
+
+  <!-- Tiêu đề -->
+  <text x="800" y="34" text-anchor="middle" font-size="26" font-weight="700">Lõi 3 — CV và so khớp JD · pipeline LLM API</text>
+  <text x="800" y="58" text-anchor="middle" font-size="15" fill="#6B7280">Dữ liệu vào → ghép prompt + schema → LLM → JSON → kiểm tra bằng code → ghi bảng → so khớp → hai chiều ra</text>
+
+  <!-- Nhãn làn -->
+  <text x="40" y="86" font-size="15" font-weight="700" fill="#E8891C" letter-spacing="1">LUỒNG CV (Candidate)</text>
+  <text x="840" y="86" font-size="15" font-weight="700" fill="#2F6FED" letter-spacing="1">LUỒNG JD (ba nguồn)</text>
+
+  <!-- Hàng 1: đầu vào CV -->
+  <g stroke="#E8891C" stroke-width="2" fill="#FFFFFF">
+    <rect x="40" y="96" width="170" height="72" rx="12"/>
+    <rect x="235" y="96" width="245" height="72" rx="12"/>
+  </g>
+  <rect x="505" y="96" width="265" height="72" rx="12" fill="#FFFFFF" stroke="#1F2A44" stroke-width="2" stroke-dasharray="6 4"/>
+  <g text-anchor="middle" font-size="14">
+    <text x="125" y="120" font-size="16" font-weight="700">Upload CV</text>
+    <text x="125" y="141">PDF / DOCX ≤ 5 MB</text>
+    <text x="125" y="160">magic bytes · 10/ngày</text>
+    <text x="357" y="120" font-size="16" font-weight="700">Bóc chữ</text>
+    <text x="357" y="141">PyMuPDF · python-docx · sort (cột, y)</text>
+    <text x="357" y="160">&lt; 200 ký tự → scanned_unsupported</text>
+    <text x="637" y="120" font-size="16" font-weight="700">Từ điển kỹ năng</text>
+    <text x="637" y="141">skills ⋈ skill_aliases theo career</text>
+    <text x="637" y="160">150–300 mục · cache_control</text>
+  </g>
+
+  <!-- Hàng 1: đầu vào JD -->
+  <g stroke="#2F6FED" stroke-width="2" fill="#FFFFFF">
+    <rect x="840" y="96" width="210" height="72" rx="12"/>
+    <rect x="1075" y="96" width="260" height="72" rx="12"/>
+    <rect x="1360" y="96" width="200" height="72" rx="12"/>
+  </g>
+  <g text-anchor="middle" font-size="14">
+    <text x="945" y="120" font-size="16" font-weight="700">① Crawler</text>
+    <text x="945" y="141">TopCV · ITviec · 07:00, 19:00</text>
+    <text x="945" y="160">≤ 200 tin/lần · lưu HTML thô</text>
+    <text x="1205" y="120" font-size="16" font-weight="700">② Agent tìm web (e)</text>
+    <text x="1205" y="141"><tspan fill="#6B7280">Tavily / Brave</tspan> → <tspan fill="#6C5CE7" font-weight="700">Haiku 4.5</tspan></text>
+    <text x="1205" y="160">is_job_posting ≥ 0,7 · 10 query/ngày</text>
+    <text x="1460" y="120" font-size="16" font-weight="700">③ Recruiter</text>
+    <text x="1460" y="141">form · sửa required, weight</text>
+    <text x="1460" y="160">xác nhận → published</text>
+  </g>
+
+  <!-- Hàng 2: ghép prompt -->
+  <rect x="40" y="205" width="730" height="72" rx="12" fill="#FFFFFF" stroke="#E8891C" stroke-width="2"/>
+  <rect x="840" y="205" width="720" height="72" rx="12" fill="#FFFFFF" stroke="#2F6FED" stroke-width="2"/>
+  <g text-anchor="middle" font-size="14">
+    <text x="405" y="229" font-size="16" font-weight="700">Ghép prompt (a)</text>
+    <text x="405" y="250">system: quy tắc 4 dòng + từ điển theo career [cache] + JSON schema cv_profile</text>
+    <text x="405" y="269">user: cv_text ≈ 1.500–3.000 token · chỉ trả skill_id có trong từ điển, lạ → null</text>
+    <text x="1200" y="229" font-size="16" font-weight="700">Ghép prompt (b)</text>
+    <text x="1200" y="250">parse: trafilatura · PyMuPDF · form → jd_text ≈ 1.000 token</text>
+    <text x="1200" y="269">system: cùng từ điển [cache] + schema jd_profile · required, weight, years_min</text>
+  </g>
+
+  <!-- Hàng 3: LLM bóc tách -->
+  <rect x="195" y="310" width="420" height="72" rx="12" fill="#6C5CE7"/>
+  <rect x="980" y="310" width="440" height="72" rx="12" fill="#6C5CE7"/>
+  <g text-anchor="middle" font-size="14" fill="#FFFFFF">
+    <text x="405" y="334" font-size="16" font-weight="700">Sonnet 5 · bóc tách CV (a)</text>
+    <text x="405" y="355">output_config.format → cv_profile · effort low</text>
+    <text x="405" y="374">skills[{skill_id, raw, years, level, evidence}] · ≈ $0,02/CV</text>
+    <text x="1200" y="334" font-size="16" font-weight="700">Haiku 4.5 · bóc tách JD (b)</text>
+    <text x="1200" y="355">Batch API cho crawler (−50 %) · T = 0 · ≈ $0,002/JD</text>
+    <text x="1200" y="374">jd_profile{skills[{skill_id, raw, required, weight, years_min}]}</text>
+  </g>
+
+  <!-- Hàng 4: kiểm tra + nhánh lỗi + hàng đợi -->
+  <rect x="40" y="415" width="245" height="72" rx="12" fill="#FDECEC" stroke="#D93B3B" stroke-width="2"/>
+  <rect x="310" y="415" width="980" height="72" rx="12" fill="#1F2A44"/>
+  <rect x="1315" y="415" width="245" height="72" rx="12" fill="#FFF6E0" stroke="#E8A81C" stroke-width="2"/>
+  <g text-anchor="middle" font-size="14">
+    <text x="162" y="439" font-size="16" font-weight="700" fill="#D93B3B">Nhánh lỗi</text>
+    <text x="162" y="460">parse lỗi · từ chối · timeout · 429</text>
+    <text x="162" y="479">gọi lại 1 lần → rơi về quy tắc §7.1</text>
+    <text x="800" y="439" font-size="16" font-weight="700" fill="#FFFFFF">Kiểm tra bằng code, không gọi LLM</text>
+    <text x="800" y="460" fill="#FFFFFF">parse JSON → đúng schema → mọi skill_id ∈ từ điển → evidence ⊂ text</text>
+    <text x="800" y="479" fill="#FFFFFF">mỗi lời gọi ghi llm_calls{purpose, model, input/output tokens, latency_ms, parsed_ok}</text>
+    <text x="1437" y="439" font-size="16" font-weight="700" fill="#B8860B">Hàng đợi unmapped</text>
+    <text x="1437" y="460">skill_id = null → unmapped_skills</text>
+    <text x="1437" y="479">Admin thêm alias → bóc lại</text>
+  </g>
+
+  <!-- Hàng 5: bảng + chấm CV + khử trùng lặp -->
+  <rect x="40" y="520" width="250" height="72" rx="12" fill="#FFFFFF" stroke="#E8891C" stroke-width="2"/>
+  <rect x="320" y="520" width="380" height="72" rx="12" fill="#6C5CE7"/>
+  <rect x="840" y="520" width="420" height="72" rx="12" fill="#FFFFFF" stroke="#6C5CE7" stroke-width="2"/>
+  <rect x="1290" y="520" width="270" height="72" rx="12" fill="#FFFFFF" stroke="#2F6FED" stroke-width="2"/>
+  <g text-anchor="middle" font-size="14">
+    <text x="165" y="544" font-size="16" font-weight="700">cvs · cv_skills</text>
+    <text x="165" y="565">cv_json = cv_profile · version</text>
+    <text x="165" y="584">map_method = 'llm' · FK skills</text>
+    <text x="510" y="544" font-size="16" font-weight="700" fill="#FFFFFF">Sonnet 5 · chấm CV (c)</text>
+    <text x="510" y="565" fill="#FFFFFF">rubric 4 mục [cache] + cv_profile + jd_profile</text>
+    <text x="510" y="584" fill="#FFFFFF">cv_review{score, issues[], suggestions[]} → cv_scores</text>
+    <text x="1050" y="544" font-size="16" font-weight="700" fill="#6C5CE7">Khử trùng lặp (e)</text>
+    <text x="1050" y="565">sha256 content_hash trùng → duplicate_of ngay</text>
+    <text x="1050" y="584">cặp nghi trùng → Haiku 4.5 is_duplicate ≥ 0,8</text>
+    <text x="1425" y="544" font-size="16" font-weight="700">jd_postings · jd_skills</text>
+    <text x="1425" y="565">jd_json · status · duplicate_of</text>
+    <text x="1425" y="584">jd_duplicates{method, confidence}</text>
+  </g>
+
+  <!-- Hàng 6: so khớp -->
+  <rect x="425" y="630" width="300" height="72" rx="12" fill="#FFFFFF" stroke="#1F2A44" stroke-width="2"/>
+  <rect x="755" y="630" width="385" height="72" rx="12" fill="#6C5CE7"/>
+  <rect x="1170" y="630" width="200" height="72" rx="12" fill="#FFFFFF" stroke="#1F2A44" stroke-width="2"/>
+  <g text-anchor="middle" font-size="14">
+    <text x="575" y="654" font-size="16" font-weight="700">Lọc sơ (SQL, không LLM)</text>
+    <text x="575" y="675">giao skill_id · trúng ≥ 1 required</text>
+    <text x="575" y="694">1 JD × N → top 30 · 1 CV × 1 JD → gọi thẳng</text>
+    <text x="947" y="654" font-size="16" font-weight="700" fill="#FFFFFF">LLM-as-judge (d)</text>
+    <text x="947" y="675" fill="#FFFFFF">Sonnet 5 (Candidate) · Haiku 4.5 (Recruiter)</text>
+    <text x="947" y="694" fill="#FFFFFF">jd_profile [cache] + cv_profile → match_result</text>
+    <text x="1270" y="654" font-size="16" font-weight="700">matches</text>
+    <text x="1270" y="675">match_pct · verdict · method</text>
+    <text x="1270" y="694">gaps[] · reasons[] · version</text>
+  </g>
+
+  <!-- Hàng 7: hai chiều ra + log -->
+  <rect x="40" y="750" width="560" height="72" rx="12" fill="#FFFFFF" stroke="#E8891C" stroke-width="2"/>
+  <rect x="640" y="750" width="320" height="72" rx="12" fill="#FFFFFF" stroke="#6B7280" stroke-width="2" stroke-dasharray="6 4"/>
+  <rect x="1000" y="750" width="560" height="72" rx="12" fill="#FFFFFF" stroke="#2F6FED" stroke-width="2"/>
+  <g text-anchor="middle" font-size="14">
+    <text x="320" y="774" font-size="16" font-weight="700" fill="#E8891C">Candidate</text>
+    <text x="320" y="795">% match · gap từng skill · lý do (reasons[])</text>
+    <text x="320" y="814">gap → suggestions(pending) → roadmap Lõi 1</text>
+    <text x="800" y="774" font-size="16" font-weight="700" fill="#6B7280">llm_calls</text>
+    <text x="800" y="795" fill="#6B7280">purpose · model · prompt_version · tokens</text>
+    <text x="800" y="814" fill="#6B7280">latency_ms · parsed_ok · stop_reason</text>
+    <text x="1280" y="774" font-size="16" font-weight="700" fill="#2F6FED">Recruiter</text>
+    <text x="1280" y="795">xếp hạng top 30 theo match_pct · ẩn danh</text>
+    <text x="1280" y="814">lọc min_match · mở hồ sơ ghi audit_logs</text>
+  </g>
+
+  <!-- Mũi tên luồng CV -->
+  <g stroke="#E8891C" stroke-width="2" fill="none" marker-end="url(#aO)">
+    <path d="M210,132 L235,132"/>
+    <path d="M357,168 L357,205"/>
+    <path d="M405,277 L405,310"/>
+    <path d="M290,556 L320,556"/>
+    <path d="M1220,702 L1220,726 L320,726 L320,750"/>
+  </g>
+  <path d="M637,168 L637,205" stroke="#1F2A44" stroke-width="2" fill="none" stroke-dasharray="6 4" marker-end="url(#aN)"/>
+  <text x="364" y="192" font-size="14" fill="#E8891C">cv_text</text>
+  <text x="644" y="192" font-size="14" fill="#1F2A44">prefix cache</text>
+
+  <!-- Mũi tên luồng JD -->
+  <g stroke="#2F6FED" stroke-width="2" fill="none" marker-end="url(#aB)">
+    <path d="M945,168 L945,205"/>
+    <path d="M1205,168 L1205,205"/>
+    <path d="M1460,168 L1460,205"/>
+    <path d="M1200,277 L1200,310"/>
+    <path d="M1260,556 L1290,556"/>
+    <path d="M1425,592 L1425,612 L575,612 L575,630"/>
+    <path d="M1300,702 L1300,750"/>
+  </g>
+  <text x="1212" y="192" font-size="14" fill="#2F6FED">jd_text</text>
+  <text x="1000" y="606" font-size="14" fill="#2F6FED" text-anchor="middle">jd_skills · jd_profile (published)</text>
+
+  <!-- LLM → kiểm tra -->
+  <g stroke="#6C5CE7" stroke-width="2" fill="none" marker-end="url(#aP)">
+    <path d="M405,382 L405,415"/>
+    <path d="M1200,382 L1200,415"/>
+    <path d="M1140,666 L1170,666"/>
+  </g>
+  <text x="412" y="403" font-size="14" fill="#6C5CE7">JSON</text>
+  <text x="1207" y="403" font-size="14" fill="#6C5CE7">JSON</text>
+
+  <!-- Kiểm tra → bảng, nhánh lỗi, hàng đợi -->
+  <g stroke="#1F2A44" stroke-width="2" fill="none" marker-end="url(#aN)">
+    <path d="M405,487 L405,503 L165,503 L165,520"/>
+    <path d="M1200,487 L1200,503 L1050,503 L1050,520"/>
+    <path d="M165,592 L165,666 L425,666"/>
+    <path d="M725,666 L755,666"/>
+  </g>
+  <path d="M310,451 L285,451" stroke="#D93B3B" stroke-width="2" fill="none" marker-end="url(#aR)"/>
+  <path d="M1290,451 L1315,451" stroke="#E8A81C" stroke-width="2" fill="none" marker-end="url(#aW)"/>
+  <text x="175" y="650" font-size="14" fill="#0E9F8E">+ verified_skills (Lõi 1, p ≥ 60)</text>
+  <text x="178" y="516" font-size="14" fill="#1F2A44">đạt</text>
+  <text x="1062" y="516" font-size="14" fill="#1F2A44">đạt</text>
+
+  <!-- Vòng phản hồi về Lõi 1 -->
+  <path d="M120,822 L120,852" stroke="#0E9F8E" stroke-width="2" fill="none" marker-end="url(#aT)"/>
+  <text x="132" y="868" font-size="14" fill="#0E9F8E" font-weight="700">→ Lõi 1: suggestions pending vào roadmap · skill_states quay lại (d)</text>
+
+  <!-- Chú giải -->
+  <g font-size="14">
+    <rect x="760" y="850" width="18" height="18" rx="4" fill="#6C5CE7"/><text x="784" y="864">LLM API (ghi model)</text>
+    <rect x="930" y="850" width="18" height="18" rx="4" fill="#1F2A44"/><text x="954" y="864">Kiểm tra / bảng</text>
+    <rect x="1080" y="850" width="18" height="18" rx="4" fill="#FFFFFF" stroke="#6B7280" stroke-width="2" stroke-dasharray="4 3"/><text x="1104" y="864">Dịch vụ ngoài / log</text>
+    <rect x="1250" y="850" width="18" height="18" rx="4" fill="#FDECEC" stroke="#D93B3B" stroke-width="2"/><text x="1274" y="864">Nhánh lỗi</text>
+    <rect x="1360" y="850" width="18" height="18" rx="4" fill="#FFF6E0" stroke="#E8A81C" stroke-width="2"/><text x="1384" y="864">Hàng đợi Admin</text>
+    <text x="1500" y="864" fill="#0E9F8E" font-weight="700">— Lõi 1</text>
+  </g>
+</svg>

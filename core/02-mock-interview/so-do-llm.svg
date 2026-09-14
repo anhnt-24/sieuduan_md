@@ -1,0 +1,209 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 820" width="1600" height="820" font-family="Helvetica Neue, Arial, sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1F2A44"/></marker>
+    <marker id="arP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6C5CE7"/></marker>
+    <marker id="arT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0E9F8E"/></marker>
+    <marker id="arO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E8891C"/></marker>
+    <marker id="arR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D93B3B"/></marker>
+    <marker id="arW" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E8A81C"/></marker>
+  </defs>
+  <rect width="1600" height="820" fill="#fff"/>
+
+  <!-- Tiêu đề -->
+  <text x="20" y="34" font-size="22" font-weight="700" fill="#1F2A44">Lõi 2 — Phỏng vấn thử với AI: pipeline LLM API một lượt, mở phiên và kết thúc buổi</text>
+  <text x="20" y="58" font-size="14" fill="#6B7280">Một lượt = ghi âm → STT → ghép prompt → Sonnet 5 (chấm + quyết định + câu hỏi thêm, ép JSON schema) → kiểm tra JSON → TTS → phát lại. p50 ≈ 4,1 s · p95 ≈ 8,6 s · ≈ $0,009–0,013 mỗi lượt.</text>
+
+  <!-- Vòng lặp lượt tiếp theo -->
+  <path d="M1385,120 L1385,90 L95,90 L95,118" fill="none" stroke="#E8891C" stroke-width="2" stroke-dasharray="8 6" marker-end="url(#arO)"/>
+  <text x="740" y="84" font-size="14" fill="#E8891C" text-anchor="middle">lượt tiếp theo — follow_up: cùng câu, fu_count + 1 (tối đa 2, server ép) · next: câu tiếp · hết n câu → hàng dưới</text>
+
+  <!-- 1. Ghi âm [FE] -->
+  <rect x="20" y="120" width="150" height="140" rx="12" fill="#FFF4E8" stroke="#E8891C" stroke-width="2"/>
+  <text x="95" y="145" font-size="16" font-weight="700" fill="#1F2A44" text-anchor="middle">1. Ghi âm [FE]</text>
+  <text x="95" y="168" font-size="14" fill="#1F2A44" text-anchor="middle">MediaRecorder</text>
+  <text x="95" y="186" font-size="14" fill="#1F2A44" text-anchor="middle">WebM/Opus 10–40 s</text>
+  <text x="95" y="204" font-size="14" fill="#1F2A44" text-anchor="middle">hoặc gõ tay,</text>
+  <text x="95" y="222" font-size="14" fill="#1F2A44" text-anchor="middle">sửa transcript</text>
+  <text x="95" y="246" font-size="14" fill="#6B7280" text-anchor="middle">≈ 0,3 s</text>
+  <path d="M170,190 L188,190" stroke="#1F2A44" stroke-width="2" marker-end="url(#ar)"/>
+
+  <!-- 2. STT -->
+  <rect x="190" y="120" width="170" height="140" rx="12" fill="#F3F4F6" stroke="#6B7280" stroke-width="2"/>
+  <text x="275" y="145" font-size="16" font-weight="700" fill="#1F2A44" text-anchor="middle">2. STT API</text>
+  <text x="275" y="168" font-size="14" fill="#1F2A44" text-anchor="middle">Whisper large-v3</text>
+  <text x="275" y="186" font-size="14" fill="#1F2A44" text-anchor="middle">Groq (mặc định)</text>
+  <text x="275" y="204" font-size="14" fill="#1F2A44" text-anchor="middle">hoặc OpenAI whisper-1</text>
+  <text x="275" y="222" font-size="14" fill="#1F2A44" text-anchor="middle">+ prompt từ vựng KT</text>
+  <text x="275" y="246" font-size="14" fill="#6B7280" text-anchor="middle">≈ 0,9 s · ≈ $0,001</text>
+  <path d="M360,190 L378,190" stroke="#1F2A44" stroke-width="2" marker-end="url(#ar)"/>
+
+  <!-- 3. Ghép prompt -->
+  <rect x="380" y="120" width="220" height="140" rx="12" fill="#EEF1F7" stroke="#1F2A44" stroke-width="2"/>
+  <text x="490" y="145" font-size="16" font-weight="700" fill="#1F2A44" text-anchor="middle">3. Ghép prompt [BE]</text>
+  <text x="490" y="168" font-size="14" fill="#1F2A44" text-anchor="middle">system + rubric (cache)</text>
+  <text x="490" y="186" font-size="14" fill="#1F2A44" text-anchor="middle">+ skill JD/career, câu hỏi</text>
+  <text x="490" y="204" font-size="14" fill="#1F2A44" text-anchor="middle">+ lượt trước, fu_count</text>
+  <text x="490" y="222" font-size="14" font-family="Menlo, Consolas, monospace" fill="#1F2A44" text-anchor="middle">+ &lt;candidate_answer&gt;</text>
+  <text x="490" y="246" font-size="14" fill="#6B7280" text-anchor="middle">≈ 1,4k token vào (800 cache)</text>
+  <path d="M600,190 L618,190" stroke="#1F2A44" stroke-width="2" marker-end="url(#ar)"/>
+
+  <!-- 4. LLM Sonnet 5 -->
+  <rect x="620" y="120" width="240" height="140" rx="12" fill="#F0EEFD" stroke="#6C5CE7" stroke-width="2"/>
+  <text x="740" y="145" font-size="16" font-weight="700" fill="#6C5CE7" text-anchor="middle">4. LLM — Claude Sonnet 5</text>
+  <text x="740" y="168" font-size="14" fill="#1F2A44" text-anchor="middle">1 call: chấm S/T/A/R, evidence,</text>
+  <text x="740" y="186" font-size="14" fill="#1F2A44" text-anchor="middle">quyết định, câu hỏi thêm, conf</text>
+  <text x="740" y="204" font-size="14" font-family="Menlo, Consolas, monospace" fill="#1F2A44" text-anchor="middle">output_config.format=schema</text>
+  <text x="740" y="222" font-size="14" fill="#1F2A44" text-anchor="middle">thinking adaptive · effort low</text>
+  <text x="740" y="246" font-size="14" fill="#6B7280" text-anchor="middle">≈ 2,0 s · ≈ $0,008 mỗi lần</text>
+  <path d="M860,190 L878,190" stroke="#6C5CE7" stroke-width="2" marker-end="url(#arP)"/>
+
+  <!-- 5. Kiểm tra JSON -->
+  <rect x="880" y="120" width="220" height="140" rx="12" fill="#EAF1FE" stroke="#2F6FED" stroke-width="2"/>
+  <text x="990" y="145" font-size="16" font-weight="700" fill="#2F6FED" text-anchor="middle">5. Kiểm tra JSON [BE]</text>
+  <text x="990" y="168" font-size="14" fill="#1F2A44" text-anchor="middle">parse · số nguyên 0–5 · enum</text>
+  <text x="990" y="186" font-size="14" fill="#1F2A44" text-anchor="middle">evidence ⊂ transcript</text>
+  <text x="990" y="204" font-size="14" fill="#1F2A44" text-anchor="middle">fu_count ≥ 2 → ép next</text>
+  <text x="990" y="222" font-size="14" fill="#1F2A44" text-anchor="middle">injection_detected → cờ</text>
+  <text x="990" y="246" font-size="14" fill="#6B7280" text-anchor="middle">&lt; 5 ms</text>
+  <path d="M1100,190 L1118,190" stroke="#1F2A44" stroke-width="2" marker-end="url(#ar)"/>
+
+  <!-- 6. TTS -->
+  <rect x="1120" y="120" width="170" height="140" rx="12" fill="#F3F4F6" stroke="#6B7280" stroke-width="2"/>
+  <text x="1205" y="145" font-size="16" font-weight="700" fill="#1F2A44" text-anchor="middle">6. TTS API</text>
+  <text x="1205" y="168" font-size="14" fill="#1F2A44" text-anchor="middle">edge-tts (miễn phí)</text>
+  <text x="1205" y="186" font-size="14" fill="#1F2A44" text-anchor="middle">hoặc OpenAI tts-1</text>
+  <text x="1205" y="204" font-size="14" fill="#1F2A44" text-anchor="middle">vi-VN-HoaiMyNeural</text>
+  <text x="1205" y="222" font-size="14" fill="#1F2A44" text-anchor="middle">→ mp3 câu tiếp</text>
+  <text x="1205" y="246" font-size="14" fill="#6B7280" text-anchor="middle">≈ 0,9 s · 0–$0,002</text>
+  <path d="M1290,190 L1308,190" stroke="#1F2A44" stroke-width="2" marker-end="url(#ar)"/>
+
+  <!-- 7. Phát lại [FE] -->
+  <rect x="1310" y="120" width="150" height="140" rx="12" fill="#FFF4E8" stroke="#E8891C" stroke-width="2"/>
+  <text x="1385" y="145" font-size="16" font-weight="700" fill="#1F2A44" text-anchor="middle">7. Phát lại [FE]</text>
+  <text x="1385" y="168" font-size="14" fill="#1F2A44" text-anchor="middle">audio + văn bản</text>
+  <text x="1385" y="186" font-size="14" fill="#1F2A44" text-anchor="middle">scores, evidence,</text>
+  <text x="1385" y="204" font-size="14" fill="#1F2A44" text-anchor="middle">missing_points</text>
+  <text x="1385" y="222" font-size="14" fill="#1F2A44" text-anchor="middle">timings 4 chặng</text>
+  <text x="1385" y="246" font-size="14" fill="#6B7280" text-anchor="middle">tổng ≈ 4,1 s p50</text>
+
+  <!-- Nhánh từ khối kiểm tra -->
+  <path d="M1050,260 L1050,285 L1290,285 L1290,308" fill="none" stroke="#0E9F8E" stroke-width="2" marker-end="url(#arT)"/>
+  <text x="1170" y="279" font-size="14" fill="#0E9F8E" text-anchor="middle">đạt → ghi DB</text>
+  <path d="M990,260 L990,308" fill="none" stroke="#E8A81C" stroke-width="2" marker-end="url(#arW)"/>
+  <text x="978" y="300" font-size="14" fill="#E8A81C" text-anchor="end">conf &lt; 0,6</text>
+  <path d="M930,260 L930,285 L740,285 L740,308" fill="none" stroke="#D93B3B" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arR)"/>
+  <text x="835" y="279" font-size="14" fill="#D93B3B" text-anchor="middle">lỗi / không đạt</text>
+
+  <!-- Nhánh lỗi -->
+  <rect x="620" y="310" width="240" height="90" rx="12" fill="#FDECEC" stroke="#D93B3B" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="740" y="332" font-size="15" font-weight="700" fill="#D93B3B" text-anchor="middle">Nhánh lỗi</text>
+  <text x="740" y="352" font-size="14" fill="#1F2A44" text-anchor="middle">parse lỗi, từ chối, timeout, 429</text>
+  <text x="740" y="370" font-size="14" fill="#1F2A44" text-anchor="middle">→ gọi lại 1 lần, max_tokens ↑</text>
+  <text x="740" y="388" font-size="14" fill="#1F2A44" text-anchor="middle">→ vẫn lỗi: chấm theo quy tắc §7.1</text>
+
+  <!-- Chấm lần 2 -->
+  <rect x="880" y="310" width="220" height="90" rx="12" fill="#FFF8E6" stroke="#E8A81C" stroke-width="2"/>
+  <text x="990" y="332" font-size="15" font-weight="700" fill="#E8A81C" text-anchor="middle">Chấm lần 2</text>
+  <text x="990" y="352" font-size="14" fill="#1F2A44" text-anchor="middle">confidence &lt; 0,6 → gọi lại B4</text>
+  <text x="990" y="370" font-size="14" fill="#1F2A44" text-anchor="middle">cùng prompt, điểm = trung bình</text>
+  <text x="990" y="388" font-size="14" fill="#1F2A44" text-anchor="middle">|Δ| &gt; 1,0 → low_confidence</text>
+
+  <!-- Ghi DB -->
+  <rect x="1120" y="310" width="340" height="90" rx="12" fill="#E6F6F4" stroke="#0E9F8E" stroke-width="2"/>
+  <text x="1290" y="332" font-size="15" font-weight="700" fill="#0E9F8E" text-anchor="middle">Ghi DB</text>
+  <text x="1290" y="352" font-size="14" font-family="Menlo, Consolas, monospace" fill="#1F2A44" text-anchor="middle">interview_turns: transcript, timings</text>
+  <text x="1290" y="370" font-size="14" font-family="Menlo, Consolas, monospace" fill="#1F2A44" text-anchor="middle">interview_scores: S/T/A/R, run_no</text>
+  <text x="1290" y="388" font-size="14" font-family="Menlo, Consolas, monospace" fill="#1F2A44" text-anchor="middle">llm_calls: token, latency, parsed_ok</text>
+
+  <!-- Lỗi và chấm lần 2 đổ về DB -->
+  <path d="M740,400 L740,425 L1290,425 L1290,402" fill="none" stroke="#1F2A44" stroke-width="2" marker-end="url(#ar)"/>
+  <path d="M990,400 L990,425" fill="none" stroke="#1F2A44" stroke-width="2"/>
+  <text x="1015" y="443" font-size="14" fill="#6B7280" text-anchor="middle">cùng hợp đồng JSON → ghi DB (model = rule, fallback = true · run_no = 2)</text>
+
+  <!-- Hết n câu → hàng dưới -->
+  <path d="M1460,355 L1500,355 L1500,480 L390,480 L390,518" fill="none" stroke="#1F2A44" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="945" y="474" font-size="14" fill="#1F2A44" text-anchor="middle">hết n câu chính → đọc interview_scores → kết thúc buổi</text>
+
+  <!-- Mở phiên → câu 1 -->
+  <path d="M135,520 L135,262" fill="none" stroke="#6C5CE7" stroke-width="2" stroke-dasharray="8 6" marker-end="url(#arP)"/>
+  <text x="145" y="395" font-size="14" fill="#6C5CE7">câu 1 → TTS → FE</text>
+
+  <!-- 0. Mở phiên — Haiku -->
+  <rect x="20" y="520" width="230" height="140" rx="12" fill="#F0EEFD" stroke="#6C5CE7" stroke-width="2"/>
+  <text x="135" y="545" font-size="16" font-weight="700" fill="#6C5CE7" text-anchor="middle">0. Mở phiên — Haiku 4.5</text>
+  <text x="135" y="568" font-size="14" fill="#1F2A44" text-anchor="middle">vào: skill JD/career, độ khó,</text>
+  <text x="135" y="586" font-size="14" fill="#1F2A44" text-anchor="middle">10 câu mẫu từ ngân hàng</text>
+  <text x="135" y="604" font-size="14" fill="#1F2A44" text-anchor="middle">ra: 3 câu {skill_id, body,</text>
+  <text x="135" y="622" font-size="14" fill="#1F2A44" text-anchor="middle">keywords} → interview_questions</text>
+  <text x="135" y="646" font-size="14" fill="#6B7280" text-anchor="middle">≈ 1 s · ≈ $0,003 · 1 lần/buổi</text>
+
+  <!-- 1. Server tính điểm -->
+  <rect x="280" y="520" width="220" height="140" rx="12" fill="#EEF1F7" stroke="#1F2A44" stroke-width="2"/>
+  <text x="390" y="545" font-size="16" font-weight="700" fill="#1F2A44" text-anchor="middle">1. Server tính điểm</text>
+  <text x="390" y="568" font-size="14" fill="#1F2A44" text-anchor="middle">t_i = S + T + A + R (0–20)</text>
+  <text x="390" y="586" font-size="14" fill="#1F2A44" text-anchor="middle">total = Σt_i / (n×20) × 10</text>
+  <text x="390" y="604" font-size="14" fill="#1F2A44" text-anchor="middle">câu yếu: t_i / 20 &lt; 0,6</text>
+  <text x="390" y="622" font-size="14" fill="#1F2A44" text-anchor="middle">gom điểm + missing_points</text>
+  <text x="390" y="646" font-size="14" fill="#6B7280" text-anchor="middle">&lt; 1 ms</text>
+  <path d="M500,590 L528,590" stroke="#1F2A44" stroke-width="2" marker-end="url(#ar)"/>
+
+  <!-- 2. Tổng hợp — Haiku -->
+  <rect x="530" y="520" width="250" height="140" rx="12" fill="#F0EEFD" stroke="#6C5CE7" stroke-width="2"/>
+  <text x="655" y="545" font-size="16" font-weight="700" fill="#6C5CE7" text-anchor="middle">2. Tổng hợp — Haiku 4.5</text>
+  <text x="655" y="568" font-size="14" fill="#1F2A44" text-anchor="middle">vào: bảng điểm n câu, gap ban đầu,</text>
+  <text x="655" y="586" font-size="14" fill="#1F2A44" text-anchor="middle">catalog học phần đã lọc trùng</text>
+  <text x="655" y="604" font-size="14" fill="#1F2A44" text-anchor="middle">ra: weak_skills[], suggestions</text>
+  <text x="655" y="622" font-size="14" fill="#1F2A44" text-anchor="middle">[{module_id ∈ catalog, reason}]</text>
+  <text x="655" y="646" font-size="14" fill="#6B7280" text-anchor="middle">≈ 1,5 s · ≈ $0,005</text>
+  <path d="M780,590 L808,590" stroke="#6C5CE7" stroke-width="2" marker-end="url(#arP)"/>
+
+  <!-- 3. Kiểm tra -->
+  <rect x="810" y="520" width="230" height="140" rx="12" fill="#EAF1FE" stroke="#2F6FED" stroke-width="2"/>
+  <text x="925" y="545" font-size="16" font-weight="700" fill="#2F6FED" text-anchor="middle">3. Kiểm tra [BE]</text>
+  <text x="925" y="568" font-size="14" fill="#1F2A44" text-anchor="middle">module_id có trong catalog</text>
+  <text x="925" y="586" font-size="14" fill="#1F2A44" text-anchor="middle">≤ 5 · không trùng roadmap /</text>
+  <text x="925" y="604" font-size="14" fill="#1F2A44" text-anchor="middle">pending / cooldown 14 ngày</text>
+  <text x="925" y="622" font-size="14" fill="#1F2A44" text-anchor="middle">low_confidence → không tạo</text>
+  <text x="925" y="646" font-size="14" fill="#6B7280" text-anchor="middle">UNIQUE (room, module) pending</text>
+  <path d="M1040,590 L1068,590" stroke="#1F2A44" stroke-width="2" marker-end="url(#ar)"/>
+
+  <!-- 4. suggestions -->
+  <rect x="1070" y="520" width="200" height="140" rx="12" fill="#E6F6F4" stroke="#0E9F8E" stroke-width="2"/>
+  <text x="1170" y="545" font-size="16" font-weight="700" fill="#0E9F8E" text-anchor="middle">4. suggestions</text>
+  <text x="1170" y="568" font-size="14" fill="#1F2A44" text-anchor="middle">status = pending</text>
+  <text x="1170" y="586" font-size="14" fill="#1F2A44" text-anchor="middle">source = llm</text>
+  <text x="1170" y="604" font-size="14" fill="#1F2A44" text-anchor="middle">+ scorecard (total,</text>
+  <text x="1170" y="622" font-size="14" fill="#1F2A44" text-anchor="middle">weak_skills, feedback)</text>
+  <text x="1170" y="646" font-size="14" fill="#6B7280" text-anchor="middle">→ FE</text>
+  <path d="M1270,590 L1298,590" stroke="#0E9F8E" stroke-width="2" marker-end="url(#arT)"/>
+
+  <!-- 5. Candidate -->
+  <rect x="1300" y="520" width="280" height="140" rx="12" fill="#FFF4E8" stroke="#E8891C" stroke-width="2"/>
+  <text x="1440" y="545" font-size="16" font-weight="700" fill="#1F2A44" text-anchor="middle">5. Candidate quyết định [FE]</text>
+  <text x="1440" y="568" font-size="14" fill="#1F2A44" text-anchor="middle">Nhận → roadmap_items</text>
+  <text x="1440" y="586" font-size="14" fill="#1F2A44" text-anchor="middle">(source = ai_suggested) → Lõi 1</text>
+  <text x="1440" y="604" font-size="14" fill="#1F2A44" text-anchor="middle">Bỏ qua → dismissed,</text>
+  <text x="1440" y="622" font-size="14" fill="#1F2A44" text-anchor="middle">cooldown 14 ngày</text>
+  <text x="1440" y="646" font-size="14" fill="#6B7280" text-anchor="middle">Lõi 1: roadmap, skill_states</text>
+
+  <!-- Chú giải -->
+  <text x="20" y="705" font-size="15" font-weight="700" fill="#1F2A44">Chú giải</text>
+  <rect x="20" y="717" width="18" height="18" rx="4" fill="#F0EEFD" stroke="#6C5CE7" stroke-width="2"/>
+  <text x="46" y="731" font-size="14" fill="#1F2A44">LLM: Sonnet 5 chấm mỗi lượt · Haiku 4.5 tác vụ nhẹ</text>
+  <rect x="400" y="717" width="18" height="18" rx="4" fill="#F3F4F6" stroke="#6B7280" stroke-width="2"/>
+  <text x="426" y="731" font-size="14" fill="#1F2A44">Dịch vụ ngoài: STT Whisper, TTS</text>
+  <rect x="670" y="717" width="18" height="18" rx="4" fill="#EEF1F7" stroke="#1F2A44" stroke-width="2"/>
+  <text x="696" y="731" font-size="14" fill="#1F2A44">Xử lý server</text>
+  <rect x="810" y="717" width="18" height="18" rx="4" fill="#EAF1FE" stroke="#2F6FED" stroke-width="2"/>
+  <text x="836" y="731" font-size="14" fill="#1F2A44">Kiểm tra JSON và nghiệp vụ</text>
+  <rect x="1050" y="717" width="18" height="18" rx="4" fill="#E6F6F4" stroke="#0E9F8E" stroke-width="2"/>
+  <text x="1076" y="731" font-size="14" fill="#1F2A44">Ghi DB</text>
+  <rect x="1160" y="717" width="18" height="18" rx="4" fill="#FFF4E8" stroke="#E8891C" stroke-width="2"/>
+  <text x="1186" y="731" font-size="14" fill="#1F2A44">FE / Candidate</text>
+
+  <path d="M20,758 L60,758" stroke="#D93B3B" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="70" y="763" font-size="14" fill="#1F2A44">Nhánh lỗi: parse / từ chối / timeout / 429 → gọi lại 1 lần → rơi về chấm theo quy tắc (mục 7.1)</text>
+  <path d="M760,758 L800,758" stroke="#E8A81C" stroke-width="2"/>
+  <text x="810" y="763" font-size="14" fill="#1F2A44">confidence &lt; 0,6 → chấm lần 2, lấy trung bình; |Δ| &gt; 1,0 → low_confidence, Lecturer spot-check</text>
+  <text x="20" y="795" font-size="14" fill="#6B7280">Giá tính: Sonnet 5 $2 vào / $10 ra mỗi 1M token (đọc cache 0,1×), Haiku 4.5 $1 / $5 · ước lượng: ≈ $0,008 mỗi lần chấm · ≈ $0,07–0,10 mỗi buổi 3 câu (6 lượt) · mọi kết quả LLM qua kiểm tra JSON trước khi ghi DB.</text>
+</svg>

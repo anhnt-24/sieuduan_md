@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 880" width="1600" height="880" font-family="Helvetica Neue, Arial, sans-serif">
+  <defs>
+    <marker id="aN" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1F2A44"/></marker>
+    <marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0E9F8E"/></marker>
+    <marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6C5CE7"/></marker>
+    <marker id="aO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#E8891C"/></marker>
+    <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#D93B3B"/></marker>
+  </defs>
+  <rect width="1600" height="880" fill="#FFFFFF"/>
+
+  <!-- Tiêu đề -->
+  <text x="30" y="44" font-size="26" font-weight="700" fill="#1F2A44">Lõi 1 — Học thích ứng: pipeline LLM API (Sonnet 5 · Haiku 4.5 · Piston)</text>
+  <text x="30" y="70" font-size="15" fill="#6B7280">Prompt = phần cố định (cache) + dữ liệu người học; đầu ra ép JSON schema (output_config.format); backend kiểm tra rồi mới ghi bảng.</text>
+
+  <!-- ===================== HÀNG 1: TEST → ƯỚC LƯỢNG ===================== -->
+  <!-- Chọn phòng -->
+  <rect x="30" y="195" width="170" height="80" rx="8" fill="#DDF3EF" stroke="#0E9F8E" stroke-width="1.5"/>
+  <text x="115" y="222" font-size="15" font-weight="700" fill="#1F2A44" text-anchor="middle">Chọn phòng học</text>
+  <text x="115" y="243" font-size="14" fill="#6B7280" text-anchor="middle">Candidate chọn career</text>
+  <text x="115" y="263" font-size="14" fill="#1F2A44" text-anchor="middle">→ rooms</text>
+  <line x1="200" y1="235" x2="228" y2="235" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <!-- Vòng test -->
+  <rect x="230" y="110" width="690" height="300" rx="12" fill="none" stroke="#0E9F8E" stroke-width="2" stroke-dasharray="8 5"/>
+  <text x="575" y="136" font-size="17" font-weight="700" fill="#0E9F8E" text-anchor="middle">Test đầu vào · lặp 15–20 câu</text>
+
+  <rect x="245" y="160" width="205" height="84" rx="8" fill="#DDF3EF" stroke="#0E9F8E" stroke-width="1.5"/>
+  <text x="347" y="185" font-size="15" font-weight="700" fill="#1F2A44" text-anchor="middle">Ghép prompt</text>
+  <text x="347" y="206" font-size="14" fill="#6B7280" text-anchor="middle">system (cache) + skill_id</text>
+  <text x="347" y="226" font-size="14" fill="#6B7280" text-anchor="middle">xoay vòng + lịch sử câu trước</text>
+  <line x1="450" y1="202" x2="468" y2="202" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="470" y="160" width="200" height="84" rx="8" fill="#ECEAFD" stroke="#6C5CE7" stroke-width="1.5"/>
+  <text x="570" y="185" font-size="15" font-weight="700" fill="#6C5CE7" text-anchor="middle">Sonnet 5 · sinh câu</text>
+  <text x="570" y="206" font-size="14" fill="#1F2A44" text-anchor="middle">schema question</text>
+  <text x="570" y="226" font-size="14" fill="#6B7280" text-anchor="middle">độ khó ±1 theo câu trước</text>
+  <line x1="670" y1="202" x2="698" y2="202" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="700" y="160" width="200" height="84" rx="8" fill="#DDF3EF" stroke="#0E9F8E" stroke-width="1.5"/>
+  <text x="800" y="185" font-size="15" font-weight="700" fill="#1F2A44" text-anchor="middle">Người học trả lời</text>
+  <text x="800" y="206" font-size="14" fill="#6B7280" text-anchor="middle">answer, answer_ms</text>
+  <text x="800" y="226" font-size="14" fill="#6B7280" text-anchor="middle">mcq: so đáp án tại chỗ</text>
+
+  <text x="570" y="266" font-size="14" fill="#D93B3B" text-anchor="middle">lỗi JSON / lệch độ khó → gọi lại 1 lần → câu từ ngân hàng Lecturer</text>
+
+  <path d="M800 244 L800 342 L672 342" fill="none" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+  <rect x="470" y="300" width="200" height="84" rx="8" fill="#ECEAFD" stroke="#6C5CE7" stroke-width="1.5"/>
+  <text x="570" y="325" font-size="15" font-weight="700" fill="#6C5CE7" text-anchor="middle">Chấm short, code</text>
+  <text x="570" y="346" font-size="14" fill="#1F2A44" text-anchor="middle">Sonnet 5 → grading</text>
+  <text x="570" y="366" font-size="14" fill="#6B7280" text-anchor="middle">score, confidence</text>
+
+  <path d="M470 342 L300 342 L300 246" fill="none" stroke="#0E9F8E" stroke-width="2" marker-end="url(#aT)"/>
+  <text x="308" y="300" font-size="14" font-weight="600" fill="#0E9F8E">n &lt; N → câu tiếp</text>
+  <text x="575" y="398" font-size="14" fill="#1F2A44" text-anchor="middle">ghi: questions · question_attempts · llm_calls (mỗi lần gọi)</text>
+
+  <!-- Ước lượng -->
+  <line x1="920" y1="235" x2="948" y2="235" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+  <rect x="950" y="195" width="150" height="80" rx="8" fill="#DDF3EF" stroke="#0E9F8E" stroke-width="1.5"/>
+  <text x="1025" y="220" font-size="15" font-weight="700" fill="#1F2A44" text-anchor="middle">Prompt ước lượng</text>
+  <text x="1025" y="241" font-size="14" fill="#6B7280" text-anchor="middle">đủ N câu: mọi câu,</text>
+  <text x="1025" y="261" font-size="14" fill="#6B7280" text-anchor="middle">kết quả, answer_ms</text>
+  <line x1="1100" y1="235" x2="1118" y2="235" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="1120" y="195" width="200" height="80" rx="8" fill="#ECEAFD" stroke="#6C5CE7" stroke-width="1.5"/>
+  <text x="1220" y="220" font-size="15" font-weight="700" fill="#6C5CE7" text-anchor="middle">Sonnet 5 → JSON</text>
+  <text x="1220" y="241" font-size="14" fill="#1F2A44" text-anchor="middle">assessment_result</text>
+  <text x="1220" y="261" font-size="14" fill="#6B7280" text-anchor="middle">skills[] gaps[] need_more[]</text>
+  <line x1="1320" y1="235" x2="1338" y2="235" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="1340" y="195" width="110" height="80" rx="8" fill="#DDF3EF" stroke="#0E9F8E" stroke-width="1.5"/>
+  <text x="1395" y="220" font-size="15" font-weight="700" fill="#1F2A44" text-anchor="middle">Kiểm tra</text>
+  <text x="1395" y="241" font-size="14" fill="#6B7280" text-anchor="middle">skill_id, 0–100</text>
+  <text x="1395" y="261" font-size="14" fill="#6B7280" text-anchor="middle">tính lại gap</text>
+  <line x1="1450" y1="235" x2="1468" y2="235" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="1470" y="195" width="110" height="80" rx="8" fill="#1F2A44"/>
+  <text x="1525" y="230" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">skill_states</text>
+  <text x="1525" y="253" font-size="14" fill="#DDE3EE" text-anchor="middle">p, evidence</text>
+
+  <!-- Nhánh lỗi ước lượng -->
+  <path d="M1395 275 L1395 300" fill="none" stroke="#D93B3B" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#aR)"/>
+  <rect x="1120" y="302" width="320" height="62" rx="8" fill="#FDECEC" stroke="#D93B3B" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="1280" y="326" font-size="14" fill="#D93B3B" text-anchor="middle">lỗi parse / schema / skill lạ → gọi lại 1 lần</text>
+  <text x="1280" y="348" font-size="14" fill="#D93B3B" text-anchor="middle">rồi rơi về quy tắc: p = % đúng theo mức khó</text>
+
+  <!-- skill_states → prompt roadmap -->
+  <path d="M1525 275 L1525 480 L390 480 L390 556" fill="none" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+  <text x="960" y="472" font-size="14" font-weight="600" fill="#1F2A44" text-anchor="middle">gap + proficiency → sinh roadmap; gap đổi sau ước lượng lại → sinh lại, giữ user_added và done</text>
+
+  <!-- Vòng lặp hằng ngày → skill_states -->
+  <path d="M1560 540 L1560 277" fill="none" stroke="#6C5CE7" stroke-width="2.5" marker-end="url(#aP)"/>
+  <text x="1548" y="524" font-size="14" font-weight="600" fill="#6C5CE7" text-anchor="end">mỗi 10 bài / skill: Sonnet 5 ước lượng lại (B) → skill_states</text>
+
+  <!-- ===================== HÀNG 2: ROADMAP → HẰNG NGÀY ===================== -->
+  <rect x="30" y="558" width="230" height="84" rx="8" fill="#FDEBD6" stroke="#E8891C" stroke-width="1.5"/>
+  <text x="145" y="583" font-size="15" font-weight="700" fill="#1F2A44" text-anchor="middle">Lecturer</text>
+  <text x="145" y="604" font-size="14" fill="#6B7280" text-anchor="middle">catalog học phần, tiên quyết,</text>
+  <text x="145" y="624" font-size="14" fill="#6B7280" text-anchor="middle">lộ trình base, ngân hàng dự phòng</text>
+  <line x1="260" y1="600" x2="288" y2="600" stroke="#E8891C" stroke-width="2" marker-end="url(#aO)"/>
+
+  <rect x="290" y="558" width="200" height="84" rx="8" fill="#DDF3EF" stroke="#0E9F8E" stroke-width="1.5"/>
+  <text x="390" y="583" font-size="15" font-weight="700" fill="#1F2A44" text-anchor="middle">Prompt roadmap</text>
+  <text x="390" y="604" font-size="14" fill="#6B7280" text-anchor="middle">catalog (cache) + base + gap</text>
+  <text x="390" y="624" font-size="14" fill="#6B7280" text-anchor="middle">+ skill_states + đã học / đã có</text>
+  <line x1="490" y1="600" x2="508" y2="600" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="510" y="558" width="185" height="84" rx="8" fill="#ECEAFD" stroke="#6C5CE7" stroke-width="1.5"/>
+  <text x="602" y="583" font-size="15" font-weight="700" fill="#6C5CE7" text-anchor="middle">Sonnet 5 → roadmap</text>
+  <text x="602" y="604" font-size="14" fill="#1F2A44" text-anchor="middle">items[{module_id, order,</text>
+  <text x="602" y="624" font-size="14" fill="#1F2A44" text-anchor="middle">reason}], unmapped_gaps[]</text>
+  <line x1="695" y1="600" x2="713" y2="600" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="715" y="558" width="220" height="84" rx="8" fill="#DDF3EF" stroke="#0E9F8E" stroke-width="1.5"/>
+  <text x="825" y="583" font-size="15" font-weight="700" fill="#1F2A44" text-anchor="middle">Kiểm tra</text>
+  <text x="825" y="604" font-size="14" fill="#6B7280" text-anchor="middle">module_id ∈ catalog, không trùng</text>
+  <text x="825" y="624" font-size="14" fill="#6B7280" text-anchor="middle">tiên quyết → cảnh báo vàng</text>
+  <line x1="935" y1="600" x2="958" y2="600" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="960" y="558" width="135" height="84" rx="8" fill="#1F2A44"/>
+  <text x="1027" y="595" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">roadmap_items</text>
+  <text x="1027" y="618" font-size="14" fill="#DDE3EE" text-anchor="middle">source, reason</text>
+  <line x1="1095" y1="600" x2="1108" y2="600" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <!-- Nhánh lỗi roadmap -->
+  <path d="M825 642 L825 668" fill="none" stroke="#D93B3B" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#aR)"/>
+  <rect x="635" y="670" width="380" height="62" rx="8" fill="#FDECEC" stroke="#D93B3B" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="825" y="694" font-size="14" fill="#D93B3B" text-anchor="middle">module lạ / trùng / lỗi JSON → gọi lại 1 lần</text>
+  <text x="825" y="716" font-size="14" fill="#D93B3B" text-anchor="middle">rồi rơi về thứ tự lộ trình base + học phần dạy gap</text>
+
+  <!-- Hằng ngày -->
+  <rect x="1110" y="540" width="470" height="270" rx="12" fill="none" stroke="#6C5CE7" stroke-width="2" stroke-dasharray="8 5"/>
+  <text x="1345" y="564" font-size="17" font-weight="700" fill="#6C5CE7" text-anchor="middle">Hằng ngày · Haiku 4.5 + Piston</text>
+
+  <rect x="1125" y="580" width="210" height="84" rx="8" fill="#ECEAFD" stroke="#6C5CE7" stroke-width="1.5"/>
+  <text x="1230" y="605" font-size="15" font-weight="700" fill="#6C5CE7" text-anchor="middle">Haiku 4.5 · chọn/sinh 5 bài</text>
+  <text x="1230" y="626" font-size="14" fill="#1F2A44" text-anchor="middle">daily_set theo gap, ≤ 2/skill</text>
+  <text x="1230" y="646" font-size="14" fill="#6B7280" text-anchor="middle">độ khó theo p, xoay loại</text>
+  <line x1="1335" y1="622" x2="1348" y2="622" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="1350" y="580" width="210" height="84" rx="8" fill="#F1F2F4" stroke="#6B7280" stroke-width="1.5"/>
+  <text x="1455" y="605" font-size="15" font-weight="700" fill="#1F2A44" text-anchor="middle">Piston · chạy test</text>
+  <text x="1455" y="626" font-size="14" fill="#6B7280" text-anchor="middle">solution phải pass tests</text>
+  <text x="1455" y="646" font-size="14" fill="#6B7280" text-anchor="middle">trước khi giao; chấm bài code</text>
+
+  <path d="M1455 664 L1455 677 L1230 677 L1230 688" fill="none" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+  <rect x="1125" y="690" width="210" height="84" rx="8" fill="#ECEAFD" stroke="#6C5CE7" stroke-width="1.5"/>
+  <text x="1230" y="715" font-size="15" font-weight="700" fill="#6C5CE7" text-anchor="middle">Haiku 4.5 · chấm, gợi ý</text>
+  <text x="1230" y="736" font-size="14" fill="#1F2A44" text-anchor="middle">grading, hint 3 mức</text>
+  <text x="1230" y="756" font-size="14" fill="#6B7280" text-anchor="middle">flashcards từ câu sai</text>
+  <line x1="1335" y1="732" x2="1348" y2="732" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="1350" y="690" width="210" height="84" rx="8" fill="#DDF3EF" stroke="#0E9F8E" stroke-width="1.5"/>
+  <text x="1455" y="715" font-size="15" font-weight="700" fill="#1F2A44" text-anchor="middle">Lịch ôn cố định</text>
+  <text x="1455" y="736" font-size="14" fill="#1F2A44" text-anchor="middle">1 · 3 · 7 · 14 · 30 ngày</text>
+  <text x="1455" y="756" font-size="14" fill="#6B7280" text-anchor="middle">quên → về 1; tối đa 30 thẻ</text>
+
+  <text x="1345" y="798" font-size="14" fill="#1F2A44" text-anchor="middle">ghi: exercises · exercise_attempts · flashcards · srs_cards · llm_calls</text>
+
+  <!-- Chú giải -->
+  <rect x="30" y="836" width="14" height="14" rx="3" fill="#DDF3EF" stroke="#0E9F8E" stroke-width="1.5"/>
+  <text x="52" y="848" font-size="14" fill="#1F2A44">Bước hệ thống</text>
+  <rect x="170" y="836" width="14" height="14" rx="3" fill="#ECEAFD" stroke="#6C5CE7" stroke-width="1.5"/>
+  <text x="192" y="848" font-size="14" fill="#1F2A44">Gọi LLM (Sonnet 5 / Haiku 4.5)</text>
+  <rect x="420" y="836" width="14" height="14" rx="3" fill="#F1F2F4" stroke="#6B7280" stroke-width="1.5"/>
+  <text x="442" y="848" font-size="14" fill="#1F2A44">Dịch vụ ngoài (Piston)</text>
+  <rect x="610" y="836" width="14" height="14" rx="3" fill="#1F2A44"/>
+  <text x="632" y="848" font-size="14" fill="#1F2A44">Bảng dữ liệu</text>
+  <rect x="740" y="836" width="14" height="14" rx="3" fill="#FDEBD6" stroke="#E8891C" stroke-width="1.5"/>
+  <text x="762" y="848" font-size="14" fill="#1F2A44">Đầu vào Lecturer</text>
+  <rect x="900" y="836" width="14" height="14" rx="3" fill="#FDECEC" stroke="#D93B3B" stroke-width="1.5" stroke-dasharray="3 2"/>
+  <text x="922" y="848" font-size="14" fill="#1F2A44">Nhánh lỗi: gọi lại 1 lần → rơi về quy tắc</text>
+  <text x="30" y="872" font-size="14" fill="#6B7280">Mọi đầu ra LLM ép JSON schema; ràng buộc số (0–100, 1–5, số phần tử) kiểm tra ở backend; mọi lần gọi ghi llm_calls (model, token, latency, parsed_ok).</text>
+</svg>

@@ -4,6 +4,8 @@
 
 > **Về chữ "train"**: hệ thống này gần như không train model nào. LLM, embedding (bge-m3), Whisper và TTS đều là model có sẵn, gọi qua API. Elo, SM-2 và công thức matching là thuật toán tất định, không có tham số học được. Thứ thực sự phải làm là **hiệu chỉnh tham số**, **xây bộ golden set** và **đo chất lượng** — mục 3 viết đúng phần đó thay vì dựng lên một quy trình huấn luyện không tồn tại.
 
+> **Phương án triển khai đã chọn: LLM API.** Các thành phần cần hiểu, sinh hoặc đánh giá nội dung gọi mô hình ngôn ngữ lớn qua API với đầu ra ép JSON schema. Mục 2 của tài liệu này mô tả **thiết kế thuật toán đề xuất bổ sung** cho từng engine (fallback, kiểm tra chéo, hoặc thay thế khi cần chi phí thấp và nhất quán); phần LLM API đảm nhiệm từng lõi, prompt, schema và chi phí được ghi trong `core/01-adaptive-learning`, `core/02-mock-interview`, `core/03-cv-jd-matching` (mục 3 mỗi tài liệu). Mục 3, 4, 5, 6 áp dụng cho cả hai phương án.
+
 **Đối chiếu với demo**: mọi công thức trong tài liệu này khớp với bản demo tại `demo/index.html` (Elo/CAT, SM-2, % match, chấm CV, chấm STAR). Chỗ nào demo làm đơn giản hơn bản thật đều được ghi chú tại chỗ.
 
 ## Mục lục
@@ -11,7 +13,7 @@
 | Mục | Nội dung |
 |---|---|
 | **1. Bản đồ lõi** | 11 engine, sơ đồ phụ thuộc, vì sao `skill_id` là trục khớp nối |
-| **2. Chi tiết từng engine** | E1 Elo/CAT · E2 roadmap · E3 đề xuất bài tập · E4 SM-2 · E5 sandbox · E6 CV · E7 JD · E8 matching · E9 mock interview · E10 vòng phản hồi · E11 AI agent |
+| **2. Chi tiết từng engine (thuật toán đề xuất)** | E1 Elo/CAT · E2 roadmap · E3 đề xuất bài tập · E4 SM-2 · E5 sandbox · E6 CV · E7 JD · E8 matching · E9 mock interview · E10 vòng phản hồi · E11 AI agent |
 | **3. "Train"** | Cái gì không train, cái gì chỉ chỉnh tham số, bộ golden set, quy trình đo lường, chi phí gán nhãn |
 | **4. Feed data** | Seed dữ liệu nền, pipeline JD 3 nguồn, pipeline CV, lược đồ CSDL, vòng đời dữ liệu |
 | **5. Cách nối** | Sơ đồ thành phần, trục `skill_id`, danh sách API, 4 luồng tuần tự, tác vụ nền, xử lý lỗi |
@@ -86,7 +88,7 @@
 
 ---
 
-## 2. Chi tiết từng engine
+## 2. Chi tiết từng engine — thiết kế thuật toán đề xuất
 
 ### 2.1 E1 — Đánh giá năng lực Elo/CAT 🟢
 
