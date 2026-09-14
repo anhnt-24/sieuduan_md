@@ -19,6 +19,7 @@ Chu trình: **học bù lỗ hổng → luyện phỏng vấn AI → tối ưu C
 | File | Nội dung |
 |---|---|
 | `BAO-CAO-SIEU-DO-AN.md` / `.pdf` | Báo cáo tổng quan: luồng nghiệp vụ, tính năng, công nghệ, thuật toán, MVP, rủi ro |
+| `BAO-CAO-KY-THUAT-CORE.md` / `.pdf` | Tài liệu kỹ thuật lõi 64 trang: 11 engine chạy thế nào, hiệu chỉnh và đo chất lượng, pipeline dữ liệu, lược đồ CSDL, API, luồng tuần tự, 30 màn hình web |
 | `LUONG-TONG-QUAN.png` / `.svg` | Sơ đồ luồng tổng quan 4 vai trò |
 | `SLIDE-SIEU-DO-AN.pptx` / `.pdf` | Slide thuyết trình |
 | `demo/index.html` | Web demo mock, 1 file, không cần backend |
