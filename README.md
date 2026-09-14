@@ -27,6 +27,8 @@ Chu trình: **học bù lỗ hổng → luyện phỏng vấn AI → tối ưu C
 
 ## Chạy demo
 
+**Bản online**: <https://anhnt-24.github.io/sieuduan_md/>
+
 Mở thẳng `demo/index.html` bằng trình duyệt. Hoặc:
 
 ```bash
