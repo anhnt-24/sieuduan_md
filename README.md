@@ -26,9 +26,19 @@ Chu trình: **học bù lỗ hổng → luyện phỏng vấn AI → tối ưu C
 | `demo/index.html` | Web demo mock, 1 file, không cần backend |
 | `Siêu đồ án.pdf` | Tài liệu ý tưởng gốc |
 
+## Ba lõi: tài liệu, sơ đồ, demo riêng
+
+| Lõi | Tài liệu | Demo |
+|---|---|---|
+| 1. Học thích ứng: Elo/CAT, roadmap theo tiên quyết, bài tập theo dải Elo, SM-2 | [`core/01-adaptive-learning/`](core/01-adaptive-learning/) | <https://anhnt-24.github.io/sieuduan_md/core/01-adaptive-learning/demo.html> |
+| 2. Phỏng vấn thử với AI: pipeline theo lượt, chấm STAR, hợp đồng JSON, vòng phản hồi | [`core/02-mock-interview/`](core/02-mock-interview/) | <https://anhnt-24.github.io/sieuduan_md/core/02-mock-interview/demo.html> |
+| 3. CV và so khớp JD: trích xuất, chuẩn hóa ba tầng, chấm CV, khử trùng lặp, so khớp hai chiều | [`core/03-cv-jd-matching/`](core/03-cv-jd-matching/) | <https://anhnt-24.github.io/sieuduan_md/core/03-cv-jd-matching/demo.html> |
+
+Mỗi thư mục có `README.md` (kèm `bao-cao.pdf`), `so-do.svg` / `so-do.png` và `demo.html` chạy độc lập. Mỗi demo có khu "Nhật ký thuật toán" ghi từng bước tính toán bằng số.
+
 ## Chạy demo
 
-**Bản online**: <https://anhnt-24.github.io/sieuduan_md/>
+**Trang chỉ mục**: <https://anhnt-24.github.io/sieuduan_md/>
 
 Mở thẳng `demo/index.html` bằng trình duyệt. Hoặc:
 

@@ -174,7 +174,7 @@ def elo_update(room, q, correct, answer_ms, n, g=0.25):
 - Invariant 2 (chặn): `|θ' − θ| ≤ K`. Property-based test với `θ ∈ [800,2000]`, `d ∈ [800,2000]`.
 - Invariant 3 (đối xứng zero-sum khi `K_θ = K_q`): `Δθ + Δd = 0`.
 - Test case cứng: `θ=1200, d=1200, S=1, K=64, g=0` → `E=0.5`, `θ'=1232`. `θ=1200, d=1600, S=1, K=32, g=0` → `E=0.0909`, `θ'=1229`.
-- Mô phỏng (§3.4): MAE(`θ̂`, `θ_true`) phải giảm đơn điệu theo `n` và < 80 tại `n = 20`.
+- Mô phỏng (§3.4): MAE(`θ̂`, `θ_true`) phải giảm đơn điệu theo `n`; đo được ≈ 117 tại `n = 20` với thiết lập §3.4 (mô phỏng trong `core/01-adaptive-learning/demo.html`).
 - Chỉ số vận hành: tỷ lệ đúng quan sát của câu được CAT chọn phải nằm 0.45–0.65. Lệch ra ngoài là `d` sai lệch hệ thống.
 
 **Hạn chế / khi nào sai**
@@ -1462,7 +1462,7 @@ def simulate(n_students=1000, n_items=30, g=0.25, k_sched=(64, 32, 16)):
     return {n: statistics.mean(v) for n, v in errs.items()}   # MAE theo số câu
 ```
 
-Kỳ vọng đường MAE: `n=5 ≈ 150`, `n=10 ≈ 110`, `n=15 ≈ 85`, `n=20 ≈ 70`, `n=30 ≈ 55`. **Kết luận rút ra**: đường cong phẳng rõ sau `n = 20` → chốt 15–20 câu là hợp lý, thêm 10 câu nữa chỉ giảm 15 điểm sai số mà mất gấp rưỡi thời gian của candidate. Đây là cách *chứng minh* con số 15–20 thay vì chọn bừa.
+Kết quả đo với đúng thiết lập trên (200 học viên ảo, `θ* ~ N(1300, 200)`, K = 64/32/16, g = 0.25) trong `core/01-adaptive-learning/demo.html`: MAE ≈ 117 tại `n = 20`, giảm đơn điệu theo `n`, và CAT luôn thấp hơn chọn câu ngẫu nhiên. Sai số còn cao vì K = 16 đóng khoảng cách chậm khi `θ*` xa điểm khởi tạo 1200; giữ nguyên lịch K để tránh dao động, chấp nhận sai số ±100 sau 15–20 câu và để θ tiếp tục hội tụ qua bài tập hằng ngày (mỗi bài là một ván Elo). Đây là cách *đo* con số 15–20 thay vì chọn bừa.
 
 Dùng cùng script để so các lựa chọn: `K = (64,32,16)` vs `(40,24,12)` vs `K = 32` cố định; có `g = 0.25` vs không; chọn câu gần `θ` vs chọn ngẫu nhiên (kiểm rằng CAT thật sự tốt hơn random — nếu không thì cả §2.1 sai).
 

@@ -1,0 +1,518 @@
+<!doctype html><html lang="vi"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Demo Lõi 3 — CV và so khớp JD</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F2F5F9;--surface:#FFFFFF;--surface-2:#E9EEF5;--line:#D9E0EA;--line-strong:#B9C4D3;
+  --ink:#1F2A44;--ink-2:#4A5872;--muted:#7A879C;
+  --navy:#1F2A44;--teal:#0E9F8E;--orange:#E8891C;--green:#2EA05C;--blue:#2F6FED;--gray:#6B7280;--purple:#6C5CE7;
+  --teal-soft:#DDF3EF;--orange-soft:#FCEBD6;--green-soft:#DDF3E4;--blue-soft:#DEE8FD;--gray-soft:#E6E8EC;--purple-soft:#E6E3FB;
+  --good:#2EA05C;--warn:#E8A81C;--bad:#D93B3B;--good-soft:#DDF3E4;--warn-soft:#FBF0D2;--bad-soft:#F9DCDC;
+  --accent:#E8891C;--accent-soft:#FCEBD6;--on-accent:#FFFFFF;--on-navy:#FFFFFF;
+  --shadow:0 1px 2px rgba(31,42,68,.06),0 8px 24px rgba(31,42,68,.08);
+  --font:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1626;--surface:#172033;--surface-2:#1F2A40;--line:#2A3650;--line-strong:#3A4A68;
+    --ink:#E6ECF5;--ink-2:#B7C2D4;--muted:#8391A8;--navy:#E6ECF5;--on-navy:#0F1626;
+    --teal:#2BC4B0;--orange:#F5A54A;--green:#4CC47A;--blue:#6B95F5;--gray:#9AA3B2;--purple:#9B8EF7;
+    --teal-soft:#153C3A;--orange-soft:#3E2C15;--green-soft:#173A26;--blue-soft:#1C2A4E;--gray-soft:#2A3140;--purple-soft:#2B2650;
+    --good:#4CC47A;--warn:#F2C14E;--bad:#F06A6A;--good-soft:#173A26;--warn-soft:#3E3416;--bad-soft:#44201F;
+    --accent:#F5A54A;--accent-soft:#3E2C15;--on-accent:#0B1220;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1626;--surface:#172033;--surface-2:#1F2A40;--line:#2A3650;--line-strong:#3A4A68;
+  --ink:#E6ECF5;--ink-2:#B7C2D4;--muted:#8391A8;--navy:#E6ECF5;--on-navy:#0F1626;
+  --teal:#2BC4B0;--orange:#F5A54A;--green:#4CC47A;--blue:#6B95F5;--gray:#9AA3B2;--purple:#9B8EF7;
+  --teal-soft:#153C3A;--orange-soft:#3E2C15;--green-soft:#173A26;--blue-soft:#1C2A4E;--gray-soft:#2A3140;--purple-soft:#2B2650;
+  --good:#4CC47A;--warn:#F2C14E;--bad:#F06A6A;--good-soft:#173A26;--warn-soft:#3E3416;--bad-soft:#44201F;
+  --accent:#F5A54A;--accent-soft:#3E2C15;--on-accent:#0B1220;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;line-height:1.25;text-wrap:balance;font-weight:600}
+h1{font-size:18px}h2{font-size:17px}h3{font-size:14px}
+p{margin:0}a{color:var(--blue)}
+button,input,select,textarea{font:inherit;color:inherit}
+code,.mono,.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:10px 16px;background:var(--surface);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.mark{width:26px;height:26px;border-radius:7px;background:var(--navy);color:var(--on-navy);display:grid;place-items:center;font-family:var(--mono);font-size:11px;font-weight:600;flex:none}
+.demo-tag{font-size:11px;color:var(--muted);border:1px dashed var(--line-strong);border-radius:999px;padding:1px 8px;white-space:nowrap}
+.topbar .sp{flex:1}
+.nav{display:flex;gap:4px;flex-wrap:wrap;padding:6px 16px;background:var(--surface);border-bottom:1px solid var(--line);font-size:12px}
+.nav a{color:var(--ink-2);text-decoration:none;padding:3px 8px;border-radius:6px}
+.nav a:hover{background:var(--surface-2)}
+.wrap{max-width:1180px;margin:0 auto;padding-block:20px 80px;padding-inline:16px;display:flex;flex-direction:column;gap:18px}
+.intro{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;background:var(--navy);color:var(--on-navy);border-radius:12px;padding:16px 20px}
+.intro p{font-size:13px;opacity:.9;max-width:70ch}
+.intro .axis{font-family:var(--mono);font-size:12px;border:1px solid rgba(255,255,255,.35);border-radius:8px;padding:8px 12px;white-space:nowrap}
+:root[data-theme="dark"] .intro .axis{border-color:rgba(15,22,38,.35)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .intro .axis{border-color:rgba(15,22,38,.35)}}
+section.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px}
+.sec-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--accent);font-weight:600;font-family:var(--mono)}
+.eyebrow.blue{color:var(--blue)}.eyebrow.teal{color:var(--teal)}.eyebrow.gray{color:var(--gray)}
+.sub{color:var(--muted);font-size:13px}
+.lead{font-size:13px;color:var(--ink-2);max-width:90ch;margin-bottom:12px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:760px){.g2,.g3{grid-template-columns:1fr}.intro{grid-template-columns:1fr}}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.row.between{justify-content:space-between}
+.stack{display:flex;flex-direction:column;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);padding:7px 12px;border-radius:7px;cursor:pointer;font-weight:500;line-height:1.2;white-space:nowrap}
+.btn:hover{background:var(--surface-2)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.blue{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.sm{padding:4px 9px;font-size:12.5px}
+.btn[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap}
+.badge.teal{background:var(--teal-soft);color:var(--teal)}.badge.orange{background:var(--orange-soft);color:var(--orange)}
+.badge.blue{background:var(--blue-soft);color:var(--blue)}.badge.gray{background:var(--gray-soft);color:var(--gray)}
+.badge.purple{background:var(--purple-soft);color:var(--purple)}.badge.green{background:var(--green-soft);color:var(--green)}
+.badge.good{background:var(--good-soft);color:var(--good)}.badge.warn{background:var(--warn-soft);color:var(--warn)}.badge.bad{background:var(--bad-soft);color:var(--bad)}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:12px;padding:2px 8px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2)}
+.chip.gap{border-color:var(--bad);color:var(--bad);background:var(--bad-soft)}
+.chip.have{border-color:var(--good);color:var(--good);background:var(--good-soft)}
+.chip.half{border-color:var(--warn);color:var(--warn);background:var(--warn-soft)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--ink-2);font-weight:500}
+.input,.select,.textarea{width:100%;border:1px solid var(--line-strong);border-radius:7px;padding:7px 10px;background:var(--surface);color:var(--ink)}
+.textarea{min-height:190px;font-family:var(--mono);font-size:12.5px;line-height:1.45;resize:vertical}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;background:var(--surface-2);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-family:var(--mono)}
+tr.dup td{color:var(--muted)}
+.formula{font-family:var(--mono);font-size:12.5px;background:var(--surface-2);border-radius:8px;padding:10px 12px;line-height:1.6;overflow-x:auto}
+.kpi{display:flex;align-items:baseline;gap:8px}
+.kpi b{font-family:var(--mono);font-size:30px;font-weight:600;line-height:1}
+.kpi span{font-size:12px;color:var(--muted)}
+.bar{height:8px;border-radius:999px;background:var(--surface-2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent)}
+.note{font-size:12.5px;color:var(--ink-2);background:var(--surface-2);border-radius:8px;padding:8px 10px}
+.log{font-family:var(--mono);font-size:12px;line-height:1.55;max-height:360px;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--surface-2)}
+.log div{padding:2px 0;border-bottom:1px dashed var(--line)}
+.log .t{color:var(--muted);margin-right:8px}
+.range{display:flex;align-items:center;gap:10px;font-size:13px}
+.range input{flex:1;min-width:120px;accent-color:var(--accent)}
+.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--navy);color:var(--on-navy);padding:8px 14px;border-radius:8px;font-size:13px;z-index:50;box-shadow:var(--shadow)}
+.meta{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:13px}
+.meta dt{color:var(--muted)}.meta dd{margin:0;font-family:var(--mono);font-size:12.5px}
+footer{color:var(--muted);font-size:12.5px;text-align:center;padding:12px}
+.tier-exact{color:var(--good)}.tier-alias{color:var(--teal)}.tier-cosine{color:var(--purple)}.tier-unmapped{color:var(--bad)}
+</style>
+<div class="topbar"><span class="mark">L3</span><h1>Lõi 3 · CV và so khớp JD</h1><span class="demo-tag">Demo lõi · dữ liệu giả · chạy trong trình duyệt</span><span class="sp"></span><button class="btn sm" data-a="reset">Reset</button></div>
+<nav class="nav" aria-label="Mục"><a href="#s1">1 Từ điển</a><a href="#s2">2 Trích xuất CV</a><a href="#s3">3 Chấm CV</a><a href="#s4">4 Kho JD</a><a href="#s5">5 So khớp</a><a href="#s6">6 Chiều ngược</a><a href="#s7">7 Gap → đề xuất</a><a href="#s8">8 Nhật ký</a></nav>
+<div class="wrap">
+<div class="intro"><p>Mọi chuỗi kỹ năng trong CV và JD đều được quy về một mã <b>skill_id</b> trước khi so khớp. Nhờ đó khoảng trống (gap) so với JD nối thẳng được sang học phần của lõi học thích ứng, không cần bước dịch nào.</p><div class="axis">CV → skill_id ← JD → gap → module</div></div>
+<section class="card" id="s1"><div class="sec-head"><span class="eyebrow gray">1 · Từ điển kỹ năng</span><h2>skill_id, alias, nhánh cha</h2></div><p class="lead">Bảng <code>skills</code> + <code>skill_aliases</code> thu nhỏ (bản thật import từ ESCO nhánh ICT). Thêm alias tại chỗ để thấy hàng đợi unmapped ở mục 2 giảm.</p><div id="dict"></div></section>
+<section class="card" id="s2"><div class="sec-head"><span class="eyebrow">2 · Trích xuất CV</span><h2>Cụm từ → tầng khớp → skill_id</h2></div><p class="lead">Bản thật: PyMuPDF bóc chữ → Sonnet 5 trả JSON → map 3 tầng (tên/alias → cosine bge-m3 ≥ 0,85 → unmapped). Demo: tầng 3 mô phỏng bằng độ giống chuỗi Jaro–Winkler trên tên và alias.</p><div id="cv"></div></section>
+<section class="card" id="s3"><div class="sec-head"><span class="eyebrow">3 · Chấm CV theo quy tắc</span><h2>score_rule = clamp(ΣRᵢ, 0, 100)</h2></div><p class="lead">Bộ quy tắc R0–R10 tất định. Bản thật cộng thêm <code>score_llm</code> (rubric 4 mục): <code>score_final = 0,5·score_rule + 0,5·score_llm</code>. Demo chỉ có phần rule.</p><div id="score"></div></section>
+<section class="card" id="s4"><div class="sec-head"><span class="eyebrow blue">4 · Kho JD ba nguồn</span><h2>Chuẩn hóa chung, khử trùng lặp</h2></div><p class="lead">① crawler theo lịch · ② agent tìm web theo yêu cầu · ③ Recruiter nhập. Cùng một pipeline: parse → extract → map skill → embed → dedupe. Trùng khi <code>content_hash</code> bằng nhau, hoặc cùng công ty/career trong 30 ngày, <code>cosine ≥ 0,95</code> và title trigram ≥ 0,8.</p><div id="jd"></div></section>
+<section class="card" id="s5"><div class="sec-head"><span class="eyebrow">5 · So khớp minh bạch</span><h2>match = w_skill·skill_match + w_cos·cosine</h2></div><div id="match"></div></section>
+<section class="card" id="s6"><div class="sec-head"><span class="eyebrow blue">6 · Chiều ngược</span><h2>1 JD × N ứng viên</h2></div><p class="lead">Recruiter chọn JD, hệ thống xếp hạng: <code>recruiter_score = match + 0,1·(mock/10)</code>, tie-break theo lần hoạt động gần nhất. Cùng công thức match ở mục 5.</p><div id="rev"></div></section>
+<section class="card" id="s7"><div class="sec-head"><span class="eyebrow teal">7 · Gap → đề xuất học</span><h2>Vòng phản hồi về lõi học thích ứng</h2></div><p class="lead">Mỗi skill có <code>cᵢ = 0</code> trong lần so khớp ở mục 5 được tra sang học phần chứa skill đó. Bỏ qua nếu học phần đã có trong roadmap hoặc đang có đề xuất pending (UNIQUE partial index).</p><div id="sug"></div></section>
+<section class="card" id="s8"><div class="sec-head"><span class="eyebrow gray">8 · Nhật ký thuật toán</span><h2>Từng bước, bằng số</h2></div><div id="log" class="log"></div></section>
+<footer><a href="../../demo/">← Demo tổng</a> · <a href="README.md">Tài liệu lõi 3</a></footer>
+</div>
+<script>
+/* ===================== DỮ LIỆU SEED ===================== */
+const SK_SEED=[
+ ["S_js","JavaScript","Frontend/Ngôn ngữ",["JS","ECMAScript","ES6+"]],
+ ["S_ts","TypeScript","Frontend/Ngôn ngữ",["TS","Typescript"]],
+ ["S_react","React","Frontend/Framework",["ReactJS","React.js","reactjs"]],
+ ["S_vue","Vue","Frontend/Framework",["VueJS","Vue.js","Vue 3"]],
+ ["S_angular","Angular","Frontend/Framework",["AngularJS","Angular 17"]],
+ ["S_css","CSS","Frontend/Giao diện",["CSS3","SCSS","Sass","Tailwind"]],
+ ["S_html","HTML","Frontend/Giao diện",["HTML5"]],
+ ["S_node","Node.js","Backend/Runtime",["NodeJS","Express","ExpressJS"]],
+ ["S_python","Python","Backend/Runtime",["Python 3","Py"]],
+ ["S_java","Java","Backend/Runtime",["Java 17","Spring Boot","Spring"]],
+ ["S_fastapi","FastAPI","Backend/Framework",["Fast API"]],
+ ["S_http","HTTP/REST","Backend/API",["REST API","RESTful","REST","Web API"]],
+ ["S_sql","SQL","Data/CSDL",["MySQL","T-SQL","Truy vấn SQL"]],
+ ["S_postgres","PostgreSQL","Data/CSDL",["Postgres","PostgreSQL 15","psql"]],
+ ["S_pandas","Pandas","Data/Phân tích",["pandas","NumPy/Pandas"]],
+ ["S_stats","Thống kê","Data/Phân tích",["Statistics","Xác suất thống kê"]],
+ ["S_dataviz","Data viz","Data/Phân tích",["Power BI","Tableau","Trực quan hoá dữ liệu"]],
+ ["S_docker","Docker","DevOps/Container",["Docker Compose","docker-compose","Containers"]],
+ ["S_k8s","Kubernetes","DevOps/Container",["K8s","Kube"]],
+ ["S_cicd","CI/CD","DevOps/Pipeline",["GitHub Actions","GitLab CI","Jenkins"]],
+ ["S_linux","Linux","DevOps/Hệ điều hành",["Ubuntu","Bash","Shell script"]],
+ ["S_aws","Cloud (AWS)","DevOps/Cloud",["AWS","Amazon Web Services","EC2"]],
+ ["S_git","Git","Công cụ/Quản lý mã",["GitHub","GitLab","Version control"]],
+ ["S_testing","Testing","QA/Kiểm thử",["Unit test","Jest","Pytest","Kiểm thử"]],
+ ["S_automation","Test automation","QA/Kiểm thử",["Playwright","Selenium","Cypress"]],
+ ["S_rn","React Native","Mobile/Framework",["RN","ReactNative"]],
+ ["S_statemgmt","State management","Mobile/Kiến trúc",["Redux","Redux Toolkit","Zustand"]]
+];
+const BLOCKLIST=[["S_react","S_rn"],["S_java","S_js"]];
+const MODULES=[
+ {id:"m1",name:"JavaScript nền tảng: scope, closure, async",skills:["S_js"],hours:12},
+ {id:"m2",name:"React hooks & quản lý state",skills:["S_react","S_statemgmt"],hours:16},
+ {id:"m3",name:"CSS layout hiện đại: Flex, Grid, responsive",skills:["S_css","S_html"],hours:8},
+ {id:"m4",name:"HTTP, REST API và caching",skills:["S_http"],hours:6},
+ {id:"m5",name:"Testing: unit, integration, mocking",skills:["S_testing"],hours:10},
+ {id:"m6",name:"Git nâng cao: rebase, revert, quy trình PR",skills:["S_git"],hours:4},
+ {id:"m7",name:"Python cho backend: FastAPI cơ bản",skills:["S_python","S_fastapi"],hours:14},
+ {id:"m8",name:"SQL & tối ưu truy vấn: index, join, N+1",skills:["S_sql","S_postgres"],hours:12},
+ {id:"m9",name:"Docker từ Dockerfile tới compose",skills:["S_docker"],hours:8},
+ {id:"m10",name:"CI/CD với GitHub Actions",skills:["S_cicd"],hours:6},
+ {id:"m11",name:"Pandas & phân tích dữ liệu thực hành",skills:["S_pandas"],hours:14},
+ {id:"m12",name:"Thống kê ứng dụng & trực quan hóa",skills:["S_stats","S_dataviz"],hours:10},
+ {id:"m13",name:"Kubernetes cơ bản: pod, service, deployment",skills:["S_k8s"],hours:12},
+ {id:"m14",name:"Test automation với Playwright",skills:["S_automation"],hours:10},
+ {id:"m15",name:"Node.js & Express: API cho sản phẩm thật",skills:["S_node"],hours:12},
+ {id:"m16",name:"TypeScript cho dự án React",skills:["S_ts"],hours:8},
+ {id:"m17",name:"React Native: từ component tới release",skills:["S_rn"],hours:16},
+ {id:"m18",name:"Linux & AWS căn bản cho DevOps",skills:["S_linux","S_aws"],hours:10},
+ {id:"m19",name:"Vue 3 Composition API",skills:["S_vue","S_angular"],hours:10}
+];
+const CANDIDATES=[
+ {id:"u1",name:"Nguyễn Minh Anh",career:"Frontend",p:{S_js:82,S_react:76,S_css:70,S_http:41,S_testing:52,S_git:68},mock:8.1,verified:true,active:"2026-09-13",roadmap:["m1","m3","m2"]},
+ {id:"u2",name:"Trần Quốc Bảo",career:"Backend",p:{S_python:78,S_sql:81,S_http:70,S_docker:62,S_git:66,S_testing:58},mock:7.6,verified:true,active:"2026-09-12",roadmap:["m7","m8"]},
+ {id:"u3",name:"Lê Thu Hà",career:"Frontend",p:{S_js:66,S_react:58,S_css:80,S_http:55,S_testing:40,S_git:60},mock:6.9,verified:false,active:"2026-09-10",roadmap:[]},
+ {id:"u4",name:"Phạm Đức Long",career:"DevOps",p:{S_docker:85,S_linux:80,S_cicd:74,S_k8s:69,S_aws:62,S_git:72},mock:8.4,verified:true,active:"2026-09-14",roadmap:["m9","m13"]},
+ {id:"u5",name:"Hoàng Ngọc Mai",career:"Data",p:{S_python:72,S_sql:77,S_pandas:70,S_stats:65,S_dataviz:60,S_git:55},mock:7.2,verified:true,active:"2026-09-11",roadmap:[]},
+ {id:"u6",name:"Vũ Anh Tuấn",career:"QA",p:{S_testing:79,S_automation:71,S_http:60,S_sql:52,S_js:58,S_git:63},mock:7.0,verified:false,active:"2026-09-09",roadmap:[]},
+ {id:"u7",name:"Đặng Thị Lan",career:"Mobile",p:{S_rn:74,S_js:70,S_statemgmt:66,S_http:58,S_git:61,S_testing:45},mock:6.5,verified:true,active:"2026-09-08",roadmap:[]},
+ {id:"u8",name:"Bùi Hữu Phước",career:"Backend",p:{S_python:60,S_sql:64,S_http:62,S_docker:48,S_git:70,S_testing:50},mock:6.1,verified:false,active:"2026-09-05",roadmap:[]},
+ {id:"u9",name:"Ngô Gia Hân",career:"Frontend",p:{S_js:90,S_react:88,S_css:72,S_http:75,S_testing:66,S_git:80},mock:8.8,verified:true,active:"2026-09-13",roadmap:[]},
+ {id:"u10",name:"Lý Văn Khoa",career:"Data",p:{S_python:65,S_sql:58,S_pandas:55,S_stats:70,S_dataviz:74,S_git:50},mock:6.4,verified:false,active:"2026-09-02",roadmap:[]}
+];
+const CV_SAMPLES={
+ u1:{label:"CV A · Nguyễn Minh Anh (tiếng Việt)",text:`Nguyễn Minh Anh
+Frontend Developer
+Email: minhanh.dev@gmail.com · SĐT: 0912 345 678 · github.com/minhanh-dev
+Tóm tắt: 2 năm kinh nghiệm phát triển giao diện web bằng ReactJS và Typescript.
+Kỹ năng: ReactJS, Typescript, Java Script, CSS3, Github Action, Redux Toolkit, Figma
+Kinh nghiệm:
+- Xây dựng dashboard quản lý đơn hàng bằng React, giảm 40% thời gian tải nhờ code-splitting
+- Tham gia phát triển trang thương mại điện tử cho khách hàng trong lĩnh vực bán lẻ, phụ trách toàn bộ phần giao diện người dùng, tích hợp API đặt hàng, thanh toán và theo dõi đơn, đồng thời hỗ trợ kiểm thử trước khi bàn giao
+- Viết unit test với Jest cho các component dùng chung
+Học vấn: Đại học Bách Khoa Hà Nội, Kỹ sư CNTT, 2024`},
+ u2:{label:"CV B · Tran Quoc Bao (English)",text:`Tran Quoc Bao
+Backend Engineer
+Email: bao.tran@outlook.com | https://github.com/baotran
+Summary: 3+ years building payment APIs with Python/FastAPI and Postgres.
+Skills: Python, Fast API, Postgres, Docker compose, K8s, REST API, Pytest, RabbitMQ
+Experience:
+- Designed REST APIs with FastAPI serving 2,000 requests/minute
+- Optimized PostgreSQL queries, cut report time from 12s to 1.5s
+- Containerized services with Docker; CI runs tests on every PR with GitHub Actions
+- Mentored two junior engineers on code review practices
+Education: HCMUT, B.Eng. Computer Science, 2022`},
+ u4:{label:"CV C · Phạm Đức Long (Việt + Anh)",text:`Phạm Đức Long
+DevOps Engineer
+Email: duclong.ops@gmail.com · 0903 111 222
+Kinh nghiệm 4 năm vận hành hạ tầng cloud, trong đó 2 năm Kubernetes.
+Kỹ năng: Kubernetes, Dockerr, AWS, Github Actions, Ubuntu, Terraform, Prometheus, Bash
+Kinh nghiệm:
+- Vận hành cụm Kubernetes 12 node trên AWS, uptime 99.9%
+- Xây pipeline GitHub Actions rút thời gian deploy từ 40 phút xuống 8 phút`}
+};
+/* JD: skills = [skill_id, weight_1_3, required] */
+const JD_SEED=[
+ {id:"j1",src:"crawler",from:"TopCV",title:"Frontend Developer (ReactJS)",company:"Sao Kim Software",career:"Frontend",city:"Hà Nội",posted:"2026-09-08",req:"Yêu cầu: tối thiểu 2 năm kinh nghiệm React, thành thạo hooks và quản lý state. Tích hợp REST API, xử lý lỗi và loading. Viết CSS responsive cho nhiều màn hình. Sử dụng Git theo quy trình pull request. Ưu tiên biết TypeScript.",skills:[["S_react",3,1],["S_js",2,1],["S_http",2,1],["S_css",2,1],["S_git",1,1],["S_ts",1,0]]},
+ {id:"j2",src:"crawler",from:"ITviec",title:"Frontend Developer (React.js)",company:"Sao Kim Software",career:"Frontend",city:"Hà Nội",posted:"2026-09-09",req:"Yêu cầu: tối thiểu 2 năm kinh nghiệm React, thành thạo hooks và quản lý state. Tích hợp REST API, xử lý lỗi và loading. Viết CSS responsive cho nhiều màn hình. Dùng Git theo quy trình pull request. Ưu tiên biết TypeScript.",skills:[["S_react",3,1],["S_js",2,1],["S_http",2,1],["S_css",2,1],["S_git",1,1],["S_ts",1,0]]},
+ {id:"j3",src:"crawler",from:"ITviec",title:"Backend Engineer (Python/FastAPI)",company:"VinaPay JSC",career:"Backend",city:"TP.HCM",posted:"2026-09-05",req:"Yêu cầu: 3 năm Python, kinh nghiệm FastAPI hoặc Django. Thiết kế và tối ưu truy vấn PostgreSQL. Viết unit test với Pytest. Đóng gói và triển khai bằng Docker. Hiểu REST API và bảo mật cơ bản. Ưu tiên có kinh nghiệm fintech.",skills:[["S_python",3,1],["S_fastapi",2,1],["S_postgres",2,1],["S_sql",2,1],["S_docker",2,1],["S_http",2,1],["S_testing",1,1]]},
+ {id:"j4",src:"agent",from:"hungthinhtech.vn/careers",title:"Fresher Frontend (Vue/React)",company:"Hưng Thịnh Tech",career:"Frontend",city:"Đà Nẵng",posted:"2026-09-03",req:"Yêu cầu: sinh viên mới tốt nghiệp CNTT. Nắm vững JavaScript, HTML, CSS. Biết dùng Git. Có hiểu biết về Vue hoặc React là lợi thế. Được đào tạo 2 tháng.",skills:[["S_js",3,1],["S_css",2,1],["S_html",1,1],["S_git",1,1],["S_vue",2,0],["S_react",2,0]]},
+ {id:"j5",src:"recruiter",from:"CloudViet Solutions",title:"DevOps Engineer",company:"CloudViet Solutions",career:"DevOps",city:"Hà Nội",posted:"2026-09-10",req:"Yêu cầu: vận hành cụm Kubernetes trên AWS ở môi trường production. Xây pipeline CI/CD bằng GitHub Actions. Thành thạo Docker và Linux. Giám sát bằng Prometheus/Grafana. Biết Terraform là lợi thế.",skills:[["S_k8s",3,1],["S_docker",3,1],["S_aws",2,1],["S_cicd",2,1],["S_linux",2,1],["S_git",1,0]]},
+ {id:"j6",src:"agent",from:"linkedin.com/jobs",title:"DevOps Engineer",company:"CloudViet Solutions",career:"DevOps",city:"Hà Nội",posted:"2026-09-11",req:"Yêu cầu: vận hành cụm Kubernetes trên AWS ở môi trường production. Xây pipeline CI/CD bằng GitHub Actions. Thành thạo Docker và Linux. Giám sát bằng Prometheus/Grafana. Biết Terraform là lợi thế.",skills:[["S_k8s",3,1],["S_docker",3,1],["S_aws",2,1],["S_cicd",2,1],["S_linux",2,1],["S_git",1,0]]},
+ {id:"j7",src:"crawler",from:"TopCV",title:"Data Analyst",company:"Tiki Retail Analytics",career:"Data",city:"TP.HCM",posted:"2026-09-02",req:"Yêu cầu: viết SQL thành thạo trên BigQuery hoặc PostgreSQL. Dùng Python và Pandas để làm sạch dữ liệu. Có nền tảng thống kê. Xây dashboard bằng Power BI hoặc Tableau.",skills:[["S_sql",3,1],["S_python",2,1],["S_pandas",2,1],["S_stats",2,1],["S_dataviz",2,0]]},
+ {id:"j8",src:"crawler",from:"ITviec",title:"QA Automation Engineer",company:"FPT Software",career:"QA",city:"Hà Nội",posted:"2026-09-06",req:"Yêu cầu: 2 năm kiểm thử phần mềm. Viết test automation với Playwright hoặc Selenium. Biết JavaScript để viết kịch bản. Kiểm thử REST API. Biết SQL để đối chiếu dữ liệu.",skills:[["S_testing",3,1],["S_automation",3,1],["S_js",2,1],["S_http",1,1],["S_sql",1,0]]},
+ {id:"j9",src:"agent",from:"linkedin.com/jobs",title:"Mobile Developer (React Native)",company:"Momo Lab",career:"Mobile",city:"TP.HCM",posted:"2026-09-07",req:"Yêu cầu: 2 năm React Native, phát hành app lên cả hai store. Thành thạo JavaScript. Quản lý state với Redux Toolkit. Gọi REST API và xử lý offline. Có viết unit test là lợi thế.",skills:[["S_rn",3,1],["S_js",2,1],["S_statemgmt",2,1],["S_http",1,1],["S_testing",1,0]]},
+ {id:"j10",src:"recruiter",from:"Nhất Nam Digital",title:"Fullstack Developer (React + Node)",company:"Nhất Nam Digital",career:"Frontend",city:"Remote",posted:"2026-09-09",req:"Yêu cầu: React cho frontend, Node.js/Express cho backend. Thiết kế bảng PostgreSQL. Xây REST API. Docker cơ bản để chạy môi trường dev. Dùng Git hằng ngày.",skills:[["S_react",3,1],["S_node",2,1],["S_js",2,1],["S_postgres",2,1],["S_http",2,1],["S_git",1,1],["S_docker",1,0]]},
+ {id:"j11",src:"crawler",from:"ITviec",title:"Data Engineer (Python/SQL)",company:"VNG Data Platform",career:"Data",city:"TP.HCM",posted:"2026-09-04",req:"Yêu cầu: Python và SQL thành thạo. Xây pipeline ETL bằng Airflow. Xử lý dữ liệu với Pandas. Đóng gói job bằng Docker. Dùng Git.",skills:[["S_python",3,1],["S_sql",3,1],["S_pandas",2,1],["S_git",1,1],["S_docker",2,0]]},
+ {id:"j12",src:"recruiter",from:"Sao Kim Software",title:"Junior Backend (Node/PostgreSQL)",company:"Sao Kim Software",career:"Backend",city:"Hà Nội",posted:"2026-09-12",req:"Yêu cầu: viết REST API bằng Express trên Node.js. Thiết kế bảng PostgreSQL. Dùng Git theo quy trình pull request. Viết test với Jest là lợi thế.",skills:[["S_node",3,1],["S_http",2,1],["S_postgres",2,1],["S_js",2,1],["S_git",1,1],["S_testing",1,0]]}
+];
+const JD_PASTE_EXAMPLE=`Junior Backend (NodeJS/PostgreSQL)
+Sao Kim Software
+Yêu cầu: xây REST API bằng Express trên Node.js. Thiết kế bảng PostgreSQL. Dùng Git theo quy trình pull request. Viết test với Jest là lợi thế.`;
+const SRC={crawler:["① Crawler","gray",0.8,1],agent:["② Agent search","purple",0.6,2],recruiter:["③ Recruiter","blue",1.0,0]}; /* [nhãn, màu, trust_weight, hạng giữ] */
+
+/* ===================== TIỆN ÍCH ===================== */
+const KEY="devroom-core3-v1";
+const $=(s,r=document)=>r.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const uid=()=>Math.random().toString(36).slice(2,8);
+const today=()=>new Date().toISOString().slice(0,10);
+const f2=x=>(Math.round(x*1000)/1000).toFixed(3);
+const norm=s=>String(s).toLowerCase().normalize("NFC").replace(/\s+/g," ").trim();
+let S=null;
+function seed(){return {aliasExtra:{},cfg:{cos:0.85,ws:0.7,nice:0.5,pPass:60,dupCos:0.95,dupTitle:0.8,mockBonus:0.1},cvText:{u1:CV_SAMPLES.u1.text,u2:CV_SAMPLES.u2.text,u4:CV_SAMPLES.u4.text},activeCv:"u1",cvRes:{},cvSkills:{},jds:JD_SEED.map(j=>({...j,status:"active",dupOf:null})),jdPaste:JD_PASTE_EXAMPLE,jdPasteSrc:"crawler",dedupe:null,targetJd:"j1",matchJd:"j1",matchCv:"u1",revJd:"j5",sug:[],logs:[]}}
+function load(){try{const r=localStorage.getItem(KEY);if(r)return JSON.parse(r)}catch(e){}return null}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function log(msg){S.logs.push({t:new Date().toLocaleTimeString("vi-VN"),msg});if(S.logs.length>120)S.logs.shift()}
+function toast(msg){if(typeof document==="undefined")return;const t=document.createElement("div");t.className="toast";t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2800)}
+
+/* ===================== TỪ ĐIỂN ===================== */
+function skills(){return SK_SEED.map(([id,name,parent,al])=>({id,name,parent,aliases:[...al,...(S.aliasExtra[id]||[])]}))}
+const skillById=id=>skills().find(s=>s.id===id);
+const nameOf=id=>{const s=skillById(id);return s?s.name:id};
+const parentOf=id=>{const s=skillById(id);return s?s.parent:"?"};
+/* Jaro–Winkler: mô phỏng cosine embedding ở tầng 3 */
+function jaro(a,b){if(a===b)return 1;const la=a.length,lb=b.length;if(!la||!lb)return 0;const w=Math.max(0,Math.floor(Math.max(la,lb)/2)-1);const ma=new Array(la).fill(false),mb=new Array(lb).fill(false);let m=0;
+ for(let i=0;i<la;i++){for(let j=Math.max(0,i-w);j<Math.min(lb,i+w+1);j++){if(!mb[j]&&a[i]===b[j]){ma[i]=mb[j]=true;m++;break}}}
+ if(!m)return 0;let t=0,k=0;for(let i=0;i<la;i++){if(!ma[i])continue;while(!mb[k])k++;if(a[i]!==b[k])t++;k++}
+ return (m/la+m/lb+(m-t/2)/m)/3}
+function jw(a,b){const j=jaro(a,b);let p=0;while(p<4&&p<a.length&&p<b.length&&a[p]===b[p])p++;return j+p*0.1*(1-j)}
+/* map_skill 3 tầng */
+function mapSkill(raw){const k=norm(raw);const list=skills();
+ for(const s of list)if(norm(s.name)===k)return {id:s.id,tier:"exact",score:1,top:[]};
+ for(const s of list)if(s.aliases.some(a=>norm(a)===k))return {id:s.id,tier:"alias",score:1,top:[]};
+ const cand=list.map(s=>{let best=0,via="";[s.name,...s.aliases].forEach(a=>{const v=jw(k,norm(a));if(v>best){best=v;via=a}});return {id:s.id,score:best,via}}).sort((x,y)=>y.score-x.score);
+ const top=cand.slice(0,3);
+ if(top[0].score>=S.cfg.cos){const t2=top[1];const blocked=t2&&BLOCKLIST.some(p=>p.includes(top[0].id)&&p.includes(t2.id));
+  if(!blocked)return {id:top[0].id,tier:"cosine",score:top[0].score,via:top[0].via,top};
+  return {id:null,tier:"unmapped",score:top[0].score,top,reason:`cặp dễ nhầm ${nameOf(top[0].id)} / ${nameOf(t2.id)} (blocklist) → Admin quyết`}}
+ return {id:null,tier:"unmapped",score:top[0].score,top,reason:`top-1 ${f2(top[0].score)} < ngưỡng ${S.cfg.cos}`}}
+
+/* ===================== TRÍCH XUẤT CV ===================== */
+const ROLE_MAP=[[/front[- ]?end|lập trình viên giao diện/i,"Frontend Developer"],[/back[- ]?end/i,"Backend Developer"],[/full[- ]?stack/i,"Fullstack Developer"],[/devops|sre/i,"DevOps Engineer"],[/data (analyst|engineer)|phân tích dữ liệu/i,"Data"],[/qa|tester|kiểm thử/i,"QA Engineer"],[/mobile|android|ios/i,"Mobile Developer"]];
+function tokens(s){return s.split(/[\s,;:()\[\]|•·"“”]+/).map(t=>t.replace(/^[.\-–]+|[.\-–,]+$/g,"")).filter(Boolean)}
+function extractCV(text){
+ const lines=text.split("\n").map(l=>l.trim()).filter(Boolean);
+ const name=lines[0]||"";const headline=/(developer|engineer|analyst|lập trình viên|kỹ sư|tester)/i.test(lines[1]||"")?lines[1]:"";
+ const email=(text.match(/[\w.+-]+@[\w-]+\.[\w.]+/)||[""])[0];const phone=(text.match(/(\+84|0)[\d\s]{8,12}\d/)||[""])[0].trim();
+ const github=(text.match(/github\.com\/[\w-]+/i)||[""])[0];
+ const role=(ROLE_MAP.find(([re])=>re.test(headline||text))||[null,"?"])[1];
+ const sen=((headline||"").match(/\b(senior|junior|lead|intern|fresher)\b/i)||[null,"middle (mặc định)"])[1].toLowerCase();
+ const years=[];const re=/(\d+(?:[.,]\d+)?)\s*\+?\s*(năm|years?|yrs?)/gi;let m;while((m=re.exec(text))){years.push({n:parseFloat(m[1].replace(",",".")),ctx:text.slice(Math.max(0,m.index-18),m.index+m[0].length+14).replace(/\n/g," ")})}
+ const yearsTotal=years.length?Math.max(...years.map(y=>y.n)):0;
+ const bullets=lines.filter(l=>/^[-•*]/.test(l)).map(l=>l.replace(/^[-•*]\s*/,""));
+ const skillLines=lines.filter(l=>/^(kỹ năng|skills?|công nghệ|tech stack)\s*:/i.test(l));
+ const phrases=[];const seen=new Set();
+ skillLines.forEach(l=>l.replace(/^[^:]+:/,"").split(/[,;/•|]/).map(p=>p.trim()).filter(Boolean).forEach(p=>{if(seen.has(norm(p)))return;seen.add(norm(p));phrases.push({raw:p,where:"dòng kỹ năng",...mapSkill(p)})}));
+ const rest=lines.filter(l=>!skillLines.includes(l)).join("\n");const tk=tokens(rest);const used=new Array(tk.length).fill(false);
+ const dict=[];skills().forEach(s=>[s.name,...s.aliases].forEach(a=>dict.push({k:norm(a),id:s.id,n:a.split(" ").length})));
+ for(let n=3;n>=1;n--)for(let i=0;i+n<=tk.length;i++){if(used.slice(i,i+n).some(Boolean))continue;
+ const g=norm(tk.slice(i,i+n).join(" "));
+ const hit=dict.find(d=>d.n===n&&d.k===g);if(hit){for(let j=i;j<i+n;j++)used[j]=true;if(!seen.has(g)){seen.add(g);
+ const s=skillById(hit.id);phrases.push({raw:tk.slice(i,i+n).join(" "),where:"nội dung",id:hit.id,tier:norm(s.name)===g?"exact":"alias",score:1,top:[]})}}}
+ const ids=[...new Set(phrases.filter(p=>p.id).map(p=>p.id))];const unmapped=phrases.filter(p=>!p.id);
+ const pageCount=Math.max(1,Math.ceil(text.length/3500));const ats=/\t/.test(text)?["multi_column"]:[];
+ return {name,headline,email,phone,github,role,sen,years,yearsTotal,bullets,phrases,ids,unmapped,pageCount,ats,nSkills:phrases.filter(p=>p.where==="dòng kỹ năng").length}}
+function runExtract(uidKey,quiet){const r=extractCV(S.cvText[uidKey]);S.cvRes[uidKey]=r;S.cvSkills[uidKey]=r.ids;
+ if(!quiet){const t={exact:0,alias:0,cosine:0,unmapped:0};r.phrases.forEach(p=>t[p.tier]++);log(`[CV ${uidKey}] ${r.phrases.length} cụm từ → exact ${t.exact} · alias ${t.alias} · cosine ${t.cosine} · unmapped ${t.unmapped} → ${r.ids.length} skill_id; years_total = ${r.yearsTotal}`);
+  r.phrases.filter(p=>p.tier==="cosine").forEach(p=>log(`  tầng 3 "${p.raw}" ≈ "${p.via}" JW=${f2(p.score)} ≥ ${S.cfg.cos} → ${p.id}`));
+  r.unmapped.forEach(p=>log(`  unmapped "${p.raw}": ${p.reason}`))}
+ return r}
+
+/* ===================== CHẤM CV ===================== */
+function scoreCV(r,jd){const rows=[];let s=0;const tips=[];const add=(id,name,pass,pts,note)=>{rows.push({id,name,pass,pts,note});s+=pts};
+ add("R0","Điểm nền",true,40,"");
+ const r1=!!(r.name&&r.headline);add("R1","Có full_name và headline",r1,r1?10:0,r1?`"${r.name}" · "${r.headline}"`:"thiếu");if(!r1)tips.push("Thiếu họ tên hoặc vị trí mục tiêu ở đầu CV.");
+ const withNum=r.bullets.filter(b=>/\d/.test(b)).length;
+ const r2=Math.min(18,withNum*6);add("R2","Bullet có số liệu (+6/bullet, cap 18)",withNum>0,r2,`with_num = ${withNum}/${r.bullets.length} → min(18, ${withNum}·6)`);if(withNum<r.bullets.length)tips.push(`${r.bullets.length-withNum} bullet chưa có số liệu đo được (%, số người dùng, thời gian).`);
+ const lng=r.bullets.filter(b=>b.length>140).length;add("R3","Bullet dài > 140 ký tự (−5/bullet)",lng===0,-5*lng,`long = ${lng}`);if(lng)tips.push(`${lng} bullet dài hơn 140 ký tự. Rút gọn còn 1 ý/bullet.`);
+ const r4=r.bullets.length>=3;add("R4","≥ 3 bullet kinh nghiệm/dự án",r4,r4?8:0,`${r.bullets.length} bullet`);if(!r4)tips.push("Cần ít nhất 3 bullet kinh nghiệm/dự án.");
+ const r5=/github\.com\/[\w-]+/i.test(r.github);add("R5","Link GitHub hợp lệ",r5,r5?8:0,r.github||"không có");if(!r5)tips.push("Thiếu link GitHub. Recruiter IT gần như luôn xem code.");
+ const r6=r.nSkills>=4;add("R6","Liệt kê ≥ 4 skill cụ thể",r6,r6?6:0,`${r.nSkills} mục ở dòng kỹ năng`);if(!r6)tips.push("Liệt kê ít nhất 4 kỹ năng cụ thể.");
+ const have=new Set(r.ids);
+ const miss=jd?jd.skills.map(x=>x[0]).filter(id=>!have.has(id)):[];add("R7","Skill JD mục tiêu không có trong CV (−4/skill)",miss.length===0,-4*miss.length,miss.length?miss.map(nameOf).join(", "):"đủ");if(miss.length)tips.push(`So với JD "${jd.title}" (${jd.company}), CV chưa nhắc tới: ${miss.map(nameOf).join(", ")}.`);
+ const r8=r.pageCount===1||r.pageCount===2;add("R8","page_count ∈ {1, 2}",r8,r8?5:-5,`page_count = ${r.pageCount} (ước từ độ dài)`);
+ const r9=r.ats.length===0;add("R9","Không có ats_flags",r9,r9?4:0,r9?"[] (demo: kiểm ký tự tab)":r.ats.join(", "));
+ const r10=!!(r.email&&r.phone);add("R10","Có email và phone",r10,r10?3:0,`${r.email||"—"} · ${r.phone||"—"}`);if(!r10)tips.push("Thiếu email hoặc số điện thoại.");
+ return {rows,raw:s,score:clamp(Math.round(s),0,100),tips,miss}}
+
+/* ===================== JD: HASH · EMBED · DEDUPE ===================== */
+function cyrb53(str){let h1=0xdeadbeef,h2=0x41c6ce57;for(let i=0;i<str.length;i++){const c=str.charCodeAt(i);h1=Math.imul(h1^c,2654435761);h2=Math.imul(h2^c,1597334677)}h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return (h2>>>0).toString(16).padStart(8,"0")+(h1>>>0).toString(16).padStart(8,"0")}
+const normDesc=s=>norm(s).replace(/[\w.+-]+@[\w-]+\.[\w.]+/g," ").replace(/(\+84|0)[\d\s]{8,12}\d/g," ").replace(/\d+/g," ").replace(/[^\p{L}\s]/gu," ").replace(/\s+/g," ").trim();
+const contentHash=j=>cyrb53(norm(j.title)+"|"+norm(j.company)+"|"+normDesc(j.req));
+function bow(s){const v={};normDesc(s).split(" ").filter(t=>t.length>=2).forEach(t=>v[t]=(v[t]||0)+1);return v}
+function cosVec(a,b){let d=0,x=0,y=0;const ks=new Set([...Object.keys(a),...Object.keys(b)]);ks.forEach(k=>{const p=a[k]||0,q=b[k]||0;d+=p*q;x+=p*p;y+=q*q});return (x&&y)?d/Math.sqrt(x*y):0}
+function trigrams(s){const out=new Set();norm(s).replace(/[^\p{L}\p{N}]+/gu," ").trim().split(" ").filter(Boolean).forEach(w=>{const p="  "+w+" ";for(let i=0;i+3<=p.length;i++)out.add(p.slice(i,i+3))});return out}
+function trgSim(a,b){const A=trigrams(a),B=trigrams(b);let inter=0;A.forEach(t=>{if(B.has(t))inter++});const uni=A.size+B.size-inter;return uni?inter/uni:0}
+const daysBetween=(a,b)=>Math.abs((new Date(a)-new Date(b))/864e5);
+/* thứ tự giữ: nguồn ③ > ① > ② → mô tả dài hơn → posted_at mới hơn → id nhỏ hơn */
+function keepOrder(a,b){const ra=SRC[a.src][3],rb=SRC[b.src][3];if(ra!==rb)return [ra<rb?a:b,ra<rb?"nguồn "+SRC[a.src][0].slice(0,1)+" > "+SRC[b.src][0].slice(0,1):"nguồn "+SRC[b.src][0].slice(0,1)+" > "+SRC[a.src][0].slice(0,1)];
+ if(a.req.length!==b.req.length)return [a.req.length>b.req.length?a:b,`mô tả dài hơn (${a.req.length} vs ${b.req.length} ký tự)`];
+ if(a.posted!==b.posted)return [a.posted>b.posted?a:b,"posted_at mới hơn"];
+ return [a.id<b.id?a:b,"id nhỏ hơn"]}
+function runDedupe(){const jds=S.jds;jds.forEach(j=>{j.status="active";j.dupOf=null;j.hash=contentHash(j)});const pairs=[];const dups=[];
+ for(let i=0;i<jds.length;i++)for(let k=i+1;k<jds.length;k++){const a=jds[i],b=jds[k];const cos=cosVec(bow(a.req),bow(b.req));const tri=trgSim(a.title,b.title);const sameHash=a.hash===b.hash;const scope=a.company===b.company||a.career===b.career;const win=daysBetween(a.posted,b.posted)<=30;
+  const near=scope&&win&&cos>=S.cfg.dupCos&&tri>=S.cfg.dupTitle;const isDup=sameHash||near;pairs.push({a,b,cos,tri,sameHash,near,isDup,scope,win});
+  if(isDup){const [keep,why]=keepOrder(a,b);const drop=keep===a?b:a;if(drop.status==="active"){drop.status="duplicate";drop.dupOf=keep.id;dups.push({keep,drop,why,reason:sameHash?"content_hash":"cosine ≥ "+S.cfg.dupCos,cos,tri})}}}
+ pairs.sort((x,y)=>y.cos-x.cos);S.dedupe={pairs:pairs.slice(0,8),dups,n:jds.length,nPairs:pairs.length};
+ log(`[Dedupe] ${jds.length} JD, ${pairs.length} cặp so sánh → ${dups.length} bản trùng`);dups.forEach(d=>log(`  ${d.drop.id} trùng ${d.keep.id} (${d.reason}, cos=${f2(d.cos)}, title=${f2(d.tri)}) → giữ ${d.keep.id}: ${d.why}`))}
+function addPastedJD(){const lines=S.jdPaste.split("\n").map(l=>l.trim()).filter(Boolean);if(lines.length<3){toast("Cần 3 dòng: tiêu đề, công ty, yêu cầu");return}
+ const [title,company,...rest]=lines;const req=rest.join(" ");const id="j"+(S.jds.length+1);
+ const r=extractCV("Kỹ năng:\n"+req.replace(/^yêu cầu:\s*/i,""));const ids=[];const line=r.phrases.filter(p=>p.id&&!ids.includes(p.id)&&ids.push(p.id));
+ const j={id,src:S.jdPasteSrc,from:S.jdPasteSrc==="recruiter"?company:S.jdPasteSrc==="crawler"?"TopCV":"web search",title,company,career:S.jds.find(x=>x.company===company)?.career||"?",city:"?",posted:today(),req,skills:ids.map(s=>[s,2,1]),status:"active",dupOf:null};
+ j.hash=contentHash(j);S.jds.push(j);S.dedupe=null;
+ log(`[JD ${id} · ${SRC[j.src][0]}] parse → extract ${line.length} skill (${ids.map(nameOf).join(", ")}; weight mặc định 2, required) → hash ${j.hash.slice(0,12)} → chờ dedupe`);toast(`Đã thêm ${id}. Bấm "Chạy khử trùng lặp".`)}
+
+/* ===================== SO KHỚP ===================== */
+function haveOf(u){const cv=new Set(S.cvSkills[u.id]||[]);const learn=new Set(Object.keys(u.p).filter(s=>u.p[s]>=S.cfg.pPass));return {cv,learn,all:new Set([...cv,...learn])}}
+function vectorOf(u){const v={};Object.keys(u.p).forEach(s=>v[s]=u.p[s]/100);(S.cvSkills[u.id]||[]).forEach(s=>v[s]=Math.max(v[s]||0,.6));return v}
+function matchJD(u,jd){const h=haveOf(u);const v=vectorOf(u);
+ const rows=jd.skills.map(([id,w13,req])=>{const w=w13*(req?1:S.cfg.nice);let c=0,why="";
+  if(h.all.has(id)){c=1;why=h.cv.has(id)&&h.learn.has(id)?`có trong CV và lõi học (p=${u.p[id]})`:h.cv.has(id)?"có trong CV":`đạt từ lõi học (p=${u.p[id]} ≥ ${S.cfg.pPass})`}
+  else{const par=parentOf(id);const sib=[...h.all].find(x=>parentOf(x)===par);if(sib){c=.5;why=`cùng nhánh ${par} với ${nameOf(sib)}`}else why="không có → gap"}
+  return {id,w13,req,w,c,why}});
+ const sw=rows.reduce((a,r)=>a+r.w,0),swc=rows.reduce((a,r)=>a+r.w*r.c,0);const sm=sw?swc/sw:0;
+ const y={};jd.skills.forEach(s=>y[s[0]]=1);const dims=[...new Set([...Object.keys(v),...Object.keys(y)])];let dot=0,a=0,b=0;dims.forEach(k=>{const x=v[k]||0,yy=y[k]||0;dot+=x*yy;a+=x*x;b+=yy*yy});
+ const cos=(a&&b)?dot/Math.sqrt(a*b):0;const m=S.cfg.ws*sm+(1-S.cfg.ws)*cos;
+ return {rows,sw,swc,sm,cos,dims,v,y,dot,a,b,match:m,pct:Math.round(m*100),gap:rows.filter(r=>r.c===0).map(r=>r.id),h}}
+function rankFor(jd){return CANDIDATES.map(u=>{const m=matchJD(u,jd);return {u,m,rs:m.match+S.cfg.mockBonus*(u.mock/10)}}).sort((x,y)=>y.rs-x.rs||(y.u.active>x.u.active?1:-1))}
+function suggestFromGap(u,m,ctx){let n=0;const skip=[];m.gap.forEach(s=>{const mod=MODULES.find(x=>x.skills.includes(s));if(!mod){skip.push(`${nameOf(s)}: chưa có học phần`);return}
+ if(u.roadmap.includes(mod.id)){skip.push(`${mod.name}: đã có trong roadmap`);return}if(S.sug.some(x=>x.uid===u.id&&x.mid===mod.id&&x.status==="pending")){skip.push(`${mod.name}: đang pending, không tạo trùng`);return}
+ const w=m.rows.find(r=>r.id===s).w;S.sug.push({id:"sg"+uid(),uid:u.id,mid:mod.id,skill:s,reason:`${ctx}: thiếu ${nameOf(s)} (wᵢ=${w})`,priority:w,origin:"jd_match",status:"pending",at:today()});n++});return {n,skip}}
+
+/* ===================== GIAO DIỆN ===================== */
+const tierLabel={exact:"tầng 1 · tên",alias:"tầng 2 · alias",cosine:"tầng 3 · tương đồng",unmapped:"unmapped"};
+const srcBadge=s=>`<span class="badge ${SRC[s][1]}">${SRC[s][0]}</span>`;
+const jdOpts=(sel,all)=>S.jds.filter(j=>all||j.status==="active").map(j=>`<option value="${j.id}" ${j.id===sel?"selected":""}>${j.id} · ${esc(j.title)} — ${esc(j.company)}</option>`).join("");
+const cvOpts=sel=>Object.keys(CV_SAMPLES).map(k=>`<option value="${k}" ${k===sel?"selected":""}>${CV_SAMPLES[k].label}</option>`).join("");
+const activeJd=id=>S.jds.find(j=>j.id===id&&j.status==="active")||S.jds.find(j=>j.status==="active");
+function renderDict(){const list=skills();const un=Object.values(S.cvRes).flatMap(r=>r.unmapped.map(p=>p.raw));const freq={};un.forEach(x=>freq[x]=(freq[x]||0)+1);
+ $("#dict").innerHTML=`<div class="grid g2" style="grid-template-columns:minmax(0,1.6fr) minmax(0,1fr)"><div class="tw" style="max-height:420px;overflow:auto"><table><thead><tr><th>skill_id</th><th>Tên</th><th>Nhánh cha (broader)</th><th>Alias</th></tr></thead>
+  <tbody>${list.map(s=>`<tr><td class="mono">${s.id}</td>
+   <td><b>${esc(s.name)}</b></td>
+   <td class="sub">${esc(s.parent)}</td>
+   <td>${s.aliases.map(a=>`<span class="chip">${esc(a)}</span>`).join(" ")}</td></tr>`).join("")}</tbody></table>
+ </div>
+ <div class="stack"><div class="note">Ngưỡng tầng 3 hiện tại: <b class="mono">${S.cfg.cos}</b> <span class="sub">(bản thật: cosine bge-m3; demo: Jaro–Winkler). Hạ dưới 0,71 để thấy false positive (Terraform → Test automation); nâng trên 0,97 để thấy hàng đợi unmapped phình.</span><div class="range" style="margin-top:6px"><input type="range" id="cosT" min="0.6" max="0.99" step="0.01" value="${S.cfg.cos}" aria-label="Ngưỡng tầng 3"><span class="mono" id="cosV">${S.cfg.cos}</span></div></div>
+ <div class="note"><b>Blocklist cặp dễ nhầm:</b> ${BLOCKLIST.map(p=>`<span class="chip">${nameOf(p[0])} / ${nameOf(p[1])}</span>`).join(" ")}<div class="sub" style="margin-top:4px">Top-1 và top-2 tạo thành cặp này → đẩy sang unmapped, không tự quyết.</div></div>
+ <form id="aliasForm" class="stack" style="gap:6px"><b style="font-size:13px">Thêm alias (Admin)</b><div class="row"><select class="select" id="aliasSkill" style="flex:1;min-width:140px" aria-label="Skill">${list.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join("")}</select><input class="input" id="aliasText" style="flex:1;min-width:120px" placeholder="vd: Java Script" aria-label="Alias mới"><button class="btn primary sm" type="submit">Thêm</button></div></form>
+ <div><b style="font-size:13px">Hàng đợi unmapped_skills</b> <span class="badge ${Object.keys(freq).length?"warn":"good"}">${Object.keys(freq).length} cụm</span><div class="stack" style="gap:4px;margin-top:6px">${Object.keys(freq).map(k=>`<div class="row between" style="border:1px solid var(--line);border-radius:6px;padding:4px 8px"><span>"${esc(k)}" <span class="sub">freq ${freq[k]}</span></span><button class="btn sm" data-a="fillAlias" data-raw="${esc(k)}">Gán alias</button></div>`).join("")||`<span class="sub">Rỗng.</span>`}</div></div></div></div>`}
+function renderCV(){const k=S.activeCv;const r=S.cvRes[k];
+ $("#cv").innerHTML=`<div class="row" style="margin-bottom:8px">${Object.keys(CV_SAMPLES).map(x=>`<button class="btn sm" data-a="pickCv" data-k="${x}" aria-pressed="${x===k}">${CV_SAMPLES[x].label}</button>`).join("")}</div>
+ <div class="grid g2" style="grid-template-columns:minmax(0,1fr) minmax(0,1.3fr)"><div class="stack"><textarea class="textarea" id="cvText" aria-label="Văn bản CV">${esc(S.cvText[k])}</textarea>
+ <div class="row"><button class="btn primary" data-a="extract">Trích xuất</button><button class="btn sm" data-a="restoreCv">Khôi phục mẫu</button></div>
+ ${r?`<dl class="meta"><dt>full_name</dt><dd>${esc(r.name)}</dd>
+  <dt>headline</dt><dd>${esc(r.headline)||"—"}</dd>
+  <dt>title_map</dt><dd>${esc(r.role)} · ${esc(r.sen)}</dd>
+  <dt>email / phone</dt><dd>${esc(r.email)||"—"} · ${esc(r.phone)||"—"}</dd>
+  <dt>github</dt><dd>${esc(r.github)||"—"}</dd>
+  <dt>years (regex)</dt><dd>${r.years.map(y=>`<span class="chip">${y.n} ← "…${esc(y.ctx)}…"</span>`).join(" ")||"—"} → years_total = <b>${r.yearsTotal}</b></dd>
+  <dt>bullets</dt><dd>${r.bullets.length}</dd></dl>`:""}</div>
+ <div class="stack">${r?`<div class="tw"><table><thead><tr><th>Cụm từ</th><th>Vị trí</th><th>Tầng khớp</th><th>skill_id</th><th>Ghi chú</th></tr></thead>
+  <tbody>${r.phrases.map(p=>`<tr><td><b>${esc(p.raw)}</b></td>
+   <td class="sub">${p.where}</td>
+   <td class="tier-${p.tier}">${tierLabel[p.tier]}</td>
+   <td class="mono">${p.id||"NULL"}</td>
+   <td class="sub">${p.tier==="cosine"?`≈ "${esc(p.via)}" JW=${f2(p.score)}`:p.tier==="unmapped"?esc(p.reason)+(p.top.length?" · top: "+p.top.map(t=>`${nameOf(t.id)} ${f2(t.score)}`).join(", "):""):""}</td></tr>`).join("")}</tbody></table>
+ </div>
+ <div class="row"><span class="sub">cv_skills:</span><div class="chips">${r.ids.map(id=>`<span class="chip have">${nameOf(id)}</span>`).join("")}</div></div>
+ <div class="row"><span class="sub">unmapped_skills:</span><div class="chips">${r.unmapped.map(p=>`<span class="chip gap">${esc(p.raw)}</span>`).join("")||"<span class='sub'>không</span>"}</div></div>
+ <div class="row"><span class="sub">embedding:</span><span class="mono sub">bge-m3(toàn văn rút gọn) → vector(1024) — demo dùng vector bag-of-skills ở mục 5</span></div>`:`<div class="note">Bấm Trích xuất.</div>`}</div></div>`}
+function renderScore(){const k=S.activeCv;const r=S.cvRes[k];const jd=activeJd(S.targetJd);if(!r){$("#score").innerHTML=`<div class="note">Trích xuất CV ở mục 2 trước.</div>`;return}const sc=scoreCV(r,jd);
+ $("#score").innerHTML=`<div class="row between" style="margin-bottom:10px"><label class="f" style="flex:1;min-width:240px">JD mục tiêu (R7)<select class="select" id="targetJd">${jdOpts(jd.id)}</select></label><div class="kpi"><b>${sc.score}</b><span>/100 · Σ = ${sc.raw} → clamp</span></div></div>
+ <div class="grid g2" style="grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)"><div class="tw"><table><thead><tr><th>#</th><th>Quy tắc</th><th>Đạt</th><th class="num">Điểm</th><th>Căn cứ</th></tr></thead>
+  <tbody>${sc.rows.map(x=>`<tr><td class="mono">${x.id}</td>
+   <td>${x.name}</td>
+   <td>${x.pass?`<span class="badge good">đạt</span>`:`<span class="badge bad">không</span>`}</td>
+   <td class="num" style="color:${x.pts>0?"var(--good)":x.pts<0?"var(--bad)":"var(--muted)"}">${x.pts>0?"+":""}${x.pts}</td>
+   <td class="sub">${esc(x.note)}</td></tr>`).join("")}</tbody></table>
+ </div>
+ <div class="stack"><div class="formula">score_rule = clamp(round(${sc.rows.map(x=>x.pts).filter(p=>p).map(p=>(p<0?"− "+(-p):"+ "+p)).join(" ").replace(/^\+ /,"")}), 0, 100) = ${sc.score}<br>score_final = 0,5·${sc.score} + 0,5·score_llm <span class="sub">(LLM: bản thật)</span></div><b style="font-size:13px">Gợi ý sửa</b><ul style="margin:0;padding-left:18px;font-size:13px">${sc.tips.map(t=>`<li>${esc(t)}</li>`).join("")||"<li>Không có.</li>"}</ul></div></div>`}
+function renderJD(){const d=S.dedupe;
+ $("#jd").innerHTML=`<div class="tw"><table><thead><tr><th>id</th><th>Nguồn</th><th>JD</th><th>jd_skills (w · required)</th><th>posted</th><th>hash</th><th>Trạng thái</th></tr></thead>
+  <tbody>${S.jds.map(j=>`<tr class="${j.status==="duplicate"?"dup":""}"><td class="mono">${j.id}</td>
+   <td>${srcBadge(j.src)}<div class="sub">${esc(j.from)} · trust ${SRC[j.src][2]}</div></td>
+   <td><b>${esc(j.title)}</b><div class="sub">${esc(j.company)} · ${esc(j.city)}</div></td>
+   <td><div class="chips">${j.skills.map(s=>`<span class="chip">${nameOf(s[0])} <span class="mono">${s[1]}${s[2]?"":"·nice"}</span></span>`).join("")}</div></td>
+   <td class="mono">${j.posted}</td>
+   <td class="mono">${(j.hash||contentHash(j)).slice(0,10)}</td>
+   <td>${j.status==="duplicate"?`<span class="badge bad">duplicate → ${j.dupOf}</span>`:`<span class="badge good">active</span>`}</td></tr>`).join("")}</tbody></table>
+ </div>
+ <div class="grid g2" style="margin-top:12px"><div class="stack"><b style="font-size:13px">Nạp JD mới (dòng 1 tiêu đề · dòng 2 công ty · còn lại: yêu cầu)</b><textarea class="textarea" id="jdPaste" style="min-height:120px" aria-label="JD mới">${esc(S.jdPaste)}</textarea>
+ <div class="row"><select class="select" id="jdPasteSrc" style="width:auto" aria-label="Nguồn">${Object.keys(SRC).map(s=>`<option value="${s}" ${s===S.jdPasteSrc?"selected":""}>${SRC[s][0]}</option>`).join("")}</select><button class="btn blue" data-a="addJd">Chạy pipeline chuẩn hóa</button><button class="btn primary" data-a="dedupe">Chạy khử trùng lặp</button></div></div>
+ <div class="stack">${d?`<div class="tw"><table><thead><tr><th>Cặp</th><th class="num">cosine</th><th class="num">title trgm</th><th>Kết luận</th></tr></thead>
+  <tbody>${d.pairs.map(p=>`<tr><td class="mono">${p.a.id} × ${p.b.id}${p.sameHash?" <span class='badge bad'>hash =</span>":""}</td>
+   <td class="num">${f2(p.cos)}</td>
+   <td class="num">${f2(p.tri)}</td>
+   <td class="sub">${p.isDup?`<span class="badge bad">trùng</span> ${p.sameHash?"content_hash bằng nhau":`cos ≥ ${S.cfg.dupCos} và title ≥ ${S.cfg.dupTitle}`}`:p.cos>=S.cfg.dupCos?"cos đạt nhưng title/cửa sổ không đạt":"khác nhau"}</td></tr>`).join("")}</tbody></table>
+ </div>
+ <div class="sub">Hiển thị 8/${d.nPairs} cặp có cosine cao nhất. Cosine demo: bag-of-words trên <code>normalized_desc</code>; bản thật: embedding bge-m3.</div>
+ ${d.dups.map(x=>`<div class="note"><b>${x.drop.id}</b> → status = duplicate, duplicate_of = <b>${x.keep.id}</b>. Lý do giữ ${x.keep.id}: ${esc(x.why)}. Không xóa bản trùng.</div>`).join("")||`<div class="note">Không có bản trùng.</div>`}`:`<div class="note">Chưa chạy khử trùng lặp.</div>`}</div></div>`}
+function renderMatch(){const u=CANDIDATES.find(x=>x.id===S.matchCv);const jd=activeJd(S.matchJd);const m=matchJD(u,jd);const ws=S.cfg.ws,wc=1-ws;
+ $("#match").innerHTML=`<div class="grid g3" style="margin-bottom:10px"><label class="f">CV / ứng viên<select class="select" id="matchCv">${cvOpts(u.id)}</select></label>
+ <label class="f">JD<select class="select" id="matchJd">${jdOpts(jd.id)}</select></label><div class="stack" style="gap:4px"><span style="font-size:12.5px;color:var(--ink-2);font-weight:500">Trọng số (Admin · settings.match_weights)</span><div class="range"><span class="mono">w_skill ${ws.toFixed(2)}</span><input type="range" id="ws" min="0" max="1" step="0.05" value="${ws}" aria-label="Trọng số skill"><span class="mono">w_cos ${wc.toFixed(2)}</span></div></div></div>
+ <div class="note" style="margin-bottom:10px"><b>Have</b> = cv_skills ∪ {skill_states.p ≥ ${S.cfg.pPass}} · CV: ${[...m.h.cv].map(nameOf).join(", ")||"—"} · Lõi học: ${[...m.h.learn].map(s=>`${nameOf(s)} (${u.p[s]})`).join(", ")||"—"}</div>
+ <div class="grid g2" style="grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)"><div class="stack"><div class="tw"><table><thead><tr><th>Skill JD</th><th class="num">weight</th><th>req</th><th class="num">wᵢ</th><th class="num">cᵢ</th><th class="num">wᵢ·cᵢ</th><th>Lý do</th></tr></thead>
+  <tbody>${m.rows.map(r=>`<tr><td><b>${nameOf(r.id)}</b> <span class="sub mono">${r.id}</span></td>
+   <td class="num">${r.w13}</td>
+   <td>${r.req?"bắt buộc":"nice"}</td>
+   <td class="num">${r.w}</td>
+   <td class="num" style="color:${r.c===1?"var(--good)":r.c===.5?"var(--warn)":"var(--bad)"}">${r.c}</td>
+   <td class="num">${r.w*r.c}</td>
+   <td class="sub">${esc(r.why)}</td></tr>`).join("")}<tr><td colspan="3"><b>skill_match = Σwᵢcᵢ / Σwᵢ</b></td>
+   <td class="num">${m.sw}</td>
+   <td></td>
+   <td class="num">${m.swc}</td>
+   <td class="mono">${m.swc} / ${m.sw} = <b>${f2(m.sm)}</b></td></tr></tbody></table>
+ </div>
+ <div class="row"><span class="sub">gap (cᵢ = 0):</span><div class="chips">${m.gap.map(s=>`<span class="chip gap">${nameOf(s)}</span>`).join("")||"<span class='sub'>không</span>"}</div><span class="sub">· cᵢ = 0,5:</span><div class="chips">${m.rows.filter(r=>r.c===.5).map(r=>`<span class="chip half">${nameOf(r.id)}</span>`).join("")||"<span class='sub'>không</span>"}</div></div></div>
+ <div class="stack"><div class="tw"><table><thead><tr><th>chiều</th><th class="num">CV v</th><th class="num">JD y</th></tr></thead><tbody>${m.dims.map(k=>`<tr><td>${nameOf(k)}</td><td class="num">${(m.v[k]||0).toFixed(2)}</td><td class="num">${m.y[k]||0}</td></tr>`).join("")}</tbody></table></div>
+ <div class="formula">cos = v·y / (‖v‖·‖y‖) = ${f2(m.dot)} / (${f2(Math.sqrt(m.a))} · ${f2(Math.sqrt(m.b))}) = <b>${f2(m.cos)}</b><br>match = ${ws.toFixed(2)}·${f2(m.sm)} + ${wc.toFixed(2)}·${f2(m.cos)} = <b>${f2(m.match)}</b></div>
+ <div class="kpi"><b>${m.pct}%</b><span>match · CV ${u.name} × ${jd.id}</span></div>
+ <div class="bar"><i style="width:${m.pct}%"></i></div>
+ <div class="sub">v: p/100 từ lõi học, tối thiểu 0,6 nếu có trong CV; y: 1 cho skill của JD. Bản thật: cosine giữa embedding bge-m3 của CV và <code>requirements_text</code>.</div>
+ <button class="btn primary" data-a="suggest">Tạo đề xuất từ gap →</button></div></div>`}
+function renderRev(){const jd=activeJd(S.revJd);const rows=rankFor(jd);
+ $("#rev").innerHTML=`<label class="f" style="margin-bottom:10px">JD<select class="select" id="revJd">${jdOpts(jd.id)}</select></label><div class="tw"><table><thead><tr><th>#</th><th>Ứng viên</th><th>Career</th><th>CV</th><th class="num">skill_match</th><th class="num">cosine</th><th class="num">match</th><th class="num">mock</th><th class="num">recruiter_score</th><th>Gap</th></tr></thead>
+  <tbody>${rows.map((r,i)=>`<tr><td class="mono">${i+1}</td>
+   <td><b>${esc(r.u.name)}</b> ${r.u.verified?`<span class="badge green">Verified</span>`:""}<div class="sub">hoạt động ${r.u.active}</div></td>
+   <td class="sub">${r.u.career}</td>
+   <td class="sub">${(S.cvSkills[r.u.id]||[]).length?`${S.cvSkills[r.u.id].length} skill`:"—"}</td>
+   <td class="num">${f2(r.m.sm)}</td>
+   <td class="num">${f2(r.m.cos)}</td>
+   <td class="num"><b>${r.m.pct}%</b></td>
+   <td class="num">${r.u.mock.toFixed(1)}</td>
+   <td class="num">${f2(r.m.match)} + 0,1·${(r.u.mock/10).toFixed(2)} = <b>${f2(r.rs)}</b></td>
+   <td><div class="chips">${r.m.gap.map(s=>`<span class="chip gap">${nameOf(s)}</span>`).join("")||"<span class='sub'>—</span>"}</div></td></tr>`).join("")}</tbody></table>
+ </div>
+ <div class="sub" style="margin-top:6px">Bản thật precompute vào bảng <code>matches</code> khi JD tạo/sửa và refresh 02:00 hằng ngày; danh sách cho Recruiter ẩn danh (tên viết tắt).</div>`}
+function renderSug(){$("#sug").innerHTML=`<div class="tw"><table><thead><tr><th>id</th><th>Ứng viên</th><th>Học phần</th><th>Lý do</th><th class="num">priority</th><th>origin</th><th>status</th></tr></thead>
+  <tbody>${S.sug.map(s=>{const mod=MODULES.find(m=>m.id===s.mid);const u=CANDIDATES.find(x=>x.id===s.uid);return `<tr><td class="mono">${s.id}</td>
+   <td>${esc(u.name)}</td>
+   <td><b>${esc(mod.name)}</b> <span class="sub">${mod.hours}h</span></td>
+   <td class="sub">${esc(s.reason)}</td>
+   <td class="num">${s.priority}</td>
+   <td class="mono">${s.origin}</td>
+   <td><span class="badge warn">${s.status}</span></td></tr>`}).join("")||`<tr><td colspan="7" class="sub">Chưa có đề xuất. Bấm "Tạo đề xuất từ gap" ở mục 5.</td></tr>`}</tbody></table>
+ </div>
+ <div class="sub" style="margin-top:6px">Đề xuất pending chờ Candidate nhận hoặc bỏ qua ở roadmap (lõi học thích ứng). Nhận → <code>roadmap_items(source='from_suggestion')</code>.</div>`}
+function renderLog(){const el=$("#log");el.innerHTML=S.logs.map(l=>`<div><span class="t">${l.t}</span>${esc(l.msg)}</div>`).join("")||"<div class='sub'>Trống.</div>";el.scrollTop=el.scrollHeight}
+function renderAll(){renderDict();renderCV();renderScore();renderJD();renderMatch();renderRev();renderSug();renderLog();save()}
+
+/* ===================== HÀNH ĐỘNG ===================== */
+const ACT={
+ reset(){try{localStorage.removeItem(KEY)}catch(e){}S=seed();init(true);toast("Đã reset và seed lại dữ liệu demo")},
+ pickCv(el){S.activeCv=el.dataset.k;renderAll()},
+ extract(){S.cvText[S.activeCv]=$("#cvText").value;runExtract(S.activeCv);renderAll();toast("Đã trích xuất và map skill")},
+ restoreCv(){S.cvText[S.activeCv]=CV_SAMPLES[S.activeCv].text;runExtract(S.activeCv);renderAll()},
+ fillAlias(el){$("#aliasText").value=el.dataset.raw;$("#aliasSkill").focus();toast("Chọn skill rồi bấm Thêm")},
+ addJd(){S.jdPaste=$("#jdPaste").value;S.jdPasteSrc=$("#jdPasteSrc").value;addPastedJD();renderAll()},
+ dedupe(){runDedupe();renderAll();toast(`${S.dedupe.dups.length} bản trùng`)},
+ suggest(){const u=CANDIDATES.find(x=>x.id===S.matchCv);const jd=activeJd(S.matchJd);const m=matchJD(u,jd);const r=suggestFromGap(u,m,`Match ${jd.id} ${jd.title} (${m.pct}%)`);
+  log(`[Đề xuất] ${u.name} × ${jd.id}: gap ${m.gap.map(nameOf).join(", ")||"rỗng"} → tạo ${r.n} đề xuất${r.skip.length?"; bỏ qua: "+r.skip.join("; "):""}`);renderAll();toast(r.n?`Đã tạo ${r.n} đề xuất pending`:"Không tạo đề xuất mới (rỗng hoặc trùng)")}
+};
+function init(fresh){if(fresh||!Object.keys(S.cvRes).length){Object.keys(CV_SAMPLES).forEach(k=>runExtract(k,!fresh));if(!fresh)log("Seed: trích xuất 3 CV mẫu")}renderAll()}
+if(typeof document!=="undefined"){
+ S=load()||seed();if(!S.cfg)S=seed();init(false);
+ document.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(b&&ACT[b.dataset.a])ACT[b.dataset.a](b)});
+ document.addEventListener("submit",e=>{if(e.target.id==="aliasForm"){e.preventDefault();
+ const id=$("#aliasSkill").value,a=$("#aliasText").value.trim();if(!a)return;(S.aliasExtra[id]=S.aliasExtra[id]||[]).push(a);log(`[Alias] Admin thêm "${a}" → ${id}; trích xuất lại 3 CV`);Object.keys(CV_SAMPLES).forEach(k=>runExtract(k,true));renderAll();toast(`Đã thêm alias "${a}" → ${nameOf(id)}`)}});
+ document.addEventListener("input",e=>{const id=e.target.id;if(id==="ws"){S.cfg.ws=parseFloat(e.target.value);renderMatch();renderRev();save()}if(id==="cosT"){S.cfg.cos=parseFloat(e.target.value);$("#cosV").textContent=S.cfg.cos;}});
+ document.addEventListener("change",e=>{const id=e.target.id;if(id==="cosT"){log(`[Cấu hình] skill_map_cos_threshold = ${S.cfg.cos}; trích xuất lại 3 CV`);Object.keys(CV_SAMPLES).forEach(k=>runExtract(k,true));renderAll()}
+  if(id==="targetJd"){S.targetJd=e.target.value;renderScore();save()}if(id==="matchCv"){S.matchCv=e.target.value;S.activeCv=e.target.value;renderAll()}if(id==="matchJd"){S.matchJd=e.target.value;renderMatch();save()}if(id==="revJd"){S.revJd=e.target.value;renderRev();save()}
+  if(id==="jdPasteSrc"){S.jdPasteSrc=e.target.value;save()}if(id==="jdPaste"){S.jdPaste=e.target.value;save()}});
+}
+</script>
+</html>

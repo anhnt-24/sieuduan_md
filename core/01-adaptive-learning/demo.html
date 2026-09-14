@@ -1,0 +1,520 @@
+<!doctype html><html lang="vi"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Lõi 1 — Học thích ứng · Demo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F2F5F9;--surface:#FFFFFF;--surface-2:#E9EEF5;--line:#D9E0EA;--line-strong:#B9C4D3;
+  --ink:#1F2A44;--ink-2:#4A5872;--muted:#7A879C;
+  --navy:#1F2A44;--teal:#0E9F8E;--orange:#E8891C;--green:#2EA05C;--blue:#2F6FED;--gray:#6B7280;--purple:#6C5CE7;
+  --teal-soft:#DDF3EF;--orange-soft:#FCEBD6;--green-soft:#DDF3E4;--blue-soft:#DEE8FD;--gray-soft:#E6E8EC;--purple-soft:#E6E3FB;
+  --good:#2EA05C;--warn:#E8A81C;--bad:#D93B3B;--good-soft:#DDF3E4;--warn-soft:#FBF0D2;--bad-soft:#F9DCDC;
+  --accent:#0E9F8E;--accent-soft:#DDF3EF;--on-accent:#FFFFFF;
+  --font:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0F1626;--surface:#172033;--surface-2:#1F2A40;--line:#2A3650;--line-strong:#3A4A68;
+    --ink:#E6ECF5;--ink-2:#B7C2D4;--muted:#8391A8;--navy:#E6ECF5;
+    --teal:#2BC4B0;--orange:#F5A54A;--green:#4CC47A;--blue:#6B95F5;--gray:#9AA3B2;--purple:#9B8EF7;
+    --teal-soft:#153C3A;--orange-soft:#3E2C15;--green-soft:#173A26;--blue-soft:#1C2A4E;--gray-soft:#2A3140;--purple-soft:#2B2650;
+    --good:#4CC47A;--warn:#F2C14E;--bad:#F06A6A;--good-soft:#173A26;--warn-soft:#3E3416;--bad-soft:#44201F;
+    --accent:#2BC4B0;--accent-soft:#153C3A;--on-accent:#0B1220;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;line-height:1.25;font-weight:600}h1{font-size:18px}h2{font-size:16px}h3{font-size:14px}
+p{margin:0}a{color:var(--blue)}button,input,select{font:inherit;color:inherit}
+code,.mono{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+[hidden]{display:none!important}
+.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 16px;background:var(--surface);border-bottom:1px solid var(--line)}
+.top .mark{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:7px;background:var(--teal);color:#fff;font-family:var(--mono);font-size:12px;font-weight:600;margin-right:8px}
+.tag{font-size:11px;color:var(--muted);border:1px dashed var(--line-strong);border-radius:999px;padding:2px 9px}
+.top .btn{margin-left:auto}
+main{max-width:1120px;margin:0 auto;padding:18px 16px 40px}
+footer{max-width:1120px;margin:0 auto;padding:0 16px 32px;color:var(--muted);font-size:13px}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;background:var(--surface-2);padding:4px;border-radius:9px;margin-bottom:16px}
+.tabs button{flex:1 1 auto;border:0;background:transparent;padding:8px 10px;border-radius:6px;cursor:pointer;color:var(--ink-2);font-weight:500}
+.tabs button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+.card+.card{margin-top:14px}
+.grid{display:grid;gap:14px}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:760px){.g2{grid-template-columns:1fr}}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.between{justify-content:space-between}
+.stack{display:flex;flex-direction:column;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);padding:7px 12px;border-radius:7px;cursor:pointer;font-weight:500;line-height:1.2}
+.btn:hover{background:var(--surface-2)}.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.sm{padding:4px 9px;font-size:12.5px}.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.opt{justify-content:flex-start;text-align:left;width:100%;white-space:normal}
+.btn.opt.ok{border-color:var(--good);background:var(--good-soft)}.btn.opt.no{border-color:var(--bad);background:var(--bad-soft)}
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap}
+.badge.teal{background:var(--teal-soft);color:var(--teal)}.badge.good{background:var(--good-soft);color:var(--good)}
+.badge.bad{background:var(--bad-soft);color:var(--bad)}.badge.warn{background:var(--warn-soft);color:var(--warn)}
+.badge.gray{background:var(--gray-soft);color:var(--gray)}.badge.purple{background:var(--purple-soft);color:var(--purple)}
+.note{background:var(--surface-2);border-radius:7px;padding:9px 12px;font-size:13px;color:var(--ink-2)}
+.note.formula{font-family:var(--mono);font-size:12.5px;line-height:1.7;color:var(--ink);white-space:pre-wrap}
+.note.warn{background:var(--warn-soft);border-left:3px solid var(--warn);color:var(--ink)}
+.note.gap{background:var(--bad-soft);color:var(--ink)}
+.sub{color:var(--muted);font-size:13px}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--ink-2);font-weight:500}
+.select,.input{border:1px solid var(--line-strong);border-radius:7px;padding:6px 9px;background:var(--surface);color:var(--ink)}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:5px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{color:var(--muted);font-weight:600;font-size:12px}
+td.n,th.n{text-align:right;font-family:var(--mono)}
+.tw{overflow-x:auto}
+svg.chart{width:100%;height:auto;display:block}
+.dag{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--ink-2)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px;border:1.5px solid}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;font-size:12px;padding:2px 8px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2)}
+.chip.gap{border-color:var(--bad);color:var(--bad);background:var(--bad-soft)}.chip.have{border-color:var(--good);color:var(--good);background:var(--good-soft)}
+.fc{min-height:120px;display:grid;place-items:center;text-align:center;padding:18px;border:1px solid var(--line-strong);border-radius:10px;background:var(--surface-2);cursor:pointer;font-size:15px}
+.fc.back{background:var(--teal-soft);border-color:var(--teal)}
+.cal{display:grid;grid-template-columns:repeat(15,minmax(0,1fr));gap:3px}
+.cal div{aspect-ratio:1;border-radius:4px;background:var(--surface-2);display:grid;place-items:center;font-size:10px;color:var(--muted);font-family:var(--mono)}
+.cal div.due{background:var(--teal-soft);color:var(--teal);font-weight:600}.cal div.today{outline:2px solid var(--navy);outline-offset:-2px}
+.cal div.hot{background:var(--teal);color:#fff}
+ol.log{margin:0;padding-left:26px;max-height:300px;overflow:auto;font-size:12.5px;font-family:var(--mono);line-height:1.6}
+ol.log li{padding:1px 0;border-bottom:1px dashed var(--line)}ol.log b{color:var(--teal);font-weight:600}
+input[type=range]{width:100%}
+.kbd{font-family:var(--mono);font-size:11px;border:1px solid var(--line-strong);border-radius:4px;padding:0 5px;color:var(--muted)}
+.btn.primary .kbd{color:inherit;border-color:currentColor;opacity:.85}
+</style>
+<header class="top">
+  <h1><span class="mark">L1</span>Lõi 1 — Học thích ứng</h1>
+  <span class="tag">Demo lõi · dữ liệu giả · chạy trong trình duyệt</span>
+  <button class="btn" id="reset" aria-label="Reset dữ liệu demo">Reset</button>
+</header>
+<main>
+  <div class="tabs" role="tablist" id="tabs">
+    <button role="tab" data-tab="cat" aria-selected="true">1 · Test đầu vào (CAT)</button>
+    <button role="tab" data-tab="sim" aria-selected="false">2 · Mô phỏng hội tụ</button>
+    <button role="tab" data-tab="road" aria-selected="false">3 · Roadmap</button>
+    <button role="tab" data-tab="daily" aria-selected="false">4 · Bài tập hôm nay + Flashcard</button>
+  </div>
+  <section id="cat" role="tabpanel"></section>
+  <section id="sim" role="tabpanel" hidden></section>
+  <section id="road" role="tabpanel" hidden></section>
+  <section id="daily" role="tabpanel" hidden></section>
+  <section class="card" style="margin-top:18px">
+    <div class="row between"><h2>Nhật ký thuật toán</h2><button class="btn sm" data-act="clearlog">Xoá nhật ký</button></div>
+    <p class="sub" style="margin:4px 0 8px">Mỗi bước tính toán một dòng: số đầu vào → công thức → số đầu ra.</p>
+    <ol class="log" id="log"></ol>
+  </section>
+</main>
+<footer>Demo tổng: <a href="../../demo/">../../demo/</a> · Tài liệu lõi: <a href="README.md">README.md</a> · Bàn phím: <span class="kbd">1–4</span> chọn đáp án / chấm thẻ, <span class="kbd">Enter</span> câu tiếp, <span class="kbd">F</span> lật thẻ.</footer>
+<script>
+/* ===== 1. Dữ liệu seed (rút từ demo tổng, có mở rộng) ===== */
+const SK={js:"JavaScript",react:"React",css:"CSS",http:"HTTP/REST",testing:"Testing",git:"Git",python:"Python",sql:"SQL",docker:"Docker",linux:"Linux",cicd:"CI/CD",k8s:"Kubernetes",cloud:"Cloud (AWS)",pandas:"Pandas",stats:"Thống kê",dataviz:"Data viz",automation:"Test automation",mobileui:"Mobile UI",statemgmt:"State management"};
+const CAREERS=[
+  {id:"fe",name:"Frontend",skills:["js","react","css","http","testing","git"]},
+  {id:"be",name:"Backend",skills:["python","sql","http","docker","git","testing"]},
+  {id:"mobile",name:"Mobile",skills:["mobileui","js","statemgmt","http","git","testing"]},
+  {id:"devops",name:"DevOps",skills:["docker","linux","cicd","k8s","cloud","git"]},
+  {id:"data",name:"Data",skills:["python","sql","pandas","stats","dataviz","git"]},
+  {id:"qa",name:"QA",skills:["testing","automation","http","sql","js","git"]}];
+/* q: câu hỏi, o: 4 lựa chọn, a: index đúng, s: skill, d: độ khó Elo */
+const QBANK=[
+ {q:"`typeof null` trong JavaScript trả về gì?",o:["\"null\"","\"object\"","\"undefined\"","\"boolean\""],a:1,s:"js",d:1100},
+ {q:"Kết quả của `[1,2,3].map(x => x * 2)` là?",o:["[1,2,3]","[2,4,6]","6","undefined"],a:1,s:"js",d:1000},
+ {q:"Closure trong JavaScript là gì?",o:["Hàm không có tham số","Hàm ghi nhớ scope nơi nó được tạo ra","Hàm chỉ chạy một lần","Một kiểu vòng lặp"],a:1,s:"js",d:1300},
+ {q:"`Promise.all([p1,p2])` sẽ reject khi nào?",o:["Khi tất cả promise reject","Khi bất kỳ promise nào reject","Không bao giờ reject","Khi p1 resolve trước p2"],a:1,s:"js",d:1400},
+ {q:"Event loop xử lý microtask (Promise.then) so với macrotask (setTimeout) như thế nào?",o:["Macrotask luôn chạy trước","Microtask được xử lý hết trước khi lấy macrotask kế tiếp","Chạy song song","Tùy trình duyệt"],a:1,s:"js",d:1650},
+ {q:"`let` khác `var` ở điểm nào?",o:["`let` có block scope, `var` có function scope","`let` không thể gán lại","`var` chỉ dùng trong class","Không khác gì"],a:0,s:"js",d:1150},
+ {q:"Hook nào của React dùng để lưu state trong function component?",o:["useEffect","useState","useRef","useMemo"],a:1,s:"react",d:1000},
+ {q:"`useEffect(() => {...}, [])` chạy khi nào?",o:["Mỗi lần render","Chỉ sau lần mount đầu tiên","Trước khi render","Khi state thay đổi"],a:1,s:"react",d:1250},
+ {q:"Vì sao React cần `key` khi render danh sách?",o:["Để CSS hoạt động","Để reconciliation xác định phần tử nào thay đổi","Để tránh lỗi cú pháp","Chỉ là quy ước"],a:1,s:"react",d:1350},
+ {q:"`useMemo` và `useCallback` khác nhau thế nào?",o:["Giống hệt nhau","useMemo ghi nhớ giá trị, useCallback ghi nhớ hàm","useCallback chạy async","useMemo chỉ dùng cho mảng"],a:1,s:"react",d:1550},
+ {q:"Thuộc tính CSS nào tạo bố cục 2 chiều (hàng và cột)?",o:["display: flex","display: grid","float","position: absolute"],a:1,s:"css",d:1050},
+ {q:"Specificity của `#id .class p` so với `.a .b .c` thì cái nào thắng?",o:["`.a .b .c`","`#id .class p`","Bằng nhau, cái sau thắng","Tùy trình duyệt"],a:1,s:"css",d:1400},
+ {q:"`position: sticky` hoạt động dựa trên gì?",o:["Viewport luôn luôn","Scroll container gần nhất và ngưỡng top/bottom","Chỉ khi có z-index","Chỉ trong flex"],a:1,s:"css",d:1500},
+ {q:"HTTP status 404 nghĩa là gì?",o:["Server lỗi","Không tìm thấy tài nguyên","Chưa xác thực","Chuyển hướng"],a:1,s:"http",d:1000},
+ {q:"Phương thức HTTP nào được coi là idempotent?",o:["POST","PUT","PATCH (luôn luôn)","Không có"],a:1,s:"http",d:1350},
+ {q:"Sự khác nhau giữa 401 và 403?",o:["401 chưa xác thực, 403 đã xác thực nhưng không có quyền","Giống nhau","401 là lỗi server","403 là chuyển hướng"],a:0,s:"http",d:1300},
+ {q:"Header nào cho phép cache phía client trong 1 giờ?",o:["Cache-Control: max-age=3600","Expires: 1h","ETag: 3600","Content-Type: cache"],a:0,s:"http",d:1550},
+ {q:"Unit test khác integration test ở điểm nào?",o:["Unit test kiểm tra 1 đơn vị cô lập, integration kiểm tra nhiều thành phần phối hợp","Unit test chậm hơn","Integration test không cần code","Không khác"],a:0,s:"testing",d:1050},
+ {q:"Mock và stub khác nhau như thế nào?",o:["Giống nhau","Stub trả dữ liệu cố định; mock còn kiểm tra cách nó được gọi","Mock chỉ dùng cho DB","Stub chỉ dùng trong E2E"],a:1,s:"testing",d:1450},
+ {q:"Kim tự tháp test khuyến nghị tỉ lệ nào?",o:["Nhiều E2E, ít unit","Nhiều unit, ít E2E","Bằng nhau","Chỉ manual"],a:1,s:"testing",d:1250},
+ {q:"`git rebase` khác `git merge` ở điểm gì?",o:["Rebase viết lại lịch sử thành đường thẳng, merge tạo merge commit","Rebase xóa nhánh","Merge nhanh hơn","Không khác"],a:0,s:"git",d:1350},
+ {q:"Lệnh nào tạo nhánh mới và chuyển sang nó?",o:["git branch new","git checkout -b new","git switch","git new branch"],a:1,s:"git",d:1000},
+ {q:"`git stash` dùng để làm gì?",o:["Xóa thay đổi","Tạm cất thay đổi chưa commit","Đẩy code lên remote","Gộp commit"],a:1,s:"git",d:1150},
+ {q:"Để hoàn tác commit đã push mà không viết lại lịch sử, dùng lệnh nào?",o:["git reset --hard","git revert","git rm","git checkout"],a:1,s:"git",d:1450},
+ {q:"List comprehension `[x*x for x in range(4)]` cho kết quả?",o:["[0,1,4,9]","[1,4,9,16]","[0,1,2,3]","Lỗi"],a:0,s:"python",d:1050},
+ {q:"GIL trong CPython ảnh hưởng gì?",o:["Chỉ 1 thread chạy bytecode Python tại một thời điểm","Cấm dùng thread","Tăng tốc đa luồng","Không ảnh hưởng"],a:0,s:"python",d:1600},
+ {q:"Decorator trong Python là gì?",o:["Kiểu dữ liệu","Hàm nhận hàm và trả về hàm mới","Class đặc biệt","Câu lệnh import"],a:1,s:"python",d:1350},
+ {q:"`SELECT COUNT(*) FROM orders WHERE status='paid'` đếm gì?",o:["Tất cả đơn","Số đơn có status = paid","Số cột","Tổng tiền"],a:1,s:"sql",d:1000},
+ {q:"INNER JOIN khác LEFT JOIN ở điểm nào?",o:["LEFT JOIN giữ toàn bộ dòng bảng trái kể cả không khớp","INNER JOIN nhanh hơn luôn","Giống nhau","LEFT JOIN chỉ dùng 2 bảng"],a:0,s:"sql",d:1200},
+ {q:"Index B-tree giúp truy vấn nào nhanh hơn?",o:["`WHERE email = ?` và range scan","Chỉ `SELECT *`","`LIKE '%abc'`","Mọi truy vấn INSERT"],a:0,s:"sql",d:1500},
+ {q:"Vấn đề N+1 query là gì?",o:["Query trả N+1 dòng","1 query lấy danh sách rồi N query lấy chi tiết từng dòng","Lỗi cú pháp SQL","Thiếu index"],a:1,s:"sql",d:1650},
+ {q:"Sự khác nhau giữa Docker image và container?",o:["Giống nhau","Image là bản mẫu chỉ đọc, container là instance đang chạy","Container nhỏ hơn image","Image chạy trên Windows"],a:1,s:"docker",d:1050},
+ {q:"Mục đích của multi-stage build trong Dockerfile?",o:["Chạy nhiều container","Giảm kích thước image cuối bằng cách bỏ toolchain build","Tăng RAM","Chỉ để debug"],a:1,s:"docker",d:1450},
+ {q:"Docker volume dùng để làm gì?",o:["Lưu dữ liệu bền ngoài vòng đời container","Tăng CPU","Đặt tên image","Mở port"],a:0,s:"docker",d:1200},
+ {q:"Lệnh Linux nào xem 20 dòng cuối file log và theo dõi liên tục?",o:["cat -f","tail -n 20 -f app.log","head -20","less -n"],a:1,s:"linux",d:1100},
+ {q:"`chmod 644 file` nghĩa là gì?",o:["Owner rw, group r, others r","Ai cũng rwx","Owner x, others rw","Không ai đọc được"],a:0,s:"linux",d:1300},
+ {q:"CI khác CD ở điểm nào?",o:["CI tích hợp & test tự động mỗi commit, CD tự động triển khai","CI là deploy","Giống nhau","CD chỉ chạy thủ công"],a:0,s:"cicd",d:1150},
+ {q:"Chiến lược deploy nào chuyển traffic dần sang phiên bản mới?",o:["Big bang","Canary","Rollback","Snapshot"],a:1,s:"cicd",d:1450},
+ {q:"Pod trong Kubernetes là gì?",o:["Một node vật lý","Đơn vị triển khai nhỏ nhất, chứa 1+ container","Một file YAML","Một image"],a:1,s:"k8s",d:1250},
+ {q:"Kubernetes Service loại ClusterIP làm gì?",o:["Mở port ra internet","Cấp IP nội bộ ổn định cho một nhóm pod","Tạo volume","Scale node"],a:1,s:"k8s",d:1550},
+ {q:"Dịch vụ AWS nào là object storage?",o:["EC2","S3","RDS","Lambda"],a:1,s:"cloud",d:1100},
+ {q:"`df.groupby('city')['sales'].sum()` trong Pandas trả về gì?",o:["Tổng sales theo từng city","Tổng tất cả","Số dòng","Danh sách city"],a:0,s:"pandas",d:1200},
+ {q:"`df.merge(other, how='left', on='id')` tương đương SQL nào?",o:["INNER JOIN","LEFT JOIN","UNION","CROSS JOIN"],a:1,s:"pandas",d:1400},
+ {q:"Giá trị p-value < 0.05 thường được diễn giải là?",o:["Chắc chắn đúng","Bác bỏ giả thuyết H0 ở mức ý nghĩa 5%","Không có ý nghĩa","Dữ liệu sai"],a:1,s:"stats",d:1350},
+ {q:"Trung vị (median) ít bị ảnh hưởng bởi gì so với trung bình?",o:["Kích thước mẫu","Giá trị ngoại lai (outlier)","Đơn vị đo","Không khác"],a:1,s:"stats",d:1100},
+ {q:"Biểu đồ nào phù hợp nhất để so sánh giá trị giữa các nhóm rời rạc?",o:["Pie chart","Bar chart","Line chart","Scatter"],a:1,s:"dataviz",d:1150},
+ {q:"Page Object Model trong test automation giúp gì?",o:["Tăng tốc trình duyệt","Tách locator/hành động khỏi test case để dễ bảo trì","Chạy test song song","Thay thế assertion"],a:1,s:"automation",d:1400},
+ {q:"Flaky test là gì?",o:["Test luôn fail","Test lúc pass lúc fail dù code không đổi","Test chạy chậm","Test không có assertion"],a:1,s:"automation",d:1200},
+ {q:"Trong mobile, vì sao không gọi mạng trên main/UI thread?",o:["Không có API","Sẽ block UI, gây giật hoặc ANR","Không an toàn bảo mật","Tốn pin hơn"],a:1,s:"mobileui",d:1250},
+ {q:"RecyclerView (Android) / FlatList (RN) tối ưu gì?",o:["Tái sử dụng view khi cuộn danh sách dài","Tăng độ phân giải","Nén ảnh","Tự động cache mạng"],a:0,s:"mobileui",d:1400},
+ {q:"Nguyên tắc single source of truth trong state management nghĩa là?",o:["Mỗi màn hình một store","State ứng dụng nằm ở một nơi duy nhất, UI derive từ đó","Không dùng state","Chỉ dùng localStorage"],a:1,s:"statemgmt",d:1350}];
+const MODULES=[
+ {id:"m1",name:"JavaScript nền tảng: scope, closure, async",skills:["js"],hours:12},
+ {id:"m2",name:"React hooks & quản lý state",skills:["react","statemgmt"],hours:16},
+ {id:"m3",name:"CSS layout hiện đại: Flex, Grid, responsive",skills:["css"],hours:8},
+ {id:"m4",name:"HTTP, REST API và caching",skills:["http"],hours:6},
+ {id:"m5",name:"Testing: unit, integration, mocking",skills:["testing"],hours:10},
+ {id:"m6",name:"Git nâng cao: rebase, revert, quy trình PR",skills:["git"],hours:4},
+ {id:"m7",name:"Python cho backend: FastAPI cơ bản",skills:["python","http"],hours:14},
+ {id:"m8",name:"SQL & tối ưu truy vấn: index, join, N+1",skills:["sql"],hours:12},
+ {id:"m9",name:"Docker từ Dockerfile tới compose",skills:["docker"],hours:8},
+ {id:"m10",name:"CI/CD với GitHub Actions",skills:["cicd","git"],hours:6},
+ {id:"m11",name:"Pandas & phân tích dữ liệu thực hành",skills:["pandas","python"],hours:14},
+ {id:"m12",name:"Thống kê ứng dụng & trực quan hóa",skills:["stats","dataviz"],hours:10},
+ {id:"m13",name:"Kubernetes cơ bản: pod, service, deployment",skills:["k8s"],hours:12},
+ {id:"m14",name:"Test automation với Playwright",skills:["automation","js"],hours:10},
+ {id:"m15",name:"Mobile UI & danh sách hiệu năng cao",skills:["mobileui"],hours:10},
+ {id:"m16",name:"Quản lý state đa màn hình (mobile)",skills:["statemgmt"],hours:8},
+ {id:"m17",name:"Linux & shell cho DevOps",skills:["linux"],hours:6},
+ {id:"m18",name:"AWS cơ bản: EC2, S3, IAM",skills:["cloud"],hours:8}];
+const MOD={};MODULES.forEach(m=>MOD[m.id]=m);
+/* module_prerequisites: module -> các học phần phải học trước */
+const PREREQ={m2:["m1"],m5:["m1","m4"],m10:["m6","m9"],m12:["m11"],m13:["m9"],m14:["m5"],m16:["m15"],m18:["m17"]};
+const BASE={fe:["m1","m3","m2","m4","m5","m6"],be:["m7","m4","m8","m9","m5","m6"],data:["m11","m8","m12","m6"],mobile:["m1","m15","m16","m4","m5","m6"],devops:["m17","m9","m10","m13","m18","m6"],qa:["m1","m4","m5","m14","m8","m6"]};
+/* Bài tập: type mcq | code | flashcard | essay; tags; diff 1–5 (d_ex = 900 + diff·180) */
+const EXERCISES=[
+ {id:"e1",name:"Dự đoán output closure trong vòng lặp",type:"mcq",tags:["js","closure"],diff:3},
+ {id:"e2",name:"Viết hàm debounce",type:"code",tags:["js","async"],diff:3},
+ {id:"e3",name:"Phân biệt useEffect / useLayoutEffect",type:"essay",tags:["react","hooks"],diff:4},
+ {id:"e4",name:"Flashcard: HTTP status codes",type:"flashcard",tags:["http"],diff:1},
+ {id:"e5",name:"Căn giữa phần tử bằng Grid",type:"code",tags:["css","layout"],diff:2},
+ {id:"e6",name:"Viết unit test cho hàm tính thuế",type:"code",tags:["testing","js"],diff:2},
+ {id:"e7",name:"Giải conflict khi rebase",type:"essay",tags:["git"],diff:3},
+ {id:"e8",name:"Tối ưu query có N+1",type:"essay",tags:["sql","performance"],diff:4},
+ {id:"e9",name:"Viết Dockerfile multi-stage cho Node app",type:"code",tags:["docker"],diff:3},
+ {id:"e10",name:"Flashcard: lệnh Git thường dùng",type:"flashcard",tags:["git"],diff:1},
+ {id:"e11",name:"Groupby & pivot trong Pandas",type:"code",tags:["pandas","python"],diff:3},
+ {id:"e12",name:"Phân biệt p-value và confidence interval",type:"mcq",tags:["stats"],diff:3},
+ {id:"e13",name:"Thiết kế test case cho form đăng nhập",type:"essay",tags:["testing","qa"],diff:2},
+ {id:"e14",name:"Viết pipeline CI chạy test + build image",type:"code",tags:["cicd","docker"],diff:4},
+ {id:"e15",name:"Flashcard: React hooks",type:"flashcard",tags:["react"],diff:1},
+ {id:"e16",name:"Viết Page Object cho trang checkout",type:"code",tags:["automation","testing"],diff:3},
+ {id:"e17",name:"Dự đoán output của Promise chain",type:"mcq",tags:["js","async"],diff:4},
+ {id:"e18",name:"Flashcard: kiểu dữ liệu và ép kiểu JS",type:"flashcard",tags:["js"],diff:1},
+ {id:"e19",name:"Viết custom hook useFetch",type:"code",tags:["react","http"],diff:3},
+ {id:"e20",name:"Trắc nghiệm: useEffect và dependency",type:"mcq",tags:["react"],diff:2},
+ {id:"e21",name:"Thiết kế endpoint REST cho giỏ hàng",type:"essay",tags:["http"],diff:3},
+ {id:"e22",name:"Trắc nghiệm: mã trạng thái HTTP",type:"mcq",tags:["http"],diff:2},
+ {id:"e23",name:"Viết test cho API bằng mock",type:"code",tags:["testing","http"],diff:3},
+ {id:"e24",name:"Trắc nghiệm: mock, stub, spy",type:"mcq",tags:["testing"],diff:3},
+ {id:"e25",name:"Responsive với Grid + media query",type:"code",tags:["css"],diff:3},
+ {id:"e26",name:"Trắc nghiệm: CSS specificity",type:"mcq",tags:["css"],diff:3},
+ {id:"e27",name:"Flashcard: SQL JOIN",type:"flashcard",tags:["sql"],diff:1},
+ {id:"e28",name:"Viết Dockerfile cho FastAPI",type:"code",tags:["docker","python"],diff:2},
+ {id:"e29",name:"Trắc nghiệm: Linux permissions",type:"mcq",tags:["linux"],diff:2},
+ {id:"e30",name:"Flashcard: kubectl cơ bản",type:"flashcard",tags:["k8s"],diff:1},
+ {id:"e31",name:"Trắc nghiệm: pandas merge/groupby",type:"mcq",tags:["pandas"],diff:2},
+ {id:"e32",name:"Thiết kế test tự động cho luồng thanh toán",type:"essay",tags:["automation","testing"],diff:4},
+ {id:"e33",name:"Trắc nghiệm: state management mobile",type:"mcq",tags:["statemgmt","mobileui"],diff:3},
+ {id:"e34",name:"Flashcard: lệnh git nâng cao",type:"flashcard",tags:["git"],diff:2}];
+const FLASHCARDS=[
+ {id:"f1",s:"http",front:"HTTP 201 nghĩa là gì?",back:"Created – tài nguyên mới đã được tạo (thường sau POST)."},
+ {id:"f2",s:"http",front:"HTTP 429 nghĩa là gì?",back:"Too Many Requests – client bị rate limit."},
+ {id:"f3",s:"git",front:"Lệnh xem lịch sử commit dạng 1 dòng, có nhánh?",back:"git log --oneline --graph --all"},
+ {id:"f4",s:"git",front:"Khác biệt `git fetch` và `git pull`?",back:"fetch chỉ tải về; pull = fetch + merge (hoặc rebase) vào nhánh hiện tại."},
+ {id:"f5",s:"js",front:"`==` và `===` khác nhau?",back:"`==` ép kiểu rồi so sánh; `===` so sánh cả kiểu lẫn giá trị."},
+ {id:"f6",s:"react",front:"Khi nào dùng useRef thay useState?",back:"Khi cần giữ giá trị qua các render mà không muốn re-render (DOM ref, timer id)."},
+ {id:"f7",s:"sql",front:"HAVING khác WHERE?",back:"WHERE lọc trước khi group; HAVING lọc sau khi GROUP BY (trên aggregate)."},
+ {id:"f8",s:"docker",front:"`docker compose up -d` làm gì?",back:"Khởi động các service trong compose file ở chế độ nền (detached)."},
+ {id:"f9",s:"python",front:"`*args` và `**kwargs`?",back:"*args gom positional args thành tuple; **kwargs gom keyword args thành dict."},
+ {id:"f10",s:"testing",front:"AAA pattern trong unit test?",back:"Arrange – Act – Assert."},
+ {id:"f11",s:"css",front:"`rem` khác `em`?",back:"rem tính theo font-size của root; em theo font-size của phần tử cha."},
+ {id:"f12",s:"stats",front:"Độ lệch chuẩn đo cái gì?",back:"Mức phân tán của dữ liệu quanh giá trị trung bình."},
+ {id:"f13",s:"linux",front:"`chmod +x script.sh` làm gì?",back:"Thêm quyền thực thi cho file với owner, group và others."},
+ {id:"f14",s:"k8s",front:"Deployment khác Pod?",back:"Deployment quản lý ReplicaSet để giữ đủ số Pod và rollout phiên bản mới."},
+ {id:"f15",s:"automation",front:"Locator nào bền nhất khi viết E2E?",back:"Thuộc tính data-testid hoặc role/label, không dùng XPath theo vị trí."},
+ {id:"f16",s:"mobileui",front:"ANR trên Android là gì?",back:"Application Not Responding: main thread bị chặn quá 5 giây."}];
+const TYPE={mcq:"Trắc nghiệm",code:"Code",flashcard:"Flashcard",essay:"Tự luận"};
+const CAREER=id=>CAREERS.find(c=>c.id===id);
+
+/* ===== 2. Thuật toán (tái sử dụng logic demo tổng, tham số theo tài liệu kỹ thuật) ===== */
+const kFor=n=>n<3?64:n<6?32:16;                                   // K giảm dần theo số câu đã trả lời trong phiên
+const expected=(th,d)=>1/(1+Math.pow(10,(d-th)/400));             // E = 1/(1+10^((d−θ)/400))
+const eAdj=(E,g)=>g+(1-g)*E;                                       // sàn đoán mò g = 0.25 (trắc nghiệm 4 đáp án)
+const prof=th=>Math.round(Math.max(0,Math.min(1,(th-1000)/800))*100);
+const G=()=>S.g?0.25:0;
+function pickQuestion(r,asked){                                    // tầng 1: skill ít câu nhất; tầng 2: |d−θ| nhỏ nhất
+  const c=CAREER(r.career),cnt={};c.skills.forEach(s=>cnt[s]=r.answered[s]||0);
+  const order=[...c.skills].sort((a,b)=>cnt[a]-cnt[b]||c.skills.indexOf(a)-c.skills.indexOf(b));
+  for(const s of order){const th=r.theta[s]??1200;const pool=QBANK.map((q,i)=>({q,i})).filter(x=>x.q.s===s&&!asked.includes(x.i));
+    if(pool.length){pool.sort((x,y)=>Math.abs(x.q.d-th)-Math.abs(y.q.d-th)||x.i-y.i);
+      return {i:pool[0].i,s,th,cnt:cnt[s],cands:pool.map(x=>({d:x.q.d,diff:Math.abs(x.q.d-th)}))}}}
+  return null}
+function eloUpdate(r,q,correct,n,ms,g){
+  const th=r.theta[q.s]??1200,E0=expected(th,q.d),E=eAdj(E0,g);let S=correct?1:0,suspect=false;
+  if(correct&&ms<3000&&q.d>th+200){S=0.5;suspect=true}             // nghi đoán mò: đúng quá nhanh ở câu quá khó
+  const K=kFor(n),to=Math.round(th+K*(S-E));r.theta[q.s]=to;r.answered[q.s]=(r.answered[q.s]||0)+1;
+  return {E0,E,S,K,from:th,to,delta:to-th,suspect}}
+function stopReason(r,quiz){
+  const c=CAREER(r.career),n=quiz.hist.length;if(n>=quiz.limit)return `đủ ${quiz.limit} câu`;
+  if(!c.skills.every(s=>(r.answered[s]||0)>=2))return "";
+  for(const s of c.skills){const h=quiz.hist.filter(x=>x.s===s).slice(-3);
+    if(h.length===3&&h.every(x=>Math.abs(x.delta)<20))return `θ ${SK[s]} ổn định (3 câu liên tiếp |Δθ| < 20) và mỗi skill ≥ 2 câu`}
+  return ""}
+/* E2 roadmap */
+const gapOf=r=>CAREER(r.career).skills.map(s=>({s,th:r.theta[s]??1200,p:prof(r.theta[s]??1200)})).filter(x=>x.p<60).map(x=>({...x,score:+(1-x.p/100).toFixed(2)}));
+const unlockCount=m=>Object.keys(PREREQ).filter(k=>PREREQ[k].includes(m)).length;
+const checkPrereq=(ids,mid)=>(PREREQ[mid]||[]).filter(p=>!ids.includes(p));
+function buildRoadmap(r){
+  const rm=r.rm,gap=gapOf(r),gs={};gap.forEach(g=>gs[g.s]=g.score);
+  const cand=new Set(BASE[r.career]);MODULES.forEach(m=>{if(m.skills.some(s=>gs[s]!=null))cand.add(m.id)});
+  rm.added.forEach(id=>cand.add(id));rm.removed.forEach(id=>cand.delete(id));rm.done.forEach(id=>cand.delete(id));
+  const pre={},score={},why={};
+  cand.forEach(m=>{pre[m]=new Set((PREREQ[m]||[]).filter(p=>cand.has(p)));
+    const parts=MOD[m].skills.filter(s=>gs[s]!=null),sum=parts.reduce((a,s)=>a+gs[s],0),u=unlockCount(m);
+    score[m]=+(sum+0.3*u).toFixed(2);
+    why[m]=(parts.length?parts.map(s=>`gap ${SK[s]} ${gs[s]}`).join(" + "):"không gap (lộ trình base)")+(u?` + 0.3×${u} unlock`:"")});
+  const out=[];let ready=[...cand].filter(m=>!pre[m].size);
+  while(ready.length){ready.sort((a,b)=>score[b]-score[a]||MOD[a].hours-MOD[b].hours||a.localeCompare(b));
+    const m=ready.shift();out.push(m);
+    cand.forEach(n=>{if(pre[n].has(m)){pre[n].delete(m);if(!pre[n].size&&!out.includes(n)&&!ready.includes(n))ready.push(n)}})}
+  const ids=[...out,...rm.done],warnings=[];
+  out.forEach(m=>{const miss=checkPrereq(ids,m).filter(p=>rm.removed.includes(p)||rm.added.includes(m));if(miss.length)warnings.push({m,miss})});
+  return {order:out,score,why,gap,gs,warnings,cycle:out.length!==cand.size}}
+/* E3 bài tập */
+const exElo=e=>900+e.diff*180;
+function streakShift(r,s){const h=r.streak[s]||[];if(h.length>=3&&h.slice(-3).every(x=>x))return 100;if(h.length>=2&&h.slice(-2).every(x=>!x))return -100;return 0}
+function cooldownLeft(r,e){const d=r.exDone[e.id];if(!d)return 0;const days=dayDiff(today(),d.date),cd=d.correct?14:3;return days<cd?cd-days:0}
+function mulberry32(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const hash=s=>{let h=0;for(const ch of s)h=(h*31+ch.charCodeAt(0))|0;return h};
+function dailySet(r,seed){
+  let gap=gapOf(r),fallback=false;
+  if(!gap.length){fallback=true;gap=CAREER(r.career).skills.map(s=>({s,th:r.theta[s]??1200,p:prof(r.theta[s]??1200),score:0.2}))}
+  const levels=[100,250,null],trace=[];let pool=[],level=0;
+  for(level=0;level<3;level++){const W=levels[level];pool=[];
+    for(const g of gap){const shift=streakShift(r,g.s),cen=g.th+shift;
+      for(const e of EXERCISES){if(!e.tags.includes(g.s))continue;const cd=cooldownLeft(r,e);if(cd)continue;
+        const d=exElo(e),diff=Math.abs(d-cen);if(W==null||diff<=W)pool.push({id:e.id,s:g.s,p:g.p,w:g.score,th:g.th,shift,cen,d,diff,W})}}
+    trace.push({W,n:pool.length});if(pool.length>=5)break}
+  const rnd=mulberry32(hash(seed));pool.forEach(x=>x.key=-Math.log(rnd())/Math.max(x.w,0.05));pool.sort((a,b)=>a.key-b.key);
+  const picked=[],per={};let last=null;
+  for(const x of pool){if(picked.some(p=>p.id===x.id)||(per[x.s]||0)>=2)continue;const e=EXERCISES.find(z=>z.id===x.id);
+    if(e.type===last&&pool.length>5)continue;picked.push(x);per[x.s]=(per[x.s]||0)+1;last=e.type;if(picked.length===5)break}
+  return {picked,level:Math.min(level,2),trace,fallback}}
+function exUpd(r,s,d,correct,g){const th=r.theta[s]??1200,E0=expected(th,d),E=eAdj(E0,g),K=kFor(r.answered[s]||0),to=Math.round(th+K*((correct?1:0)-E));
+  r.theta[s]=to;r.answered[s]=(r.answered[s]||0)+1;return {E0,E,K,S:correct?1:0,from:th,to}}
+/* E4 SM-2 */
+function sm2(card,q,today){const c=card||{ef:2.5,interval:0,reps:0};let {ef,interval,reps}=c;
+  if(q<3){reps=0;interval=1}else{interval=reps===0?1:reps===1?6:Math.round(interval*ef);reps++}
+  ef=Math.max(1.3,ef+(0.1-(5-q)*(0.08+(5-q)*0.02)));
+  return {ef:+ef.toFixed(2),interval,reps,due:addDays(today,interval)}}
+/* §3.4 mô phỏng học viên ảo */
+const SIMBANK=Array.from({length:41},(_,i)=>950+i*20);
+function simulateOne(thTrue,g,n,mode,rnd){let th=1200;const asked=new Set(),steps=[];
+  for(let k=0;k<n;k++){let idx=-1;
+    if(mode==="cat"){let bd=1e9;SIMBANK.forEach((d,i)=>{if(asked.has(i))return;const df=Math.abs(d-th);if(df<bd){bd=df;idx=i}})}
+    else{const free=SIMBANK.map((_,i)=>i).filter(i=>!asked.has(i));idx=free[Math.floor(rnd()*free.length)]}
+    asked.add(idx);const d=SIMBANK[idx],pT=eAdj(expected(thTrue,d),g),Sv=rnd()<pT?1:0,E=eAdj(expected(th,d),g),K=kFor(k),from=th;
+    th=Math.round(th+K*(Sv-E));steps.push({n:k+1,d,pT,S:Sv,E,K,from,to:th,delta:th-from})}
+  return steps}
+function gauss(rnd){let u=0,v=0;while(!u)u=rnd();while(!v)v=rnd();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
+
+/* ===== 3. State ===== */
+const KEY="devroom-core1-v1";
+const fmtD=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const today=()=>fmtD(new Date());
+const addDays=(iso,n)=>{const d=new Date(iso+"T00:00:00");d.setDate(d.getDate()+n);return fmtD(d)};
+const dayDiff=(a,b)=>Math.round((new Date(a+"T00:00:00")-new Date(b+"T00:00:00"))/864e5);
+const newRoom=career=>({career,theta:{},answered:{},tested:false,quiz:null,rm:{removed:[],added:[],done:[]},streak:{},exDone:{},daily:null,nonce:0,cards:{},cardId:null});
+const DEF=()=>({tab:"cat",career:"fe",limit:15,g:true,rooms:{},simTheta:1450,sim:null,mae:null,flipped:false,log:[]});
+let S=DEF();
+function load(){try{const x=JSON.parse(localStorage.getItem(KEY));if(x&&x.rooms)S={...DEF(),...x}}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+const room=()=>S.rooms[S.career]||(S.rooms[S.career]=newRoom(S.career));
+function log(tab,text){S.log.push({tab,text});if(S.log.length>300)S.log.shift();save();renderLog()}
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+const md=s=>esc(s).replace(/`([^`]+)`/g,"<code>$1</code>");
+const f2=x=>(+x).toFixed(2),f3=x=>(+x).toFixed(3);
+
+/* ===== 4. Biểu đồ SVG ===== */
+const PALETTE=["#0E9F8E","#E8891C","#2F6FED","#6C5CE7","#2EA05C","#6B7280","#D93B3B"];
+function lineChart(o){const W=o.w||640,H=o.h||300,L=46,R=12,T=30,B=34,pw=W-L-R,ph=H-T-B;
+  const X=x=>L+(x-o.xmin)/(o.xmax-o.xmin)*pw,Y=y=>T+(1-(y-o.ymin)/(o.ymax-o.ymin))*ph;let s="";
+  const ys=o.yticks||5,xs=o.xticks||5;
+  for(let i=0;i<=ys;i++){const v=o.ymin+(o.ymax-o.ymin)*i/ys;s+=`<line x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${L-6}" y="${Y(v)+4}" text-anchor="end" font-size="11" fill="var(--muted)">${Math.round(v)}</text>`}
+  for(let i=0;i<=xs;i++){const v=o.xmin+(o.xmax-o.xmin)*i/xs;s+=`<text x="${X(v)}" y="${H-B+16}" text-anchor="middle" font-size="11" fill="var(--muted)">${Math.round(v)}</text>`}
+  s+=`<line x1="${L}" x2="${L}" y1="${T}" y2="${H-B}" stroke="var(--line-strong)"/><line x1="${L}" x2="${W-R}" y1="${H-B}" y2="${H-B}" stroke="var(--line-strong)"/>`;
+  s+=`<text x="${L+pw/2}" y="${H-4}" text-anchor="middle" font-size="11" fill="var(--muted)">${o.xlabel||""}</text><text x="12" y="${T+ph/2}" transform="rotate(-90 12 ${T+ph/2})" text-anchor="middle" font-size="11" fill="var(--muted)">${o.ylabel||""}</text>`;
+  (o.hlines||[]).forEach(h=>{s+=`<line x1="${L}" x2="${W-R}" y1="${Y(h.y)}" y2="${Y(h.y)}" stroke="${h.color}" stroke-dasharray="6 4" stroke-width="1.5"/><text x="${W-R}" y="${Y(h.y)-5}" text-anchor="end" font-size="11" fill="${h.color}">${h.label}</text>`});
+  (o.vlines||[]).forEach(v=>{s+=`<line x1="${X(v.x)}" x2="${X(v.x)}" y1="${T}" y2="${H-B}" stroke="${v.color}" stroke-dasharray="4 3"/><text x="${X(v.x)+4}" y="${T+12}" font-size="11" fill="${v.color}">${v.label}</text>`});
+  o.series.forEach(se=>{if(!se.pts.length)return;s+=`<polyline fill="none" stroke="${se.color}" stroke-width="2" ${se.dash?'stroke-dasharray="5 4"':""} points="${se.pts.map(p=>X(p[0])+","+Y(p[1])).join(" ")}"/>`;
+    (se.marks||[]).forEach(m=>{s+=`<circle cx="${X(m[0])}" cy="${Y(m[1])}" r="3.5" fill="${m[2]}" stroke="var(--surface)"/>`})});
+  let lx=L+6;o.series.forEach(se=>{s+=`<line x1="${lx}" x2="${lx+16}" y1="14" y2="14" stroke="${se.color}" stroke-width="2.5" ${se.dash?'stroke-dasharray="5 4"':""}/><text x="${lx+20}" y="18" font-size="11" fill="var(--ink-2)">${se.name}</text>`;lx+=28+se.name.length*6.3});
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${o.aria||"biểu đồ"}">${s}</svg>`}
+
+/* ===== 5. Tab 1: Test đầu vào ===== */
+function renderCat(){const r=room(),c=CAREER(r.career),q=r.quiz;
+  let h=`<div class="card"><div class="row between"><div><h2>Test đầu vào thích ứng (CAT + Elo)</h2><p class="sub">Mỗi câu: chọn skill ít câu nhất → chọn câu có |d − θ| nhỏ nhất → cập nhật θ' = θ + K·(S − E).</p></div></div>
+  <div class="row" style="margin-top:12px">
+   <label class="f">Career (phòng học)<select class="select" data-act="career">${CAREERS.map(x=>`<option value="${x.id}" ${x.id===S.career?"selected":""}>${x.name}</option>`).join("")}</select></label>
+   <label class="f">Số câu tối đa<select class="select" data-act="limit"><option value="8" ${S.limit===8?"selected":""}>8 (rút gọn)</option><option value="15" ${S.limit===15?"selected":""}>15 (chuẩn)</option></select></label>
+   <label class="f" style="flex-direction:row;align-items:center;gap:6px;margin-top:18px"><input type="checkbox" data-act="g" ${S.g?"checked":""}> Sàn đoán mò g = 0.25</label>
+   <button class="btn primary" data-act="start" style="margin-top:18px">${q?"Làm lại test":"Bắt đầu test"}</button></div>
+  <div class="chips" style="margin-top:10px">${c.skills.map(s=>`<span class="chip">${SK[s]} · θ ${r.theta[s]??1200} · ${r.answered[s]||0} câu</span>`).join("")}</div></div>`;
+  if(!q)return h+`<div class="card note">Chưa chạy test. θ khởi tạo 1200 cho mọi skill của career (p = 25, tất cả là gap). Điều kiện dừng: n ≥ N (N = ${S.limit}) hoặc mỗi skill ≥ 2 câu và 3 câu liên tiếp cùng skill có |Δθ| < 20.</div>`;
+  const n=q.hist.length;
+  if(!q.done){const cur=q.cur,qq=QBANK[cur.i];
+    h+=`<div class="card"><div class="row between"><span class="badge teal">Câu ${n+1} · tối đa ${q.limit}</span><span class="mono">skill ${SK[cur.s]} · d = ${qq.d} · θ = ${cur.th} · K sẽ dùng = ${kFor(n)}</span></div>
+    <div class="note" style="margin-top:8px"><b>Lý do chọn:</b> ${SK[cur.s]} đang có ít câu nhất (${cur.cnt} câu). Trong ${SK[cur.s]}, các câu chưa hỏi: ${cur.cands.map(x=>`d=${x.d} (|d−θ|=${x.diff})`).join(", ")} → chọn d = ${qq.d} vì |d − θ| = ${Math.abs(qq.d-cur.th)} nhỏ nhất. Tại d = θ thì E = 0.5, thông tin cực đại.</div>
+    <h3 style="margin:12px 0 8px">${md(qq.q)}</h3><div class="stack">${qq.o.map((o,i)=>{let cls="";if(q.ans){if(i===qq.a)cls="ok";else if(i===q.ans.pick)cls="no"}return `<button class="btn opt ${cls}" data-act="answer" data-i="${i}" ${q.ans?"disabled":""}><span class="kbd">${i+1}</span>&nbsp;${md(o)}</button>`}).join("")}</div>`;
+    if(q.ans){const u=q.ans.upd;h+=`<div class="note formula" style="margin-top:12px">${q.ans.correct?"Đúng":"Sai"} · t = ${(q.ans.ms/1000).toFixed(1)} s${u.suspect?" · nghi đoán mò (đúng < 3 s, d > θ+200) → S = 0.5":""}
+E  = 1/(1+10^((${qq.d}−${u.from})/400)) = ${f3(u.E0)}${S.g?`  →  E_adj = 0.25 + 0.75·E = ${f3(u.E)}`:""}
+K  = ${u.K} (n = ${n} câu đã trả lời)   S = ${u.S}
+θ' = ${u.from} + ${u.K}·(${u.S} − ${f3(u.E)}) = <b>${u.to}</b>  (Δθ = ${u.delta>0?"+":""}${u.delta})</div>
+<div class="row" style="margin-top:10px"><button class="btn primary" data-act="next">Câu tiếp <span class="kbd">Enter</span></button></div>`}
+    h+=`</div>`}
+  else{h+=`<div class="card"><h3>Kết thúc: ${esc(q.stop)}</h3><div class="tw" style="margin-top:8px"><table><tr><th>Skill</th><th class="n">θ</th><th class="n">p = (θ−1000)/800</th><th class="n">câu</th><th>kết luận</th></tr>${c.skills.map(s=>{const p=prof(r.theta[s]);return `<tr><td>${SK[s]}</td><td class="n">${r.theta[s]}</td><td class="n">${p}</td><td class="n">${r.answered[s]||0}</td><td>${p>=60?'<span class="badge good">đạt</span>':'<span class="badge bad">gap</span>'}</td></tr>`}).join("")}</table></div>
+    <p class="sub" style="margin-top:8px">Tập gap (p &lt; 60) là đầu vào của tab Roadmap và Bài tập.</p></div>`}
+  if(q.hist.length){const N=Math.max(q.limit,q.hist.length);
+    const series=c.skills.map((s,i)=>({name:SK[s],color:PALETTE[i],pts:[[0,1200],...q.hist.map((x,k)=>[k+1,x.snap[s]])]}));
+    h+=`<div class="card"><h3>θ theo từng câu (mỗi skill một đường; đường phẳng = câu đó thuộc skill khác)</h3>${lineChart({series,xmin:0,xmax:N,ymin:900,ymax:1700,xticks:N,yticks:4,xlabel:"số câu đã trả lời",ylabel:"θ",aria:"θ theo câu"})}</div>`}
+  return h}
+function startQuiz(){const r=room();r.theta={};r.answered={};r.tested=false;r.daily=null;CAREER(r.career).skills.forEach(s=>r.theta[s]=1200);
+  r.quiz={limit:S.limit,hist:[],cur:pickQuestion(r,[]),asked:[],ans:null,done:false,stop:"",shownAt:Date.now()};
+  log("CAT",`Bắt đầu test ${CAREER(r.career).name}: θ = 1200 cho ${CAREER(r.career).skills.length} skill, N = ${S.limit}, g = ${G()}`);save();render()}
+function answer(i){const r=room(),q=r.quiz;if(!q||q.done||q.ans)return;const qq=QBANK[q.cur.i],n=q.hist.length,ms=Date.now()-q.shownAt,correct=i===qq.a;
+  const upd=eloUpdate(r,qq,correct,n,ms,G());q.ans={pick:i,correct,ms,upd};q.asked.push(q.cur.i);
+  const snap={};CAREER(r.career).skills.forEach(s=>snap[s]=r.theta[s]);q.hist.push({s:qq.s,d:qq.d,correct,delta:upd.delta,snap});
+  log("CAT",`Câu ${n+1} ${SK[qq.s]}: d=${qq.d}, θ=${upd.from}, ${correct?"đúng":"sai"} (${(ms/1000).toFixed(1)} s) → E=${f3(upd.E)}, K=${upd.K}, S=${upd.S} → θ'=${upd.to} (Δ ${upd.delta>0?"+":""}${upd.delta})${upd.suspect?" [suspect]":""}`);
+  const stop=stopReason(r,q);if(stop){q.done=true;q.stop=stop;r.tested=true;log("CAT",`Dừng: ${stop}. Gap = {${gapOf(r).map(g=>`${SK[g.s]} p=${g.p}`).join(", ")||"∅"}}`)}
+  save();render()}
+function nextQ(){const r=room(),q=r.quiz;if(!q||q.done||!q.ans)return;q.cur=pickQuestion(r,q.asked);q.ans=null;q.shownAt=Date.now();
+  if(!q.cur){q.done=true;q.stop="hết câu trong ngân hàng";r.tested=true}save();render()}
+
+/* ===== 6. Tab 2: Mô phỏng hội tụ ===== */
+function renderSim(){let h=`<div class="card"><h2>Học viên ảo: θ ước lượng có tiến về năng lực thật θ* không?</h2><p class="sub">Trả lời đúng với xác suất p_true = g + (1−g)·E(θ*, d). Thuật toán chỉ thấy đúng/sai, không thấy θ*. Ngân hàng mô phỏng: 41 câu, d = 950…1750 cách đều 20.</p>
+  <div class="row" style="margin-top:12px"><label class="f" style="flex:1;min-width:220px">θ* (năng lực thật) = <b class="mono">${S.simTheta}</b><input type="range" min="900" max="1800" step="10" value="${S.simTheta}" data-act="simTheta" aria-label="θ thật"></label>
+  <button class="btn primary" data-act="sim1">Mô phỏng 1 học viên (30 câu)</button><button class="btn" data-act="simMany">200 học viên: MAE theo n (CAT vs ngẫu nhiên)</button></div></div>`;
+  if(S.sim){const st=S.sim.steps,last=st[st.length-1],stable=st.findIndex((x,i)=>i>=2&&[st[i-2],st[i-1],x].every(y=>Math.abs(y.delta)<20));
+    h+=`<div class="card"><div class="row between"><h3>θ̂ theo câu, θ* = ${S.sim.thTrue}</h3><span class="mono">sai số cuối |θ̂ − θ*| = ${Math.abs(last.to-S.sim.thTrue)} · đúng ${st.filter(x=>x.S).length}/30</span></div>
+    ${lineChart({series:[{name:"θ̂ ước lượng",color:PALETTE[0],pts:[[0,1200],...st.map(x=>[x.n,x.to])],marks:st.map(x=>[x.n,x.to,x.S?"var(--good)":"var(--bad)"])},{name:"d câu được chọn",color:PALETTE[5],dash:true,pts:st.map(x=>[x.n,x.d])}],xmin:0,xmax:30,ymin:900,ymax:1800,xticks:6,yticks:6,xlabel:"số câu (chấm xanh = đúng, đỏ = sai)",ylabel:"Elo",hlines:[{y:S.sim.thTrue,label:"θ* = "+S.sim.thTrue,color:"var(--orange)"}],vlines:stable>=0?[{x:stable+1,label:"dừng sớm thỏa (3 |Δθ|<20)",color:"var(--warn)"}]:[],aria:"hội tụ θ"})}
+    <div class="tw" style="margin-top:8px;max-height:220px;overflow:auto"><table><tr><th class="n">n</th><th class="n">d</th><th class="n">p_true</th><th class="n">S</th><th class="n">E</th><th class="n">K</th><th class="n">θ̂ → θ̂'</th></tr>${st.map(x=>`<tr><td class="n">${x.n}</td><td class="n">${x.d}</td><td class="n">${f2(x.pT)}</td><td class="n">${x.S}</td><td class="n">${f3(x.E)}</td><td class="n">${x.K}</td><td class="n">${x.from} → ${x.to}</td></tr>`).join("")}</table></div></div>`}
+  if(S.mae){const m=S.mae;h+=`<div class="card"><h3>MAE(θ̂, θ*) theo số câu, 200 học viên θ* ~ N(1300, 200)</h3>
+    ${lineChart({series:[{name:"CAT: chọn d gần θ̂",color:PALETTE[0],pts:m.cat.map((v,i)=>[i+1,v])},{name:"Ngẫu nhiên",color:PALETTE[1],dash:true,pts:m.rnd.map((v,i)=>[i+1,v])}],xmin:0,xmax:30,ymin:0,ymax:Math.ceil(Math.max(...m.rnd,...m.cat)/50)*50,xticks:6,yticks:4,xlabel:"số câu n",ylabel:"MAE (điểm Elo)",aria:"MAE theo n"})}
+    <div class="tw" style="margin-top:8px"><table><tr><th>n</th>${[5,10,15,20,30].map(n=>`<th class="n">${n}</th>`).join("")}</tr><tr><td>CAT</td>${[5,10,15,20,30].map(n=>`<td class="n">${m.cat[n-1].toFixed(0)}</td>`).join("")}</tr><tr><td>Ngẫu nhiên</td>${[5,10,15,20,30].map(n=>`<td class="n">${m.rnd[n-1].toFixed(0)}</td>`).join("")}</tr></table></div>
+    <p class="sub" style="margin-top:6px">Tài liệu §3.4 kỳ vọng MAE ≈ 110 / 85 / 70 tại n = 10 / 15 / 20. Mô phỏng thực đo cao hơn (≈ 130 / 125 / 115) vì K = 16 đóng khoảng cách chậm khi θ* cách xa 1200; tính đơn điệu giảm và ưu thế CAT so với chọn ngẫu nhiên vẫn đúng.</p></div>`}
+  return h}
+function runSim1(){const st=simulateOne(S.simTheta,G(),30,"cat",Math.random);S.sim={thTrue:S.simTheta,steps:st};
+  log("SIM",`θ* = ${S.simTheta}, g = ${G()}: `+st.slice(0,3).map(x=>`n=${x.n} d=${x.d} p_true=${f2(x.pT)} S=${x.S} E=${f3(x.E)} K=${x.K} θ̂ ${x.from}→${x.to}`).join(" | ")+` … n=30 θ̂=${st[29].to}, |θ̂−θ*|=${Math.abs(st[29].to-S.simTheta)}`);save();render()}
+function runSimMany(){const N=200,cat=new Array(30).fill(0),rnd=new Array(30).fill(0);
+  for(let i=0;i<N;i++){const t=Math.round(1300+200*gauss(Math.random));
+    simulateOne(t,G(),30,"cat",Math.random).forEach((x,k)=>cat[k]+=Math.abs(x.to-t)/N);simulateOne(t,G(),30,"rnd",Math.random).forEach((x,k)=>rnd[k]+=Math.abs(x.to-t)/N)}
+  S.mae={cat,rnd};log("SIM",`200 học viên ảo: MAE CAT n=5/10/15/20/30 = ${[5,10,15,20,30].map(n=>cat[n-1].toFixed(0)).join("/")} · ngẫu nhiên = ${[5,10,15,20,30].map(n=>rnd[n-1].toFixed(0)).join("/")}`);save();render()}
+
+/* ===== 7. Tab 3: Roadmap ===== */
+function renderRoad(){const r=room(),rm=r.rm,R=buildRoadmap(r),c=CAREER(r.career);
+  const gapTxt=R.gap.length?R.gap.map(g=>`<span class="chip gap">${SK[g.s]} p=${g.p} → gap_score=${g.score}</span>`).join(""):'<span class="chip have">không còn gap</span>';
+  let h=`<div class="card"><h2>Roadmap gợi ý cho ${c.name} — AI chỉ gợi ý, người học tự thêm/bỏ</h2><p class="sub">Ứng viên = lộ trình base ∪ học phần dạy skill gap (− đã xong − đã bỏ). Sắp xếp bằng topo sort Kahn có ưu tiên: mỗi bước lấy học phần đủ tiên quyết có score cao nhất.</p>
+  <div class="chips" style="margin-top:10px">${gapTxt}</div>${r.tested?"":'<p class="sub" style="margin-top:6px">Chưa làm test đầu vào: θ = 1200 mọi skill (p = 25) nên mọi skill là gap.</p>'}</div>`;
+  if(R.warnings.length)h+=`<div class="card note warn">${R.warnings.map(w=>`Cảnh báo (không chặn): học phần <b>${MOD[w.m].name}</b> cần tiên quyết ${w.miss.map(p=>`<b>${MOD[p].name}</b>`).join(", ")} không có trong roadmap.`).join("<br>")}</div>`;
+  h+=`<div class="card"><h3>Đồ thị tiên quyết</h3><div class="legend" style="margin:6px 0 10px"><span><i style="background:var(--good-soft);border-color:var(--good)"></i>đạt / đã xong</span><span><i style="background:var(--bad-soft);border-color:var(--bad)"></i>chưa đạt, sẵn sàng học</span><span><i style="background:var(--gray-soft);border-color:var(--gray);border-style:dashed"></i>khóa (tiên quyết chưa xong)</span></div><div class="dag">${dagSvg(R,rm)}</div></div>`;
+  h+=`<div class="card"><h3>Thứ tự topo (${R.order.length} học phần)</h3><div class="tw"><table><tr><th>#</th><th>Học phần</th><th class="n">giờ</th><th class="n">score</th><th>lý do</th><th>tiên quyết</th><th></th></tr>${R.order.map((m,i)=>`<tr><td class="n">${i+1}</td><td>${MOD[m].name} ${rm.added.includes(m)?'<span class="badge purple">user_added</span>':'<span class="badge teal">ai_suggested</span>'}</td><td class="n">${MOD[m].hours}</td><td class="n">${R.score[m].toFixed(2)}</td><td class="sub">${R.why[m]}</td><td class="mono">${(PREREQ[m]||[]).join(", ")||"—"}</td><td><div class="row" style="gap:4px"><button class="btn sm" data-act="done" data-m="${m}">Xong</button><button class="btn sm" data-act="remove" data-m="${m}">Bỏ</button></div></td></tr>`).join("")}</table></div>
+  <div class="row" style="margin-top:10px"><label class="f">Thêm học phần từ catalog<select class="select" id="addSel">${MODULES.filter(m=>!R.order.includes(m.id)&&!rm.done.includes(m.id)).map(m=>`<option value="${m.id}">${m.name}</option>`).join("")}</select></label><button class="btn" data-act="add" style="margin-top:18px">Thêm</button>${rm.done.length?`<span class="sub">Đã xong: ${rm.done.map(m=>MOD[m].name).join(", ")}</span>`:""}${rm.removed.length?`<span class="sub">Đã bỏ: ${rm.removed.map(m=>MOD[m].name).join(", ")} <button class="btn sm" data-act="restore">Khôi phục</button></span>`:""}</div></div>`;
+  return h}
+function dagSvg(R,rm){const nodes=[...R.order,...rm.done],inSet=new Set(nodes),depth={};
+  const dep=m=>{if(depth[m]!=null)return depth[m];const ps=(PREREQ[m]||[]).filter(p=>inSet.has(p));depth[m]=ps.length?1+Math.max(...ps.map(dep)):0;return depth[m]};
+  nodes.forEach(dep);const cols={};nodes.forEach(m=>{(cols[depth[m]]=cols[depth[m]]||[]).push(m)});
+  const NW=178,NH=50,GX=60,GY=16,pos={};Object.keys(cols).forEach(d=>cols[d].forEach((m,i)=>pos[m]={x:16+d*(NW+GX),y:16+i*(NH+GY)}));
+  const W=16+(Object.keys(cols).length)*(NW+GX),H=16+Math.max(...Object.values(cols).map(a=>a.length))*(NH+GY);
+  let s=`<defs><marker id="dg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--gray)"/></marker></defs>`;
+  nodes.forEach(m=>(PREREQ[m]||[]).filter(p=>inSet.has(p)).forEach(p=>{const a=pos[p],b=pos[m];s+=`<path d="M${a.x+NW} ${a.y+NH/2} C${a.x+NW+30} ${a.y+NH/2}, ${b.x-30} ${b.y+NH/2}, ${b.x} ${b.y+NH/2}" fill="none" stroke="var(--gray)" stroke-width="1.5" marker-end="url(#dg)"/>`}));
+  nodes.forEach(m=>{const p=pos[m],done=rm.done.includes(m),ok=done||MOD[m].skills.every(sk=>R.gs[sk]==null),locked=!done&&(PREREQ[m]||[]).some(q=>inSet.has(q)&&!rm.done.includes(q));
+    const st=ok?["var(--good-soft)","var(--good)",""]:locked?["var(--gray-soft)","var(--gray)",'stroke-dasharray="5 3"']:["var(--bad-soft)","var(--bad)",""];
+    s+=`<rect x="${p.x}" y="${p.y}" width="${NW}" height="${NH}" rx="8" fill="${st[0]}" stroke="${st[1]}" stroke-width="1.5" ${st[2]}/><text x="${p.x+10}" y="${p.y+20}" font-size="12" font-weight="600" fill="var(--ink)">${m} · ${esc(MOD[m].name).slice(0,22)}${MOD[m].name.length>22?"…":""}</text><text x="${p.x+10}" y="${p.y+38}" font-size="11" fill="var(--muted)">${MOD[m].skills.map(k=>SK[k]).join(", ")} · ${MOD[m].hours}h${done?" · xong":locked?" · khóa":""}</text>`});
+  return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" style="display:block;max-width:none" role="img" aria-label="đồ thị tiên quyết">${s}</svg>`}
+function roadAct(act,m){const r=room(),rm=r.rm;
+  if(act==="remove"){rm.removed.push(m);rm.added=rm.added.filter(x=>x!==m);const dep=Object.keys(PREREQ).filter(k=>PREREQ[k].includes(m)&&buildRoadmap(r).order.includes(k));
+    log("ROAD",`Bỏ ${m} (${MOD[m].name})${dep.length?` → cảnh báo: ${dep.join(", ")} thiếu tiên quyết ${m}, không chặn`:""}`)}
+  if(act==="done"){rm.done.push(m);rm.removed=rm.removed.filter(x=>x!==m);log("ROAD",`Đánh dấu xong ${m} → các học phần có tiên quyết ${m} được mở khóa`)}
+  if(act==="add"){rm.added.push(m);rm.removed=rm.removed.filter(x=>x!==m);const miss=checkPrereq([...buildRoadmap(r).order,...rm.done],m);
+    log("ROAD",`Thêm ${m} (user_added)${miss.length?` → thiếu tiên quyết ${miss.join(", ")}: cảnh báo, không chặn`:""}`)}
+  if(act==="restore"){rm.removed=[];log("ROAD","Khôi phục các học phần đã bỏ")}
+  const R=buildRoadmap(r);log("ROAD",`Topo sort lại: ${R.order.join(" → ")}`);save();render()}
+
+/* ===== 8. Tab 4: Bài tập hôm nay + Flashcard ===== */
+function ensureDaily(r){const seed=today()+r.career+r.nonce;if(r.daily&&r.daily.seed===seed)return;const ds=dailySet(r,seed);r.daily={seed,...ds};
+  log("EX",`Bộ bài ${today()}: ${ds.trace.map(t=>`W=${t.W==null?"∞":t.W} → ${t.n} bài`).join("; ")} → mức nới ${ds.level}${ds.fallback?" (không còn gap, dùng mọi skill)":""}. Chọn: ${ds.picked.map(p=>p.id).join(", ")}`);save()}
+function renderDaily(){const r=room();ensureDaily(r);const D=r.daily;
+  let h=`<div class="card"><div class="row between"><div><h2>Bài tập hôm nay (${today()})</h2><p class="sub">Điều kiện: tag ∩ gap ≠ ∅ và |d_ex − (θ + streak_shift)| ≤ W. Thiếu bài thì nới W: 100 → 250 → ∞. Lấy mẫu theo gap_score, ≤ 2 bài/skill, xoay type.</p></div><button class="btn sm" data-act="newset">Bộ mới</button></div>
+  <div class="note" style="margin-top:8px">Nới dải: ${D.trace.map(t=>`W = ${t.W==null?"∞":t.W} → ${t.n} bài`).join(" · ")} → dùng mức ${D.level} (band_relaxed_level = ${D.level})${D.fallback?" · không còn gap, dùng mọi skill với trọng số 0.2":""}</div></div>`;
+  D.picked.forEach((x,k)=>{const e=EXERCISES.find(z=>z.id===x.id),done=r.exDone[e.id],q=e.type==="mcq"?QBANK.map((qq,i)=>({qq,i})).filter(z=>z.qq.s===x.s).sort((a,b)=>Math.abs(a.qq.d-x.d)-Math.abs(b.qq.d-x.d))[0]:null;
+    h+=`<div class="card"><div class="row between"><span class="badge">${TYPE[e.type]}</span><span class="mono">d_ex = 900 + ${e.diff}·180 = ${x.d} · θ_${SK[x.s]} = ${x.th}${x.shift?` ${x.shift>0?"+":""}${x.shift} (streak)`:""} · |d − tâm| = ${x.diff} ${x.W==null?"(dải ∞)":`≤ ${x.W}`}</span></div>
+    <h3 style="margin:6px 0">${k+1}. ${esc(e.name)}</h3><div class="chips">${e.tags.map(t=>`<span class="chip ${t===x.s?"gap":""}">#${t}</span>`).join("")}</div>
+    <p class="sub" style="margin-top:6px">Lý do: tag #${x.s} ∈ gap (p = ${x.p}, gap_score = ${x.w}), d_ex = ${x.d} nằm trong dải quanh θ = ${x.cen}.</p>`;
+    if(done&&done.date===today()){h+=`<div class="note formula" style="margin-top:8px">${done.correct?"Đúng":"Sai"} · E = ${f3(done.E)} · K = ${done.K} (n_${SK[x.s]} = ${done.n}) · θ ${done.from} → <b>${done.to}</b></div>`}
+    else if(q){h+=`<p style="margin-top:8px">${md(q.qq.q)} <span class="sub">(câu QBANK gần d_ex nhất: d = ${q.qq.d})</span></p><div class="stack" style="margin-top:6px">${q.qq.o.map((o,i)=>`<button class="btn opt" data-act="exmcq" data-e="${e.id}" data-q="${q.i}" data-i="${i}">${md(o)}</button>`).join("")}</div>`}
+    else h+=`<div class="row" style="margin-top:8px"><span class="sub">Tự chấm sau khi làm:</span><button class="btn sm" data-act="exself" data-e="${e.id}" data-ok="1">Đúng</button><button class="btn sm" data-act="exself" data-e="${e.id}" data-ok="0">Sai</button></div>`;
+    h+=`</div>`});
+  h+=renderCards(r);return h}
+function exAnswer(eid,correct,d,extra){const r=room(),x=r.daily.picked.find(p=>p.id===eid),n=r.answered[x.s]||0,u=exUpd(r,x.s,d,correct,G());
+  r.exDone[eid]={date:today(),correct,...u,n};(r.streak[x.s]=r.streak[x.s]||[]).push(correct);
+  log("EX",`Bài ${eid} (${SK[x.s]}, d=${d}) ${correct?"đúng":"sai"}${extra||""}: E=${f3(u.E)}, K=${u.K} (n_skill=${n}) → θ ${u.from}→${u.to}. Streak ${SK[x.s]}: ${r.streak[x.s].slice(-3).map(b=>b?"✓":"✗").join("")} → tâm dải lần sau ${u.to}${streakShift(r,x.s)?(streakShift(r,x.s)>0?"+100":"−100"):"+0"}`);
+  save();render()}
+function cardQueue(r){const t=today(),skills=new Set(CAREER(r.career).skills);
+  return FLASHCARDS.filter(f=>skills.has(f.s)).map(f=>({f,c:r.cards[f.id]})).sort((a,b)=>{
+    const ra=a.c?dayDiff(t,a.c.due)/Math.max(a.c.interval,1):0.5,rb=b.c?dayDiff(t,b.c.due)/Math.max(b.c.interval,1):0.5;
+    const da=a.c?(dayDiff(t,a.c.due)>=0?0:1):0,db=b.c?(dayDiff(t,b.c.due)>=0?0:1):0;return da-db||rb-ra||(a.c?a.c.due:"").localeCompare(b.c?b.c.due:"")})}
+function renderCards(r){const q=cardQueue(r),cur=q.find(x=>x.f.id===r.cardId)||q[0];if(!cur)return"";const c=cur.c,t=today();
+  const due=c?dayDiff(t,c.due):null,status=!c?"thẻ mới (ef 2.5, interval 0, reps 0)":due>=0?`đến hạn ${due>0?`(quá ${due} ngày, overdue_ratio ${(due/Math.max(c.interval,1)).toFixed(2)})`:"hôm nay"}`:`ôn sớm, hạn ${c.due} (còn ${-due} ngày)`;
+  const cal=[];for(let i=0;i<30;i++){const d=addDays(t,i),n=Object.values(r.cards).filter(x=>x.due===d||(i===0&&dayDiff(t,x.due)>0)).length;cal.push(`<div class="${n?"due":""} ${n>=3?"hot":""} ${i===0?"today":""}" title="${d}">${n||""}</div>`)}
+  let h=`<div class="card"><div class="row between"><h2>Flashcard — ôn ngắt quãng SM-2</h2><span class="sub">${q.filter(x=>x.c&&dayDiff(t,x.c.due)>=0).length} đến hạn · ${q.filter(x=>!x.c).length} mới · ${q.length} thẻ</span></div>
+  <div class="row between" style="margin:8px 0"><span class="badge teal">${SK[cur.f.s]}</span><span class="mono">${status}</span></div>
+  <div class="fc ${S.flipped?"back":""}" data-act="flip" tabindex="0" role="button" aria-label="Lật thẻ">${S.flipped?md(cur.f.back):md(cur.f.front)}<br><span class="sub">(${S.flipped?"mặt sau":"nhấn để lật"} · <span class="kbd">F</span>)</span></div>
+  <div class="row" style="margin-top:10px">${[["Quên",1,"bad"],["Khó",3,"warn"],["Tốt",4,"teal"],["Dễ",5,"good"]].map((b,i)=>`<button class="btn" data-act="rate" data-q="${b[1]}" data-f="${cur.f.id}" ${S.flipped?"":"disabled"}><span class="kbd">${i+1}</span>&nbsp;${b[0]} (q=${b[1]})</button>`).join("")}</div>`;
+  if(r.lastSm2){const L=r.lastSm2;h+=`<div class="note formula" style="margin-top:10px">Thẻ ${L.id} · q = ${L.q} · trước: ef ${L.b.ef}, interval ${L.b.interval}, reps ${L.b.reps}
+${L.q<3?`q < 3 → reps = 0, interval = 1`:`q ≥ 3 → interval = ${L.b.reps===0?"1 (reps=0)":L.b.reps===1?"6 (reps=1)":`round(${L.b.interval}·${L.b.ef}) = ${L.a.interval}`}, reps = ${L.a.reps}`}
+ef' = max(1.3, ${L.b.ef} + 0.1 − (5−${L.q})·(0.08 + (5−${L.q})·0.02)) = <b>${L.a.ef}</b>
+due = ${t} + ${L.a.interval} ngày = <b>${L.a.due}</b></div>`}
+  h+=`<h3 style="margin:14px 0 6px">Lịch ôn 30 ngày tới (số thẻ đến hạn mỗi ngày, ô đầu = hôm nay gồm cả quá hạn)</h3><div class="cal">${cal.join("")}</div>
+  <div class="tw" style="margin-top:10px"><table><tr><th>Thẻ</th><th>Skill</th><th class="n">ef</th><th class="n">interval</th><th class="n">reps</th><th>due</th></tr>${q.map(x=>`<tr><td>${esc(x.f.front).slice(0,40)}</td><td>${SK[x.f.s]}</td><td class="n">${x.c?x.c.ef:"2.5"}</td><td class="n">${x.c?x.c.interval:0}</td><td class="n">${x.c?x.c.reps:0}</td><td class="mono">${x.c?x.c.due:"mới"}</td></tr>`).join("")}</table></div></div>`;
+  return h}
+function rateCard(fid,q){const r=room(),b=r.cards[fid]||{ef:2.5,interval:0,reps:0},a=sm2(r.cards[fid],q,today());r.cards[fid]=a;r.lastSm2={id:fid,q,b,a};
+  const nq=cardQueue(r).filter(x=>x.f.id!==fid);r.cardId=nq.length?nq[0].f.id:fid;S.flipped=false;
+  log("SM2",`Thẻ ${fid} q=${q}: (ef ${b.ef}, I ${b.interval}, reps ${b.reps}) → I=${a.interval}, reps=${a.reps}, ef'=max(1.3, ${b.ef}+0.1−(5−${q})·(0.08+(5−${q})·0.02))=${a.ef}, due=${a.due}`);save();render()}
+
+/* ===== 9. Router, sự kiện, nhật ký ===== */
+function renderLog(){$("#log").innerHTML=S.log.map(l=>`<li><b>[${l.tab}]</b> ${esc(l.text)}</li>`).join("");const el=$("#log");el.scrollTop=el.scrollHeight}
+function render(){document.querySelectorAll("#tabs [role=tab]").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===S.tab));
+  ["cat","sim","road","daily"].forEach(t=>{const el=document.getElementById(t);el.hidden=t!==S.tab;if(t===S.tab)el.innerHTML={cat:renderCat,sim:renderSim,road:renderRoad,daily:renderDaily}[t]()});renderLog()}
+document.addEventListener("click",e=>{const el=e.target.closest("[data-act],[role=tab]");if(!el)return;
+  if(el.getAttribute("role")==="tab"){S.tab=el.dataset.tab;save();render();return}
+  const a=el.dataset.act,r=room();
+  if(a==="start")startQuiz();else if(a==="answer")answer(+el.dataset.i);else if(a==="next")nextQ();
+  else if(a==="sim1")runSim1();else if(a==="simMany")runSimMany();
+  else if(a==="remove"||a==="done")roadAct(a,el.dataset.m);else if(a==="add")roadAct("add",$("#addSel").value);else if(a==="restore")roadAct("restore");
+  else if(a==="newset"){r.nonce++;r.daily=null;save();render()}
+  else if(a==="exmcq"){const q=QBANK[+el.dataset.q];exAnswer(el.dataset.e,+el.dataset.i===q.a,q.d," (trắc nghiệm)")}
+  else if(a==="exself"){const e=EXERCISES.find(z=>z.id===el.dataset.e);exAnswer(e.id,el.dataset.ok==="1",exElo(e)," (tự chấm)")}
+  else if(a==="flip"){S.flipped=!S.flipped;render()}else if(a==="rate")rateCard(el.dataset.f,+el.dataset.q)
+  else if(a==="clearlog"){S.log=[];save();renderLog()}});
+document.addEventListener("change",e=>{const a=e.target.dataset.act;if(!a)return;
+  if(a==="career"){S.career=e.target.value;S.flipped=false;log("CAT",`Chuyển phòng ${CAREER(S.career).name}`);save();render()}
+  else if(a==="limit"){S.limit=+e.target.value;save()}else if(a==="g"){S.g=e.target.checked;save();render()}});
+document.addEventListener("input",e=>{if(e.target.dataset.act==="simTheta"){S.simTheta=+e.target.value;e.target.closest("label").querySelector("b").textContent=S.simTheta;save()}});
+document.addEventListener("keydown",e=>{if(e.target.matches("input,select,textarea")||e.metaKey||e.ctrlKey)return;const r=room(),k=e.key;
+  if(S.tab==="cat"&&r.quiz&&!r.quiz.done){if(/^[1-4]$/.test(k)&&!r.quiz.ans){answer(+k-1);e.preventDefault()}else if(k==="Enter"&&r.quiz.ans){nextQ();e.preventDefault()}}
+  if(S.tab==="daily"){if(k==="f"||k==="F"){S.flipped=!S.flipped;render()}else if(/^[1-4]$/.test(k)&&S.flipped){const b=document.querySelector("[data-act=rate]");if(b)rateCard(b.dataset.f,[1,3,4,5][+k-1])}
+    else if((k==="Enter"||k===" ")&&e.target.classList.contains("fc")){S.flipped=!S.flipped;render();e.preventDefault()}}});
+$("#reset").addEventListener("click",()=>{try{localStorage.removeItem(KEY)}catch(e){}S=DEF();log("SYS","Reset: xoá localStorage, seed lại dữ liệu");render()});
+load();if(!S.log.length)log("SYS","Nạp seed: 6 career, 51 câu hỏi, 18 học phần, 34 bài tập, 16 flashcard");render();
+</script>

@@ -1,0 +1,246 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" font-family="Helvetica Neue, Arial, sans-serif">
+  <defs>
+    <marker id="aN" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1F2A44"/></marker>
+    <marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0E9F8E"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6B7280"/></marker>
+    <marker id="aW" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#E8A81C"/></marker>
+  </defs>
+  <rect width="1600" height="1000" fill="#FFFFFF"/>
+
+  <!-- Tiêu đề -->
+  <text x="30" y="46" font-size="26" font-weight="700" fill="#1F2A44">Lõi 1 — Học thích ứng: cơ chế CAT/Elo → gap → roadmap → bài tập &amp; SM-2</text>
+  <text x="30" y="72" font-size="15" fill="#6B7280">Dữ liệu chảy từ trái sang phải. θ được cập nhật lại sau mỗi bài làm và quay về khối 2 (vòng lặp phía trên).</text>
+
+  <!-- Vòng lặp lớn: khối 4 -> khối 2 -->
+  <path d="M1550 460 L1580 460 L1580 106 L598 106 L598 120" fill="none" stroke="#0E9F8E" stroke-width="2.5" marker-end="url(#aT)"/>
+  <text x="1090" y="98" font-size="15" font-weight="600" fill="#0E9F8E" text-anchor="middle">vòng lặp: θ' sau mỗi bài tập quay về trạng thái năng lực (khối 2)</text>
+
+  <!-- ===================== KHỐI 1: CAT ===================== -->
+  <rect x="30" y="122" width="336" height="748" rx="12" fill="#FFFFFF" stroke="#0E9F8E" stroke-width="2"/>
+  <rect x="30" y="122" width="336" height="46" rx="12" fill="#0E9F8E"/>
+  <rect x="30" y="150" width="336" height="18" fill="#0E9F8E"/>
+  <text x="198" y="152" font-size="20" font-weight="700" fill="#FFFFFF" text-anchor="middle">1 · Test đầu vào (CAT)</text>
+
+  <rect x="46" y="186" width="304" height="58" rx="8" fill="#DDF3EF" stroke="#0E9F8E" stroke-width="1.5"/>
+  <text x="198" y="210" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Chọn skill có ít câu đã hỏi nhất</text>
+  <text x="198" y="232" font-size="14" fill="#6B7280" text-anchor="middle">xoay vòng để phủ hết skill của career</text>
+  <line x1="198" y1="244" x2="198" y2="262" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="46" y="264" width="304" height="58" rx="8" fill="#DDF3EF" stroke="#0E9F8E" stroke-width="1.5"/>
+  <text x="198" y="288" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Chọn câu chưa hỏi có |d − θ| nhỏ nhất</text>
+  <text x="198" y="310" font-size="14" fill="#6B7280" text-anchor="middle">d = θ ⇒ E = 0.5, thông tin cực đại</text>
+  <line x1="198" y1="322" x2="198" y2="340" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="46" y="342" width="304" height="46" rx="8" fill="#FFFFFF" stroke="#0E9F8E" stroke-width="1.5"/>
+  <text x="198" y="371" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Trả lời → S = 1 (đúng) / 0 (sai)</text>
+  <line x1="198" y1="388" x2="198" y2="406" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="46" y="408" width="304" height="118" rx="8" fill="#E9EEF5" stroke="#1F2A44" stroke-width="1.5"/>
+  <text x="198" y="432" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">E = 1 / (1 + 10^((d − θ) / 400))</text>
+  <text x="198" y="455" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">θ' = θ + K · (S − E)</text>
+  <text x="198" y="478" font-size="14" fill="#1F2A44" text-anchor="middle">K = 64 (n&lt;3) · 32 (n&lt;6) · 16 (còn lại)</text>
+  <text x="198" y="499" font-size="14" fill="#1F2A44" text-anchor="middle">E_adj = 0.25 + 0.75·E (sàn đoán mò)</text>
+  <text x="198" y="518" font-size="14" fill="#1F2A44" text-anchor="middle">đúng &lt; 3 s và d &gt; θ + 200 ⇒ S = 0.5</text>
+  <line x1="198" y1="526" x2="198" y2="544" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="46" y="546" width="304" height="76" rx="8" fill="#FBF0D2" stroke="#E8A81C" stroke-width="1.5"/>
+  <text x="198" y="570" font-size="16" font-weight="600" fill="#1F2A44" text-anchor="middle">Dừng?</text>
+  <text x="198" y="592" font-size="14" fill="#1F2A44" text-anchor="middle">n ≥ 15 và (n ≥ 20 hoặc</text>
+  <text x="198" y="611" font-size="14" fill="#1F2A44" text-anchor="middle">|Δθ| &lt; 20 ở 3 câu liên tiếp cùng skill)</text>
+  <!-- vòng lặp nhỏ: chưa dừng -> chọn skill -->
+  <path d="M350 584 L360 584 L360 215 L352 215" fill="none" stroke="#E8A81C" stroke-width="2" marker-end="url(#aW)"/>
+  <rect x="351" y="342" width="17" height="116" fill="#FFFFFF"/><text x="360" y="400" font-size="14" font-weight="600" fill="#E8A81C" text-anchor="middle" transform="rotate(-90 360 400)">chưa → hỏi tiếp</text>
+  <line x1="198" y1="622" x2="198" y2="640" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="46" y="642" width="304" height="40" rx="8" fill="#FFFFFF" stroke="#0E9F8E" stroke-width="1.5"/>
+  <text x="198" y="667" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Dừng → xuất θ của từng skill</text>
+  <line x1="366" y1="662" x2="428" y2="662" stroke="#1F2A44" stroke-width="2.5" marker-end="url(#aN)"/>
+  <text x="397" y="654" font-size="14" font-weight="600" fill="#1F2A44" text-anchor="middle">θ, n</text>
+
+  <rect x="46" y="700" width="304" height="150" rx="8" fill="#F2F5F9" stroke="#D9E0EA"/>
+  <text x="60" y="724" font-size="14" font-weight="600" fill="#6B7280">Ví dụ một câu</text>
+  <text x="60" y="746" font-size="14" fill="#1F2A44">θ = 1200, d = 1600, K = 32, trả lời đúng</text>
+  <text x="60" y="766" font-size="14" fill="#1F2A44">E = 1 / (1 + 10^(400/400)) = 0.091</text>
+  <text x="60" y="786" font-size="14" fill="#1F2A44">θ' = 1200 + 32 · (1 − 0.091) = 1229</text>
+  <text x="60" y="814" font-size="14" fill="#6B7280">Khởi tạo: θ₀ = 1200 · d = 900 + mức(1–5)·180</text>
+  <text x="60" y="834" font-size="14" fill="#6B7280">Phiên: 15–20 câu · mỗi skill ≥ 2 câu</text>
+
+  <!-- ===================== KHỐI 2: TRẠNG THÁI ===================== -->
+  <rect x="430" y="122" width="336" height="748" rx="12" fill="#FFFFFF" stroke="#1F2A44" stroke-width="2"/>
+  <rect x="430" y="122" width="336" height="46" rx="12" fill="#1F2A44"/>
+  <rect x="430" y="150" width="336" height="18" fill="#1F2A44"/>
+  <text x="598" y="152" font-size="20" font-weight="700" fill="#FFFFFF" text-anchor="middle">2 · Trạng thái năng lực</text>
+
+  <rect x="446" y="186" width="304" height="210" rx="8" fill="#FFFFFF" stroke="#B9C4D3"/>
+  <rect x="446" y="186" width="304" height="30" rx="8" fill="#E9EEF5"/>
+  <rect x="446" y="202" width="304" height="14" fill="#E9EEF5"/>
+  <text x="456" y="206" font-size="14" font-weight="600" fill="#1F2A44">Skill</text>
+  <text x="600" y="206" font-size="14" font-weight="600" fill="#1F2A44" text-anchor="end">θ</text>
+  <text x="650" y="206" font-size="14" font-weight="600" fill="#1F2A44" text-anchor="end">p</text>
+  <text x="704" y="206" font-size="14" font-weight="600" fill="#1F2A44" text-anchor="middle">kết luận</text>
+  <g font-size="14" fill="#1F2A44">
+    <rect x="446" y="246" width="304" height="30" fill="#F2F5F9"/>
+    <rect x="446" y="306" width="304" height="30" fill="#F2F5F9"/>
+    <rect x="446" y="366" width="304" height="30" fill="#F2F5F9"/>
+    <text x="456" y="236">JavaScript</text><text x="600" y="236" text-anchor="end">1340</text><text x="650" y="236" text-anchor="end">43</text>
+    <rect x="672" y="222" width="64" height="22" rx="11" fill="#F9DCDC" stroke="#D93B3B"/><text x="704" y="238" text-anchor="middle" fill="#D93B3B" font-weight="600">gap</text>
+    <text x="456" y="266">React</text><text x="600" y="266" text-anchor="end">1180</text><text x="650" y="266" text-anchor="end">23</text>
+    <rect x="672" y="252" width="64" height="22" rx="11" fill="#F9DCDC" stroke="#D93B3B"/><text x="704" y="268" text-anchor="middle" fill="#D93B3B" font-weight="600">gap</text>
+    <text x="456" y="296">CSS</text><text x="600" y="296" text-anchor="end">1520</text><text x="650" y="296" text-anchor="end">65</text>
+    <rect x="672" y="282" width="64" height="22" rx="11" fill="#DDF3E4" stroke="#2EA05C"/><text x="704" y="298" text-anchor="middle" fill="#2EA05C" font-weight="600">đạt</text>
+    <text x="456" y="326">HTTP/REST</text><text x="600" y="326" text-anchor="end">1260</text><text x="650" y="326" text-anchor="end">33</text>
+    <rect x="672" y="312" width="64" height="22" rx="11" fill="#F9DCDC" stroke="#D93B3B"/><text x="704" y="328" text-anchor="middle" fill="#D93B3B" font-weight="600">gap</text>
+    <text x="456" y="356">Testing</text><text x="600" y="356" text-anchor="end">1100</text><text x="650" y="356" text-anchor="end">13</text>
+    <rect x="672" y="342" width="64" height="22" rx="11" fill="#F9DCDC" stroke="#D93B3B"/><text x="704" y="358" text-anchor="middle" fill="#D93B3B" font-weight="600">gap</text>
+    <text x="456" y="386">Git</text><text x="600" y="386" text-anchor="end">1490</text><text x="650" y="386" text-anchor="end">61</text>
+    <rect x="672" y="372" width="64" height="22" rx="11" fill="#DDF3E4" stroke="#2EA05C"/><text x="704" y="388" text-anchor="middle" fill="#2EA05C" font-weight="600">đạt</text>
+  </g>
+  <line x1="598" y1="396" x2="598" y2="414" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="446" y="416" width="304" height="70" rx="8" fill="#E9EEF5" stroke="#1F2A44" stroke-width="1.5"/>
+  <text x="598" y="442" font-size="14" font-weight="600" fill="#1F2A44" text-anchor="middle">p = clamp((θ − 1000) / 800, 0, 1) · 100</text>
+  <text x="598" y="466" font-size="14" fill="#1F2A44" text-anchor="middle">Đạt khi p ≥ 60 ⇔ θ ≥ 1480</text>
+  <line x1="598" y1="486" x2="598" y2="504" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="446" y="506" width="304" height="112" rx="8" fill="#F9DCDC" stroke="#D93B3B" stroke-width="1.5"/>
+  <text x="598" y="530" font-size="16" font-weight="600" fill="#D93B3B" text-anchor="middle">Tập gap = { skill : p &lt; 60 }</text>
+  <g font-size="14" fill="#D93B3B" font-weight="600">
+    <rect x="455" y="546" width="84" height="24" rx="12" fill="#FFFFFF" stroke="#D93B3B"/><text x="497" y="563" text-anchor="middle">Testing 13</text>
+    <rect x="545" y="546" width="74" height="24" rx="12" fill="#FFFFFF" stroke="#D93B3B"/><text x="582" y="563" text-anchor="middle">React 23</text>
+    <rect x="625" y="546" width="66" height="24" rx="12" fill="#FFFFFF" stroke="#D93B3B"/><text x="658" y="563" text-anchor="middle">HTTP 33</text>
+    <rect x="697" y="546" width="52" height="24" rx="12" fill="#FFFFFF" stroke="#D93B3B"/><text x="723" y="563" text-anchor="middle">JS 43</text>
+  </g>
+  <text x="598" y="598" font-size="14" fill="#1F2A44" text-anchor="middle">gap_score = w · (1 − p/100), w = trọng số skill</text>
+  <line x1="598" y1="618" x2="598" y2="636" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="446" y="638" width="304" height="60" rx="8" fill="#FFFFFF" stroke="#1F2A44" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="598" y="662" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Đầu ra: gap[] = [{skill, p, w}]</text>
+  <text x="598" y="684" font-size="14" fill="#6B7280" text-anchor="middle">và θ[skill] cho khối 3 và khối 4</text>
+  <line x1="766" y1="668" x2="828" y2="668" stroke="#1F2A44" stroke-width="2.5" marker-end="url(#aN)"/>
+  <text x="797" y="660" font-size="14" font-weight="600" fill="#1F2A44" text-anchor="middle">gap, θ</text>
+
+  <rect x="446" y="720" width="304" height="130" rx="8" fill="#F2F5F9" stroke="#D9E0EA"/>
+  <text x="460" y="744" font-size="14" font-weight="600" fill="#6B7280">Khoá lưu: (candidate, room, skill_id)</text>
+  <text x="460" y="766" font-size="14" fill="#1F2A44">Cùng S_sql nhưng phòng Data ≠ phòng BE</text>
+  <text x="460" y="788" font-size="14" fill="#1F2A44">θ chỉ dùng để xếp ưu tiên gap,</text>
+  <text x="460" y="808" font-size="14" fill="#1F2A44">sai số ±100 với 2–4 câu / skill</text>
+  <text x="460" y="834" font-size="14" fill="#6B7280">Bảng: skill_states, question_attempts</text>
+
+  <!-- ===================== KHỐI 3: ROADMAP ===================== -->
+  <rect x="830" y="122" width="336" height="748" rx="12" fill="#FFFFFF" stroke="#0E9F8E" stroke-width="2"/>
+  <rect x="830" y="122" width="336" height="46" rx="12" fill="#0E9F8E"/>
+  <rect x="830" y="150" width="336" height="18" fill="#0E9F8E"/>
+  <text x="998" y="152" font-size="20" font-weight="700" fill="#FFFFFF" text-anchor="middle">3 · Roadmap (AI chỉ gợi ý)</text>
+
+  <rect x="846" y="186" width="304" height="56" rx="8" fill="#DDF3E4" stroke="#2EA05C" stroke-width="1.5"/>
+  <text x="998" y="208" font-size="14" font-weight="600" fill="#2EA05C" text-anchor="middle">Đầu vào Lecturer: base_tracks,</text>
+  <text x="998" y="229" font-size="14" fill="#1F2A44" text-anchor="middle">module_prerequisites, module_skills</text>
+  <line x1="998" y1="242" x2="998" y2="258" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <text x="998" y="277" font-size="14" fill="#6B7280" text-anchor="middle">DAG tiên quyết (mũi tên: học trước → sau)</text>
+  <g font-size="14" font-weight="600" text-anchor="middle">
+    <rect x="846" y="290" width="92" height="36" rx="8" fill="#F9DCDC" stroke="#D93B3B" stroke-width="1.5"/><text x="892" y="313" fill="#1F2A44">m1 JS</text>
+    <rect x="952" y="290" width="92" height="36" rx="8" fill="#DDF3E4" stroke="#2EA05C" stroke-width="1.5"/><text x="998" y="313" fill="#1F2A44">m3 CSS</text>
+    <rect x="1058" y="290" width="92" height="36" rx="8" fill="#F9DCDC" stroke="#D93B3B" stroke-width="1.5"/><text x="1104" y="313" fill="#1F2A44">m4 HTTP</text>
+    <rect x="846" y="376" width="92" height="36" rx="8" fill="#E6E8EC" stroke="#6B7280" stroke-width="1.5" stroke-dasharray="5 3"/><text x="892" y="399" fill="#1F2A44">m2 React</text>
+    <rect x="952" y="376" width="92" height="36" rx="8" fill="#E6E8EC" stroke="#6B7280" stroke-width="1.5" stroke-dasharray="5 3"/><text x="998" y="399" fill="#1F2A44">m5 Testing</text>
+    <rect x="1058" y="376" width="92" height="36" rx="8" fill="#DDF3E4" stroke="#2EA05C" stroke-width="1.5"/><text x="1104" y="399" fill="#1F2A44">m6 Git</text>
+  </g>
+  <line x1="892" y1="326" x2="892" y2="374" stroke="#6B7280" stroke-width="2" marker-end="url(#aG)"/>
+  <line x1="900" y1="326" x2="986" y2="374" stroke="#6B7280" stroke-width="2" marker-end="url(#aG)"/>
+  <line x1="1096" y1="326" x2="1010" y2="374" stroke="#6B7280" stroke-width="2" marker-end="url(#aG)"/>
+  <line x1="998" y1="414" x2="998" y2="428" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="846" y="430" width="304" height="62" rx="8" fill="#E9EEF5" stroke="#1F2A44" stroke-width="1.5"/>
+  <text x="998" y="453" font-size="14" font-weight="600" fill="#1F2A44" text-anchor="middle">score(m) = Σ gap_score(s ∈ m.skills)</text>
+  <text x="998" y="475" font-size="14" fill="#1F2A44" text-anchor="middle">+ 0.3 · unlock_count(m) (số node m mở ra)</text>
+  <line x1="998" y1="492" x2="998" y2="508" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="846" y="510" width="304" height="62" rx="8" fill="#DDF3EF" stroke="#0E9F8E" stroke-width="1.5"/>
+  <text x="998" y="534" font-size="16" font-weight="600" fill="#1F2A44" text-anchor="middle">Topo sort Kahn có ưu tiên</text>
+  <text x="998" y="556" font-size="14" fill="#6B7280" text-anchor="middle">mỗi bước: node đủ tiên quyết, score cao nhất</text>
+  <line x1="998" y1="572" x2="998" y2="588" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="846" y="590" width="304" height="56" rx="8" fill="#FFFFFF" stroke="#0E9F8E" stroke-width="1.5"/>
+  <text x="998" y="612" font-size="14" font-weight="600" fill="#1F2A44" text-anchor="middle">Thứ tự: m1 → m4 → m5 → m2 → m6 → m3</text>
+  <text x="998" y="634" font-size="14" fill="#6B7280" text-anchor="middle">gap chèn thêm học phần chưa có trong base</text>
+  <line x1="998" y1="646" x2="998" y2="662" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="846" y="664" width="304" height="76" rx="8" fill="#FBF0D2" stroke="#E8A81C" stroke-width="1.5"/>
+  <text x="998" y="688" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Người học tự thêm / bỏ học phần</text>
+  <text x="998" y="708" font-size="14" fill="#1F2A44" text-anchor="middle">bỏ học phần tiên quyết ⇒ cảnh báo vàng,</text>
+  <text x="998" y="728" font-size="14" fill="#1F2A44" text-anchor="middle">không chặn (source: user_added, removed_at)</text>
+  <line x1="1166" y1="668" x2="1228" y2="668" stroke="#1F2A44" stroke-width="2.5" marker-end="url(#aN)"/>
+  <text x="1197" y="660" font-size="14" font-weight="600" fill="#1F2A44" text-anchor="middle">gap, θ</text>
+
+  <rect x="846" y="760" width="304" height="90" rx="8" fill="#F2F5F9" stroke="#D9E0EA"/>
+  <text x="860" y="784" font-size="14" font-weight="600" fill="#6B7280">Tất định: cùng input → cùng thứ tự</text>
+  <text x="860" y="806" font-size="14" fill="#1F2A44">Tie-break: hours nhỏ hơn, rồi module_id</text>
+  <text x="860" y="828" font-size="14" fill="#6B7280">Bảng: roadmap_items, module_prerequisites</text>
+
+  <!-- ===================== KHỐI 4: HỌC HẰNG NGÀY ===================== -->
+  <rect x="1230" y="122" width="336" height="748" rx="12" fill="#FFFFFF" stroke="#0E9F8E" stroke-width="2"/>
+  <rect x="1230" y="122" width="336" height="46" rx="12" fill="#0E9F8E"/>
+  <rect x="1230" y="150" width="336" height="18" fill="#0E9F8E"/>
+  <text x="1398" y="152" font-size="20" font-weight="700" fill="#FFFFFF" text-anchor="middle">4 · Học hằng ngày</text>
+
+  <text x="1246" y="200" font-size="15" font-weight="600" fill="#0E9F8E">Bài tập theo dải Elo (5 bài / ngày)</text>
+  <rect x="1246" y="210" width="304" height="56" rx="8" fill="#DDF3EF" stroke="#0E9F8E" stroke-width="1.5"/>
+  <text x="1398" y="232" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Lọc: tags(e) ∩ gap ≠ ∅</text>
+  <text x="1398" y="254" font-size="14" fill="#1F2A44" text-anchor="middle">và |d_ex − θ_s| ≤ W, W = 100</text>
+  <line x1="1398" y1="266" x2="1398" y2="282" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="1246" y="284" width="304" height="56" rx="8" fill="#FBF0D2" stroke="#E8A81C" stroke-width="1.5"/>
+  <text x="1398" y="306" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Thiếu bài (&lt; 5) ⇒ nới dải</text>
+  <text x="1398" y="328" font-size="14" fill="#1F2A44" text-anchor="middle">W: 100 → 250 → ∞ (ghi log band_relaxed)</text>
+  <line x1="1398" y1="340" x2="1398" y2="356" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="1246" y="358" width="304" height="56" rx="8" fill="#FFFFFF" stroke="#0E9F8E" stroke-width="1.5"/>
+  <text x="1398" y="380" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Chọn 5 bài: ≤ 2 bài / skill, xoay type</text>
+  <text x="1398" y="402" font-size="14" fill="#1F2A44" text-anchor="middle">trọng số lấy mẫu = gap_score(skill)</text>
+  <line x1="1398" y1="414" x2="1398" y2="430" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="1246" y="432" width="304" height="56" rx="8" fill="#E9EEF5" stroke="#1F2A44" stroke-width="1.5"/>
+  <text x="1398" y="454" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Làm bài → S → θ' = θ + K·(S − E)</text>
+  <text x="1398" y="476" font-size="14" fill="#1F2A44" text-anchor="middle">3 đúng liên tiếp: tâm +100 · 2 sai: −100</text>
+
+  <text x="1246" y="520" font-size="15" font-weight="600" fill="#0E9F8E">Flashcard — ôn ngắt quãng SM-2</text>
+  <rect x="1246" y="530" width="304" height="50" rx="8" fill="#FFFFFF" stroke="#0E9F8E" stroke-width="1.5"/>
+  <text x="1398" y="552" font-size="14" font-weight="600" fill="#1F2A44" text-anchor="middle">Tự chấm q: Quên 1 · Khó 3 · Tốt 4 · Dễ 5</text>
+  <text x="1398" y="572" font-size="14" fill="#6B7280" text-anchor="middle">quiz tự động: q suy từ đúng/sai + thời gian</text>
+  <line x1="1398" y1="580" x2="1398" y2="596" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <rect x="1246" y="598" width="304" height="118" rx="8" fill="#E9EEF5" stroke="#1F2A44" stroke-width="1.5"/>
+  <text x="1398" y="620" font-size="14" font-weight="600" fill="#1F2A44" text-anchor="middle">q &lt; 3: reps = 0, I = 1</text>
+  <text x="1398" y="641" font-size="14" font-weight="600" fill="#1F2A44" text-anchor="middle">q ≥ 3: I = 1 → 6 → round(I·EF), reps + 1</text>
+  <text x="1398" y="664" font-size="14" font-weight="600" fill="#1F2A44" text-anchor="middle">EF' = max(1.3, EF + 0.1</text>
+  <text x="1398" y="684" font-size="14" font-weight="600" fill="#1F2A44" text-anchor="middle">− (5 − q)·(0.08 + (5 − q)·0.02))</text>
+  <text x="1398" y="706" font-size="14" fill="#1F2A44" text-anchor="middle">due = hôm nay + I ngày</text>
+  <line x1="1398" y1="716" x2="1398" y2="732" stroke="#1F2A44" stroke-width="2" marker-end="url(#aN)"/>
+
+  <text x="1246" y="752" font-size="14" fill="#6B7280">Lịch ôn khi luôn q = 4 (EF = 2.5), đơn vị ngày:</text>
+  <line x1="1252" y1="780" x2="1550" y2="780" stroke="#B9C4D3" stroke-width="2"/>
+  <line x1="1252" y1="772" x2="1252" y2="788" stroke="#6B7280" stroke-width="2"/>
+  <circle cx="1262" cy="780" r="6" fill="#0E9F8E"/>
+  <circle cx="1300" cy="780" r="6" fill="#0E9F8E"/>
+  <circle cx="1372" cy="780" r="6" fill="#0E9F8E"/>
+  <circle cx="1550" cy="780" r="6" fill="#0E9F8E"/>
+  <g font-size="14" fill="#1F2A44" text-anchor="middle" font-weight="600">
+    <text x="1262" y="803">1</text><text x="1300" y="803">6</text><text x="1372" y="803">15</text><text x="1550" y="803">38</text>
+  </g>
+  <text x="1246" y="828" font-size="14" fill="#6B7280">Tối đa 30 thẻ / ngày, quá hạn nhiều lên trước</text>
+  <text x="1246" y="848" font-size="14" fill="#6B7280">Bảng: srs_cards, review_logs</text>
+
+  <!-- ===================== CHÚ GIẢI ===================== -->
+  <text x="30" y="918" font-size="15" font-weight="600" fill="#1F2A44">Chú giải</text>
+  <g font-size="14" fill="#1F2A44">
+    <rect x="30" y="936" width="18" height="18" rx="4" fill="#DDF3EF" stroke="#0E9F8E" stroke-width="1.5"/><text x="56" y="950">Bước thuật toán học</text>
+    <rect x="222" y="936" width="18" height="18" rx="4" fill="#E9EEF5" stroke="#1F2A44" stroke-width="1.5"/><text x="248" y="950">Công thức / trạng thái</text>
+    <rect x="414" y="936" width="18" height="18" rx="4" fill="#DDF3E4" stroke="#2EA05C" stroke-width="1.5"/><text x="440" y="950">Đầu vào Lecturer</text>
+    <rect x="606" y="936" width="18" height="18" rx="4" fill="#FBF0D2" stroke="#E8A81C" stroke-width="1.5"/><text x="632" y="950">Điều kiện / cảnh báo</text>
+    <rect x="798" y="936" width="18" height="18" rx="4" fill="#DDF3E4" stroke="#2EA05C" stroke-width="1.5"/><text x="824" y="950">Đạt (p ≥ 60)</text>
+    <rect x="990" y="936" width="18" height="18" rx="4" fill="#F9DCDC" stroke="#D93B3B" stroke-width="1.5"/><text x="1016" y="950">Gap (p &lt; 60)</text>
+    <rect x="1182" y="936" width="18" height="18" rx="4" fill="#E6E8EC" stroke="#6B7280" stroke-width="1.5" stroke-dasharray="4 2"/><text x="1208" y="950">Khóa (thiếu tiên quyết)</text>
+    <line x1="1374" y1="945" x2="1404" y2="945" stroke="#0E9F8E" stroke-width="2.5" marker-end="url(#aT)"/><text x="1412" y="950">Vòng lặp cập nhật θ</text>
+  </g>
+</svg>
