@@ -1,0 +1,850 @@
+<title>DevRoom Demo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F2F5F9;--surface:#FFFFFF;--surface-2:#E9EEF5;--line:#D9E0EA;--line-strong:#B9C4D3;
+  --ink:#1F2A44;--ink-2:#4A5872;--muted:#7A879C;
+  --navy:#1F2A44;--teal:#0E9F8E;--orange:#E8891C;--green:#2EA05C;--blue:#2F6FED;--gray:#6B7280;--purple:#6C5CE7;
+  --teal-soft:#DDF3EF;--orange-soft:#FCEBD6;--green-soft:#DDF3E4;--blue-soft:#DEE8FD;--gray-soft:#E6E8EC;--purple-soft:#E6E3FB;
+  --good:#2EA05C;--warn:#E8A81C;--bad:#D93B3B;--good-soft:#DDF3E4;--warn-soft:#FBF0D2;--bad-soft:#F9DCDC;
+  --accent:#0E9F8E;--accent-soft:#DDF3EF;--on-accent:#FFFFFF;
+  --shadow:0 1px 2px rgba(31,42,68,.06),0 8px 24px rgba(31,42,68,.08);
+  --radius:10px;--font:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1626;--surface:#172033;--surface-2:#1F2A40;--line:#2A3650;--line-strong:#3A4A68;
+    --ink:#E6ECF5;--ink-2:#B7C2D4;--muted:#8391A8;--navy:#E6ECF5;
+    --teal:#2BC4B0;--orange:#F5A54A;--green:#4CC47A;--blue:#6B95F5;--gray:#9AA3B2;--purple:#9B8EF7;
+    --teal-soft:#153C3A;--orange-soft:#3E2C15;--green-soft:#173A26;--blue-soft:#1C2A4E;--gray-soft:#2A3140;--purple-soft:#2B2650;
+    --good:#4CC47A;--warn:#F2C14E;--bad:#F06A6A;--good-soft:#173A26;--warn-soft:#3E3416;--bad-soft:#44201F;
+    --accent:#2BC4B0;--accent-soft:#153C3A;--on-accent:#0B1220;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1626;--surface:#172033;--surface-2:#1F2A40;--line:#2A3650;--line-strong:#3A4A68;
+  --ink:#E6ECF5;--ink-2:#B7C2D4;--muted:#8391A8;--navy:#E6ECF5;
+  --teal:#2BC4B0;--orange:#F5A54A;--green:#4CC47A;--blue:#6B95F5;--gray:#9AA3B2;--purple:#9B8EF7;
+  --teal-soft:#153C3A;--orange-soft:#3E2C15;--green-soft:#173A26;--blue-soft:#1C2A4E;--gray-soft:#2A3140;--purple-soft:#2B2650;
+  --good:#4CC47A;--warn:#F2C14E;--bad:#F06A6A;--good-soft:#173A26;--warn-soft:#3E3416;--bad-soft:#44201F;
+  --accent:#2BC4B0;--accent-soft:#153C3A;--on-accent:#0B1220;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{margin:0;line-height:1.25;text-wrap:balance;font-weight:600}
+h1{font-size:22px}h2{font-size:17px}h3{font-size:15px}h4{font-size:13.5px}
+p{margin:0}
+a{color:var(--blue)}
+button,input,select,textarea{font:inherit;color:inherit}
+code,.mono,.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+
+/* role accents */
+[data-role="candidate"]{--accent:var(--teal);--accent-soft:var(--teal-soft)}
+[data-role="lecturer"]{--accent:var(--green);--accent-soft:var(--green-soft)}
+[data-role="recruiter"]{--accent:var(--blue);--accent-soft:var(--blue-soft)}
+[data-role="admin"]{--accent:var(--gray);--accent-soft:var(--gray-soft)}
+.path-career{--accent:var(--orange);--accent-soft:var(--orange-soft)}
+.ai-scope{--accent:var(--purple);--accent-soft:var(--purple-soft)}
+
+/* top bar */
+.topbar{position:sticky;top:0;z-index:20;height:56px;display:flex;align-items:center;gap:16px;padding-inline:16px;background:var(--surface);border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:16px;letter-spacing:-.01em;white-space:nowrap}
+.logo .mark{width:26px;height:26px;border-radius:7px;background:var(--navy);color:#fff;display:grid;place-items:center;font-family:var(--mono);font-size:12px;font-weight:600}
+:root[data-theme="dark"] .logo .mark{color:#0F1626}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .logo .mark{color:#0F1626}}
+.demo-tag{font-size:11px;color:var(--muted);border:1px dashed var(--line-strong);border-radius:999px;padding:1px 8px;white-space:nowrap}
+.seg{display:flex;background:var(--surface-2);border-radius:8px;padding:3px;gap:2px;margin-left:auto}
+.seg button{border:0;background:transparent;padding:5px 12px;border-radius:6px;cursor:pointer;color:var(--ink-2);font-weight:500;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.seg button i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px}
+
+/* shell */
+.shell{display:grid;grid-template-columns:224px minmax(0,1fr);min-height:calc(100vh - 56px)}
+.side{border-right:1px solid var(--line);background:var(--surface);padding:14px 10px;position:sticky;top:56px;height:calc(100vh - 56px);overflow:auto}
+.side .grp{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:12px 10px 6px;font-weight:600}
+.side a{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:7px;color:var(--ink-2);text-decoration:none;font-weight:500}
+.side a:hover{background:var(--surface-2)}
+.side a.on{background:var(--accent-soft);color:var(--ink)}
+.side a .n{font-family:var(--mono);font-size:11px;color:var(--muted);width:16px}
+.side a.on .n{color:var(--accent)}
+.main{padding:24px 24px 96px;max-width:1120px;width:100%;min-width:0}
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--accent);font-weight:600;margin-bottom:4px}
+.sub{color:var(--muted);font-size:13px;margin-top:4px}
+
+/* primitives */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.card.raised{box-shadow:var(--shadow)}
+.card + .card{margin-top:14px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.row.between{justify-content:space-between}
+.stack{display:flex;flex-direction:column;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);padding:7px 12px;border-radius:7px;cursor:pointer;font-weight:500;line-height:1.2;white-space:nowrap}
+.btn:hover{background:var(--surface-2)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.primary:hover{filter:brightness(.95)}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--ink-2)}
+.btn.ghost:hover{background:var(--surface-2)}
+.btn.danger{color:var(--bad);border-color:var(--bad)}
+.btn.sm{padding:4px 9px;font-size:12.5px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap}
+.badge.teal{background:var(--teal-soft);color:var(--teal)}
+.badge.orange{background:var(--orange-soft);color:var(--orange)}
+.badge.green{background:var(--green-soft);color:var(--green)}
+.badge.blue{background:var(--blue-soft);color:var(--blue)}
+.badge.gray{background:var(--gray-soft);color:var(--gray)}
+.badge.purple{background:var(--purple-soft);color:var(--purple)}
+.badge.good{background:var(--good-soft);color:var(--good)}
+.badge.warn{background:var(--warn-soft);color:var(--warn)}
+.badge.bad{background:var(--bad-soft);color:var(--bad)}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:12px;padding:2px 8px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2)}
+.chip.gap{border-color:var(--bad);color:var(--bad);background:var(--bad-soft)}
+.chip.have{border-color:var(--good);color:var(--good);background:var(--good-soft)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--ink-2);font-weight:500}
+.input,.select,.textarea{width:100%;border:1px solid var(--line-strong);border-radius:7px;padding:7px 10px;background:var(--surface);color:var(--ink)}
+.textarea{min-height:90px;resize:vertical}
+.textarea.code{font-family:var(--mono);font-size:13px;min-height:220px;line-height:1.5;tab-size:2}
+.progress{height:6px;background:var(--surface-2);border-radius:999px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--accent);border-radius:999px}
+.progress.good i{background:var(--good)}.progress.warn i{background:var(--warn)}.progress.bad i{background:var(--bad)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px}
+.kv dt{color:var(--muted)}.kv dd{margin:0}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-family:var(--mono)}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:16px;overflow-x:auto}
+.tabs button{border:0;background:transparent;padding:8px 12px;cursor:pointer;color:var(--muted);font-weight:500;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.empty{padding:28px;text-align:center;color:var(--muted);border:1px dashed var(--line-strong);border-radius:var(--radius)}
+.stat{padding:14px 16px}
+.stat .lbl{font-size:12px;color:var(--muted)}
+.stat .val{font-family:var(--mono);font-size:24px;font-weight:600;margin-top:2px}
+.stat .val small{font-size:13px;color:var(--muted);font-weight:400}
+.note{font-size:12.5px;color:var(--ink-2);background:var(--surface-2);border-radius:7px;padding:8px 10px}
+.note.ai{background:var(--purple-soft);color:var(--ink)}
+.note.ai b{color:var(--purple)}
+.divider{height:1px;background:var(--line);margin:14px 0}
+.list{display:flex;flex-direction:column}
+.list > div{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.list > div:last-child{border-bottom:0}
+.list .grow{flex:1;min-width:0}
+.list .t{font-weight:500}
+.list .m{font-size:12px;color:var(--muted)}
+.score-big{font-family:var(--mono);font-size:40px;font-weight:600;line-height:1}
+
+/* rooms */
+.room{cursor:pointer;position:relative;transition:transform .12s}
+.room:hover{transform:translateY(-1px)}
+.room.on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.room .career{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.room .pct{font-family:var(--mono);font-size:26px;font-weight:600}
+
+/* quiz */
+.opt{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:8px;cursor:pointer;background:var(--surface)}
+.opt:hover{border-color:var(--line-strong);background:var(--surface-2)}
+.opt.ok{border-color:var(--good);background:var(--good-soft)}
+.opt.ko{border-color:var(--bad);background:var(--bad-soft)}
+.opt .k{font-family:var(--mono);font-size:12px;color:var(--muted);width:16px;flex:none;padding-top:2px}
+.theta{font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+/* flashcard */
+.flash{perspective:1000px;height:200px;cursor:pointer}
+.flash .in{position:relative;width:100%;height:100%;transition:transform .4s;transform-style:preserve-3d}
+.flash.flipped .in{transform:rotateY(180deg)}
+.flash .face{position:absolute;inset:0;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;border-radius:var(--radius);border:1px solid var(--line);background:var(--surface);font-size:15px}
+.flash .face.back{transform:rotateY(180deg);background:var(--accent-soft);border-color:var(--accent)}
+.sm2{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.sm2 button{flex-direction:column;align-items:center;gap:1px;padding:8px 6px}
+.sm2 button small{font-size:11px;color:var(--muted);font-weight:400}
+
+/* sandbox */
+.cases{display:flex;flex-direction:column;gap:6px;font-family:var(--mono);font-size:12.5px}
+.cases div{display:flex;gap:8px;align-items:center;padding:6px 8px;border-radius:6px;background:var(--surface-2)}
+.cases .ok{color:var(--good)}.cases .ko{color:var(--bad)}
+.cases .st{width:44px;font-weight:600;flex:none}
+
+/* CV */
+.cv-prev{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;font-size:13px;min-height:320px}
+.cv-prev h2{font-size:20px;margin-bottom:2px}
+.cv-prev .sec{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:14px 0 6px;font-weight:600;border-bottom:1px solid var(--line);padding-bottom:3px}
+.cv-prev ul{margin:0;padding-left:18px}
+
+/* jobs / kanban */
+.jd{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start}
+.match{font-family:var(--mono);font-size:22px;font-weight:600;text-align:right}
+.match small{font-size:11px;color:var(--muted);display:block;font-weight:400}
+.kanban{display:grid;grid-template-columns:repeat(4,minmax(180px,1fr));gap:10px;overflow-x:auto}
+.kcol{background:var(--surface-2);border-radius:8px;padding:10px;min-height:120px}
+.kcol h4{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:8px;display:flex;justify-content:space-between}
+.kcard{background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:9px 10px;margin-bottom:8px;font-size:12.5px}
+.kcard .t{font-weight:600}
+.kcard .m{color:var(--muted);font-size:11.5px;margin-bottom:6px}
+
+/* chat */
+.chat{display:flex;flex-direction:column;gap:10px;max-height:420px;overflow:auto;padding:4px}
+.msg{max-width:78%;padding:9px 12px;border-radius:12px;font-size:13.5px;line-height:1.45}
+.msg.ai{align-self:flex-start;background:var(--surface-2);border-bottom-left-radius:4px}
+.msg.me{align-self:flex-end;background:var(--accent);color:var(--on-accent);border-bottom-right-radius:4px}
+.msg .who{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;opacity:.7;margin-bottom:2px;font-weight:600}
+.star{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.star div{text-align:center;background:var(--surface-2);border-radius:6px;padding:6px}
+.star b{font-family:var(--mono);font-size:18px;display:block}
+.star small{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+
+/* AI panel */
+.fab{position:fixed;right:20px;bottom:20px;z-index:30;border:0;background:var(--purple);color:#fff;border-radius:999px;padding:11px 16px;font-weight:600;cursor:pointer;box-shadow:var(--shadow);display:flex;align-items:center;gap:8px}
+.panel{position:fixed;right:20px;bottom:76px;width:min(380px,calc(100vw - 32px));max-height:min(560px,calc(100vh - 100px));z-index:30;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden}
+.panel .ph{padding:12px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;font-weight:600}
+.panel .ph .dot{width:9px;height:9px;border-radius:50%;background:var(--purple)}
+.panel .chat{flex:1;padding:12px;max-height:none}
+.panel .quick{display:flex;gap:6px;flex-wrap:wrap;padding:8px 12px;border-top:1px solid var(--line)}
+.panel form{display:flex;gap:6px;padding:10px 12px;border-top:1px solid var(--line)}
+
+/* toast / modal */
+.toasts{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:40;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
+.toast{background:var(--navy);color:var(--bg);padding:9px 14px;border-radius:8px;font-size:13px;box-shadow:var(--shadow);max-width:min(480px,calc(100vw - 32px));animation:up .2s ease-out}
+@keyframes up{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.modal-bg{position:fixed;inset:0;background:rgba(15,22,38,.45);z-index:50;display:grid;place-items:center;padding:16px}
+.modal{background:var(--surface);border-radius:12px;padding:20px;width:min(560px,100%);max-height:90vh;overflow:auto;box-shadow:var(--shadow)}
+
+/* chart */
+.bars{width:100%;height:auto;display:block}
+.bars text{font-family:var(--mono);font-size:11px;fill:var(--muted)}
+.bars line{stroke:var(--line)}
+.bars rect{fill:var(--blue)}
+
+@media (max-width:720px){
+  .topbar{gap:8px;padding-inline:12px}
+  .demo-tag{display:none}
+  .seg{margin-left:auto}
+  .seg button{padding:5px 8px;font-size:12px}
+  .seg button span{display:none}
+  .seg button i{margin-right:0}
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .side{position:sticky;top:56px;height:auto;display:flex;gap:2px;overflow-x:auto;padding:6px 8px;border-right:0;border-bottom:1px solid var(--line);scrollbar-width:none}
+  .side .grp{display:none}
+  .side a{white-space:nowrap;padding:6px 10px}
+  .side a .n{display:none}
+  .main{padding:16px 16px 96px}
+  .grid{grid-template-columns:1fr!important}
+  .jd{grid-template-columns:1fr}
+  .match{text-align:left}
+  .sm2{grid-template-columns:repeat(2,1fr)}
+  .msg{max-width:92%}
+}
+</style>
+<div id="app" data-role="candidate">
+  <header class="topbar">
+    <div class="logo"><span class="mark">&lt;/&gt;</span>DevRoom</div>
+    <span class="demo-tag">Bản demo mock · dữ liệu giả · chạy trong trình duyệt</span>
+    <div class="seg" id="roleSeg" role="group" aria-label="Vai trò">
+      <button data-role="candidate" aria-pressed="true"><i style="background:var(--teal)"></i><span>Candidate</span></button>
+      <button data-role="lecturer"><i style="background:var(--green)"></i><span>Lecturer</span></button>
+      <button data-role="recruiter"><i style="background:var(--blue)"></i><span>Recruiter</span></button>
+      <button data-role="admin"><i style="background:var(--gray)"></i><span>Admin</span></button>
+    </div>
+    <button class="btn sm" id="btnReset" title="Xóa localStorage và seed lại">Reset demo</button>
+  </header>
+  <div class="shell">
+    <nav class="side" id="side" aria-label="Điều hướng"></nav>
+    <main class="main" id="main"></main>
+  </div>
+  <button class="fab" id="fab" aria-label="Mở trợ lý AI">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5l1.6 3.9 3.9 1.6-3.9 1.6L8 12.5 6.4 8.6 2.5 7l3.9-1.6z" fill="currentColor"/></svg>
+    Trợ lý AI
+  </button>
+  <aside class="panel ai-scope" id="panel" hidden aria-label="Trợ lý AI">
+    <div class="ph"><span class="dot"></span><span id="panelTitle">Trợ lý AI</span><button class="btn ghost sm" id="panelClose" style="margin-left:auto">Đóng</button></div>
+    <div class="chat" id="panelChat"></div>
+    <div class="quick" id="panelQuick"></div>
+    <form id="panelForm"><input class="input" id="panelInput" placeholder="Hỏi về roadmap, CV, việc làm, phỏng vấn…" autocomplete="off"><button class="btn primary" type="submit">Gửi</button></form>
+  </aside>
+  <div class="toasts" id="toasts"></div>
+  <div id="modalRoot"></div>
+</div>
+<script>
+/* ===== SEED DATA ===== */
+const SKILLS={js:"JavaScript",react:"React",css:"CSS",http:"HTTP/REST",testing:"Testing",git:"Git",python:"Python",sql:"SQL",docker:"Docker",linux:"Linux",cicd:"CI/CD",k8s:"Kubernetes",cloud:"Cloud (AWS)",pandas:"Pandas",stats:"Thống kê",dataviz:"Data viz",automation:"Test automation",mobileui:"Mobile UI",statemgmt:"State management"};
+const CAREERS=[
+  {id:"fe",name:"Frontend",skills:["js","react","css","http","testing","git"]},
+  {id:"be",name:"Backend",skills:["python","sql","http","docker","git","testing"]},
+  {id:"mobile",name:"Mobile",skills:["mobileui","js","statemgmt","http","git","testing"]},
+  {id:"devops",name:"DevOps",skills:["docker","linux","cicd","k8s","cloud","git"]},
+  {id:"data",name:"Data",skills:["python","sql","pandas","stats","dataviz","git"]},
+  {id:"qa",name:"QA",skills:["testing","automation","http","sql","js","git"]}
+];
+/* q: câu hỏi, o: 4 lựa chọn, a: index đúng, s: skill, d: độ khó Elo */
+const QBANK=[
+ {q:"`typeof null` trong JavaScript trả về gì?",o:["\"null\"","\"object\"","\"undefined\"","\"boolean\""],a:1,s:"js",d:1100},
+ {q:"Kết quả của `[1,2,3].map(x => x * 2)` là?",o:["[1,2,3]","[2,4,6]","6","undefined"],a:1,s:"js",d:1000},
+ {q:"Closure trong JavaScript là gì?",o:["Hàm không có tham số","Hàm ghi nhớ scope nơi nó được tạo ra","Hàm chỉ chạy một lần","Một kiểu vòng lặp"],a:1,s:"js",d:1300},
+ {q:"`Promise.all([p1,p2])` sẽ reject khi nào?",o:["Khi tất cả promise reject","Khi bất kỳ promise nào reject","Không bao giờ reject","Khi p1 resolve trước p2"],a:1,s:"js",d:1400},
+ {q:"Event loop xử lý microtask (Promise.then) so với macrotask (setTimeout) như thế nào?",o:["Macrotask luôn chạy trước","Microtask được xử lý hết trước khi lấy macrotask kế tiếp","Chạy song song","Tùy trình duyệt"],a:1,s:"js",d:1650},
+ {q:"`let` khác `var` ở điểm nào?",o:["`let` có block scope, `var` có function scope","`let` không thể gán lại","`var` chỉ dùng trong class","Không khác gì"],a:0,s:"js",d:1150},
+ {q:"Hook nào của React dùng để lưu state trong function component?",o:["useEffect","useState","useRef","useMemo"],a:1,s:"react",d:1000},
+ {q:"`useEffect(() => {...}, [])` chạy khi nào?",o:["Mỗi lần render","Chỉ sau lần mount đầu tiên","Trước khi render","Khi state thay đổi"],a:1,s:"react",d:1250},
+ {q:"Vì sao React cần `key` khi render danh sách?",o:["Để CSS hoạt động","Để reconciliation xác định phần tử nào thay đổi","Để tránh lỗi cú pháp","Chỉ là quy ước"],a:1,s:"react",d:1350},
+ {q:"`useMemo` và `useCallback` khác nhau thế nào?",o:["Giống hệt nhau","useMemo ghi nhớ giá trị, useCallback ghi nhớ hàm","useCallback chạy async","useMemo chỉ dùng cho mảng"],a:1,s:"react",d:1550},
+ {q:"Thuộc tính CSS nào tạo bố cục 2 chiều (hàng và cột)?",o:["display: flex","display: grid","float","position: absolute"],a:1,s:"css",d:1050},
+ {q:"Specificity của `#id .class p` so với `.a .b .c` thì cái nào thắng?",o:["`.a .b .c`","`#id .class p`","Bằng nhau, cái sau thắng","Tùy trình duyệt"],a:1,s:"css",d:1400},
+ {q:"`position: sticky` hoạt động dựa trên gì?",o:["Viewport luôn luôn","Scroll container gần nhất và ngưỡng top/bottom","Chỉ khi có z-index","Chỉ trong flex"],a:1,s:"css",d:1500},
+ {q:"HTTP status 404 nghĩa là gì?",o:["Server lỗi","Không tìm thấy tài nguyên","Chưa xác thực","Chuyển hướng"],a:1,s:"http",d:1000},
+ {q:"Phương thức HTTP nào được coi là idempotent?",o:["POST","PUT","PATCH (luôn luôn)","Không có"],a:1,s:"http",d:1350},
+ {q:"Sự khác nhau giữa 401 và 403?",o:["401 chưa xác thực, 403 đã xác thực nhưng không có quyền","Giống nhau","401 là lỗi server","403 là chuyển hướng"],a:0,s:"http",d:1300},
+ {q:"Header nào cho phép cache phía client trong 1 giờ?",o:["Cache-Control: max-age=3600","Expires: 1h","ETag: 3600","Content-Type: cache"],a:0,s:"http",d:1550},
+ {q:"Unit test khác integration test ở điểm nào?",o:["Unit test kiểm tra 1 đơn vị cô lập, integration kiểm tra nhiều thành phần phối hợp","Unit test chậm hơn","Integration test không cần code","Không khác"],a:0,s:"testing",d:1050},
+ {q:"Mock và stub khác nhau như thế nào?",o:["Giống nhau","Stub trả dữ liệu cố định; mock còn kiểm tra cách nó được gọi","Mock chỉ dùng cho DB","Stub chỉ dùng trong E2E"],a:1,s:"testing",d:1450},
+ {q:"Kim tự tháp test khuyến nghị tỉ lệ nào?",o:["Nhiều E2E, ít unit","Nhiều unit, ít E2E","Bằng nhau","Chỉ manual"],a:1,s:"testing",d:1250},
+ {q:"`git rebase` khác `git merge` ở điểm gì?",o:["Rebase viết lại lịch sử thành đường thẳng, merge tạo merge commit","Rebase xóa nhánh","Merge nhanh hơn","Không khác"],a:0,s:"git",d:1350},
+ {q:"Lệnh nào tạo nhánh mới và chuyển sang nó?",o:["git branch new","git checkout -b new","git switch","git new branch"],a:1,s:"git",d:1000},
+ {q:"`git stash` dùng để làm gì?",o:["Xóa thay đổi","Tạm cất thay đổi chưa commit","Đẩy code lên remote","Gộp commit"],a:1,s:"git",d:1150},
+ {q:"Để hoàn tác commit đã push mà không viết lại lịch sử, dùng lệnh nào?",o:["git reset --hard","git revert","git rm","git checkout"],a:1,s:"git",d:1450},
+ {q:"List comprehension `[x*x for x in range(4)]` cho kết quả?",o:["[0,1,4,9]","[1,4,9,16]","[0,1,2,3]","Lỗi"],a:0,s:"python",d:1050},
+ {q:"GIL trong CPython ảnh hưởng gì?",o:["Chỉ 1 thread chạy bytecode Python tại một thời điểm","Cấm dùng thread","Tăng tốc đa luồng","Không ảnh hưởng"],a:0,s:"python",d:1600},
+ {q:"Decorator trong Python là gì?",o:["Kiểu dữ liệu","Hàm nhận hàm và trả về hàm mới","Class đặc biệt","Câu lệnh import"],a:1,s:"python",d:1350},
+ {q:"`SELECT COUNT(*) FROM orders WHERE status='paid'` đếm gì?",o:["Tất cả đơn","Số đơn có status = paid","Số cột","Tổng tiền"],a:1,s:"sql",d:1000},
+ {q:"INNER JOIN khác LEFT JOIN ở điểm nào?",o:["LEFT JOIN giữ toàn bộ dòng bảng trái kể cả không khớp","INNER JOIN nhanh hơn luôn","Giống nhau","LEFT JOIN chỉ dùng 2 bảng"],a:0,s:"sql",d:1200},
+ {q:"Index B-tree giúp truy vấn nào nhanh hơn?",o:["`WHERE email = ?` và range scan","Chỉ `SELECT *`","`LIKE '%abc'`","Mọi truy vấn INSERT"],a:0,s:"sql",d:1500},
+ {q:"Vấn đề N+1 query là gì?",o:["Query trả N+1 dòng","1 query lấy danh sách rồi N query lấy chi tiết từng dòng","Lỗi cú pháp SQL","Thiếu index"],a:1,s:"sql",d:1650},
+ {q:"Sự khác nhau giữa Docker image và container?",o:["Giống nhau","Image là bản mẫu chỉ đọc, container là instance đang chạy","Container nhỏ hơn image","Image chạy trên Windows"],a:1,s:"docker",d:1050},
+ {q:"Mục đích của multi-stage build trong Dockerfile?",o:["Chạy nhiều container","Giảm kích thước image cuối bằng cách bỏ toolchain build","Tăng RAM","Chỉ để debug"],a:1,s:"docker",d:1450},
+ {q:"Docker volume dùng để làm gì?",o:["Lưu dữ liệu bền ngoài vòng đời container","Tăng CPU","Đặt tên image","Mở port"],a:0,s:"docker",d:1200},
+ {q:"Lệnh Linux nào xem 20 dòng cuối file log và theo dõi liên tục?",o:["cat -f","tail -n 20 -f app.log","head -20","less -n"],a:1,s:"linux",d:1100},
+ {q:"`chmod 644 file` nghĩa là gì?",o:["Owner rw, group r, others r","Ai cũng rwx","Owner x, others rw","Không ai đọc được"],a:0,s:"linux",d:1300},
+ {q:"CI khác CD ở điểm nào?",o:["CI tích hợp & test tự động mỗi commit, CD tự động triển khai","CI là deploy","Giống nhau","CD chỉ chạy thủ công"],a:0,s:"cicd",d:1150},
+ {q:"Chiến lược deploy nào chuyển traffic dần sang phiên bản mới?",o:["Big bang","Canary","Rollback","Snapshot"],a:1,s:"cicd",d:1450},
+ {q:"Pod trong Kubernetes là gì?",o:["Một node vật lý","Đơn vị triển khai nhỏ nhất, chứa 1+ container","Một file YAML","Một image"],a:1,s:"k8s",d:1250},
+ {q:"Kubernetes Service loại ClusterIP làm gì?",o:["Mở port ra internet","Cấp IP nội bộ ổn định cho một nhóm pod","Tạo volume","Scale node"],a:1,s:"k8s",d:1550},
+ {q:"Dịch vụ AWS nào là object storage?",o:["EC2","S3","RDS","Lambda"],a:1,s:"cloud",d:1100},
+ {q:"`df.groupby('city')['sales'].sum()` trong Pandas trả về gì?",o:["Tổng sales theo từng city","Tổng tất cả","Số dòng","Danh sách city"],a:0,s:"pandas",d:1200},
+ {q:"`df.merge(other, how='left', on='id')` tương đương SQL nào?",o:["INNER JOIN","LEFT JOIN","UNION","CROSS JOIN"],a:1,s:"pandas",d:1400},
+ {q:"Giá trị p-value < 0.05 thường được diễn giải là?",o:["Chắc chắn đúng","Bác bỏ giả thuyết H0 ở mức ý nghĩa 5%","Không có ý nghĩa","Dữ liệu sai"],a:1,s:"stats",d:1350},
+ {q:"Trung vị (median) ít bị ảnh hưởng bởi gì so với trung bình?",o:["Kích thước mẫu","Giá trị ngoại lai (outlier)","Đơn vị đo","Không khác"],a:1,s:"stats",d:1100},
+ {q:"Biểu đồ nào phù hợp nhất để so sánh giá trị giữa các nhóm rời rạc?",o:["Pie chart","Bar chart","Line chart","Scatter"],a:1,s:"dataviz",d:1150},
+ {q:"Page Object Model trong test automation giúp gì?",o:["Tăng tốc trình duyệt","Tách locator/hành động khỏi test case để dễ bảo trì","Chạy test song song","Thay thế assertion"],a:1,s:"automation",d:1400},
+ {q:"Flaky test là gì?",o:["Test luôn fail","Test lúc pass lúc fail dù code không đổi","Test chạy chậm","Test không có assertion"],a:1,s:"automation",d:1200},
+ {q:"Trong mobile, vì sao không gọi mạng trên main/UI thread?",o:["Không có API","Sẽ block UI, gây giật hoặc ANR","Không an toàn bảo mật","Tốn pin hơn"],a:1,s:"mobileui",d:1250},
+ {q:"RecyclerView (Android) / FlatList (RN) tối ưu gì?",o:["Tái sử dụng view khi cuộn danh sách dài","Tăng độ phân giải","Nén ảnh","Tự động cache mạng"],a:0,s:"mobileui",d:1400},
+ {q:"Nguyên tắc single source of truth trong state management nghĩa là?",o:["Mỗi màn hình một store","State ứng dụng nằm ở một nơi duy nhất, UI derive từ đó","Không dùng state","Chỉ dùng localStorage"],a:1,s:"statemgmt",d:1350}
+];
+const MODULES=[
+ {id:"m1",name:"JavaScript nền tảng: scope, closure, async",career:"fe",skills:["js"],hours:12},
+ {id:"m2",name:"React hooks & quản lý state",career:"fe",skills:["react","statemgmt"],hours:16},
+ {id:"m3",name:"CSS layout hiện đại: Flex, Grid, responsive",career:"fe",skills:["css"],hours:8},
+ {id:"m4",name:"HTTP, REST API và caching",career:"be",skills:["http"],hours:6},
+ {id:"m5",name:"Testing: unit, integration, mocking",career:"qa",skills:["testing"],hours:10},
+ {id:"m6",name:"Git nâng cao: rebase, revert, quy trình PR",career:"fe",skills:["git"],hours:4},
+ {id:"m7",name:"Python cho backend: FastAPI cơ bản",career:"be",skills:["python","http"],hours:14},
+ {id:"m8",name:"SQL & tối ưu truy vấn: index, join, N+1",career:"be",skills:["sql"],hours:12},
+ {id:"m9",name:"Docker từ Dockerfile tới compose",career:"devops",skills:["docker"],hours:8},
+ {id:"m10",name:"CI/CD với GitHub Actions",career:"devops",skills:["cicd","git"],hours:6},
+ {id:"m11",name:"Pandas & phân tích dữ liệu thực hành",career:"data",skills:["pandas","python"],hours:14},
+ {id:"m12",name:"Thống kê ứng dụng & trực quan hóa",career:"data",skills:["stats","dataviz"],hours:10},
+ {id:"m13",name:"Kubernetes cơ bản: pod, service, deployment",career:"devops",skills:["k8s"],hours:12},
+ {id:"m14",name:"Test automation với Playwright",career:"qa",skills:["automation","js"],hours:10}
+];
+const BASE_ROADMAPS={fe:["m1","m3","m2","m4","m5","m6"],be:["m7","m4","m8","m9","m5","m6"],data:["m11","m8","m12","m6"]};
+/* Bài tập: type mcq | code | flashcard | essay; tags; diff 1–5 (Elo ≈ 900 + diff*180) */
+const EXERCISES=[
+ {id:"e1",name:"Dự đoán output closure trong vòng lặp",type:"mcq",tags:["js","closure"],diff:3},
+ {id:"e2",name:"Viết hàm debounce",type:"code",tags:["js","async"],diff:3},
+ {id:"e3",name:"Phân biệt useEffect / useLayoutEffect",type:"essay",tags:["react","hooks"],diff:4},
+ {id:"e4",name:"Flashcard: HTTP status codes",type:"flashcard",tags:["http"],diff:1},
+ {id:"e5",name:"Căn giữa phần tử bằng Grid",type:"code",tags:["css","layout"],diff:2},
+ {id:"e6",name:"Viết unit test cho hàm tính thuế",type:"code",tags:["testing","js"],diff:2},
+ {id:"e7",name:"Giải conflict khi rebase",type:"essay",tags:["git"],diff:3},
+ {id:"e8",name:"Tối ưu query có N+1",type:"essay",tags:["sql","performance"],diff:4},
+ {id:"e9",name:"Viết Dockerfile multi-stage cho Node app",type:"code",tags:["docker"],diff:3},
+ {id:"e10",name:"Flashcard: lệnh Git thường dùng",type:"flashcard",tags:["git"],diff:1},
+ {id:"e11",name:"Groupby & pivot trong Pandas",type:"code",tags:["pandas","python"],diff:3},
+ {id:"e12",name:"Phân biệt p-value và confidence interval",type:"mcq",tags:["stats"],diff:3},
+ {id:"e13",name:"Thiết kế test case cho form đăng nhập",type:"essay",tags:["testing","qa"],diff:2},
+ {id:"e14",name:"Viết pipeline CI chạy test + build image",type:"code",tags:["cicd","docker"],diff:4},
+ {id:"e15",name:"Flashcard: React hooks",type:"flashcard",tags:["react"],diff:1},
+ {id:"e16",name:"Viết Page Object cho trang checkout",type:"code",tags:["automation","testing"],diff:3}
+];
+const FLASHCARDS=[
+ {id:"f1",s:"http",front:"HTTP 201 nghĩa là gì?",back:"Created – tài nguyên mới đã được tạo (thường sau POST)."},
+ {id:"f2",s:"http",front:"HTTP 429 nghĩa là gì?",back:"Too Many Requests – client bị rate limit."},
+ {id:"f3",s:"git",front:"Lệnh xem lịch sử commit dạng 1 dòng, có nhánh?",back:"git log --oneline --graph --all"},
+ {id:"f4",s:"git",front:"Khác biệt `git fetch` và `git pull`?",back:"fetch chỉ tải về; pull = fetch + merge (hoặc rebase) vào nhánh hiện tại."},
+ {id:"f5",s:"js",front:"`==` và `===` khác nhau?",back:"`==` ép kiểu rồi so sánh; `===` so sánh cả kiểu lẫn giá trị."},
+ {id:"f6",s:"react",front:"Khi nào dùng useRef thay useState?",back:"Khi cần giữ giá trị qua các render mà không muốn re-render (DOM ref, timer id)."},
+ {id:"f7",s:"sql",front:"HAVING khác WHERE?",back:"WHERE lọc trước khi group; HAVING lọc sau khi GROUP BY (trên aggregate)."},
+ {id:"f8",s:"docker",front:"`docker compose up -d` làm gì?",back:"Khởi động các service trong compose file ở chế độ nền (detached)."},
+ {id:"f9",s:"python",front:"`*args` và `**kwargs`?",back:"*args gom positional args thành tuple; **kwargs gom keyword args thành dict."},
+ {id:"f10",s:"testing",front:"AAA pattern trong unit test?",back:"Arrange – Act – Assert."},
+ {id:"f11",s:"css",front:"`rem` khác `em`?",back:"rem tính theo font-size của root; em theo font-size của phần tử cha."},
+ {id:"f12",s:"stats",front:"Độ lệch chuẩn đo cái gì?",back:"Mức phân tán của dữ liệu quanh giá trị trung bình."}
+];
+const CODE_PROBLEMS=[
+ {id:"c1",title:"Two Sum",skill:"js",diff:"Dễ",desc:"Cho mảng số nguyên `nums` và số `target`. Trả về mảng 2 chỉ số `[i, j]` (i < j) sao cho nums[i] + nums[j] = target. Giả sử luôn có đúng 1 đáp án.",
+  starter:"function twoSum(nums, target) {\n  // viết code ở đây\n  \n}",fn:"twoSum",
+  tests:[{args:[[2,7,11,15],9],want:[0,1]},{args:[[3,2,4],6],want:[1,2]},{args:[[3,3],6],want:[0,1]},{args:[[1,5,9,13],22],want:[2,3]}]},
+ {id:"c2",title:"Valid Parentheses",skill:"js",diff:"Dễ",desc:"Cho chuỗi `s` chỉ gồm các ký tự `()[]{}`. Trả về `true` nếu các ngoặc đóng mở hợp lệ và đúng thứ tự.",
+  starter:"function isValid(s) {\n  // gợi ý: dùng stack\n  \n}",fn:"isValid",
+  tests:[{args:["()"],want:true},{args:["()[]{}"],want:true},{args:["(]"],want:false},{args:["([)]"],want:false}]},
+ {id:"c3",title:"Group Anagrams",skill:"js",diff:"Trung bình",desc:"Cho mảng chuỗi `strs`. Gom các chuỗi là anagram của nhau thành nhóm. Trả về mảng các nhóm; trong mỗi nhóm giữ thứ tự xuất hiện; các nhóm theo thứ tự phần tử đầu xuất hiện.",
+  starter:"function groupAnagrams(strs) {\n  // gợi ý: key = chữ cái đã sort\n  \n}",fn:"groupAnagrams",
+  tests:[{args:[["eat","tea","tan","ate","nat","bat"]],want:[["eat","tea","ate"],["tan","nat"],["bat"]]},{args:[[""]],want:[[""]]},{args:[["a"]],want:[["a"]]}]}
+];
+/* JD: src crawl | agent | recruiter ; salary triệu VND */
+const JDS=[
+ {id:"j1",title:"Frontend Developer (ReactJS)",company:"Sao Kim Software",career:"fe",level:"Middle",salary:[18,28],skills:["js","react","css","http","git"],src:"crawl",from:"TopCV",city:"Hà Nội",desc:"Phát triển giao diện web cho hệ thống quản lý bán lẻ. Yêu cầu 2+ năm React, thành thạo hooks, REST API, responsive."},
+ {id:"j2",title:"Backend Engineer (Python/FastAPI)",company:"VinaPay JSC",career:"be",level:"Middle",salary:[25,38],skills:["python","sql","http","docker","testing"],src:"crawl",from:"ITviec",city:"TP.HCM",desc:"Xây dựng API thanh toán, tối ưu PostgreSQL, viết unit test, deploy bằng Docker. Ưu tiên có kinh nghiệm fintech."},
+ {id:"j3",title:"Fresher Frontend (Vue/React)",company:"Hưng Thịnh Tech",career:"fe",level:"Fresher",salary:[9,13],skills:["js","css","git","http"],src:"agent",from:"Agent search · hungthinhtech.vn/careers",city:"Đà Nẵng",desc:"Tuyển fresher tốt nghiệp CNTT, nắm vững JavaScript, CSS, biết Git. Được đào tạo 2 tháng."},
+ {id:"j4",title:"DevOps Engineer",company:"CloudViet Solutions",career:"devops",level:"Senior",salary:[40,60],skills:["docker","k8s","cicd","linux","cloud","git"],src:"recruiter",from:"Recruiter · CloudViet",city:"Hà Nội",desc:"Vận hành cụm Kubernetes trên AWS, xây pipeline GitHub Actions, giám sát bằng Prometheus/Grafana."},
+ {id:"j5",title:"Data Analyst",company:"Tiki Retail Analytics",career:"data",level:"Junior",salary:[14,20],skills:["sql","python","pandas","stats","dataviz"],src:"crawl",from:"TopCV",city:"TP.HCM",desc:"Phân tích dữ liệu bán hàng, xây dashboard, viết SQL trên BigQuery, báo cáo tuần cho team vận hành."},
+ {id:"j6",title:"QA Automation Engineer",company:"FPT Software",career:"qa",level:"Middle",salary:[20,30],skills:["testing","automation","js","http","sql"],src:"crawl",from:"ITviec",city:"Hà Nội",desc:"Viết test automation với Playwright/Selenium, thiết kế test case, kiểm thử API, tích hợp CI."},
+ {id:"j7",title:"Mobile Developer (React Native)",company:"Momo Lab",career:"mobile",level:"Middle",salary:[22,35],skills:["mobileui","js","statemgmt","http","testing"],src:"agent",from:"Agent search · LinkedIn",city:"TP.HCM",desc:"Phát triển ứng dụng ví điện tử React Native, tối ưu hiệu năng danh sách, quản lý state với Redux Toolkit."},
+ {id:"j8",title:"Fullstack Developer (React + Node)",company:"Nhất Nam Digital",career:"fe",level:"Middle",salary:[20,30],skills:["js","react","http","sql","docker","git"],src:"recruiter",from:"Recruiter · Nhất Nam",city:"Remote",desc:"Làm sản phẩm SaaS cho doanh nghiệp SME. Cần React, Node/Express, PostgreSQL, Docker cơ bản."},
+ {id:"j9",title:"Data Engineer (Python/SQL)",company:"VNG Data Platform",career:"data",level:"Middle",salary:[30,45],skills:["python","sql","pandas","docker","git"],src:"crawl",from:"ITviec",city:"TP.HCM",desc:"Xây pipeline ETL bằng Airflow, tối ưu truy vấn dữ liệu lớn, đóng gói job bằng Docker."},
+ {id:"j10",title:"Junior Backend (Node/PostgreSQL)",company:"Sao Kim Software",career:"be",level:"Junior",salary:[12,18],skills:["js","sql","http","git","testing"],src:"recruiter",from:"Recruiter · Sao Kim",city:"Hà Nội",desc:"Viết REST API bằng Express, thiết kế bảng PostgreSQL, viết test với Jest."}
+];
+const CANDIDATES=[
+ {id:"u1",name:"Nguyễn Minh Anh",career:"fe",skills:{js:82,react:76,css:70,http:64,testing:52,git:68},mock:8.1,verified:true},
+ {id:"u2",name:"Trần Quốc Bảo",career:"be",skills:{python:78,sql:81,http:70,docker:62,git:66,testing:58},mock:7.6,verified:true},
+ {id:"u3",name:"Lê Thu Hà",career:"fe",skills:{js:66,react:58,css:80,http:55,testing:40,git:60},mock:6.9,verified:false},
+ {id:"u4",name:"Phạm Đức Long",career:"devops",skills:{docker:85,linux:80,cicd:74,k8s:69,cloud:62,git:72},mock:8.4,verified:true},
+ {id:"u5",name:"Hoàng Ngọc Mai",career:"data",skills:{python:72,sql:77,pandas:70,stats:65,dataviz:60,git:55},mock:7.2,verified:true},
+ {id:"u6",name:"Vũ Anh Tuấn",career:"qa",skills:{testing:79,automation:71,http:60,sql:52,js:58,git:63},mock:7.0,verified:false},
+ {id:"u7",name:"Đặng Thị Lan",career:"mobile",skills:{mobileui:74,js:70,statemgmt:66,http:58,git:61,testing:45},mock:6.5,verified:true},
+ {id:"u8",name:"Bùi Hữu Phước",career:"be",skills:{python:60,sql:64,http:62,docker:48,git:70,testing:50},mock:6.1,verified:false},
+ {id:"u9",name:"Ngô Gia Hân",career:"fe",skills:{js:90,react:88,css:72,http:75,testing:66,git:80},mock:8.8,verified:true},
+ {id:"u10",name:"Lý Văn Khoa",career:"data",skills:{python:65,sql:58,pandas:55,stats:70,dataviz:74,git:50},mock:6.4,verified:false}
+];
+const TRANSACTIONS=[
+ {id:"t1",date:"2026-09-10",who:"CloudViet Solutions",type:"Phí đăng JD",amount:1500000},
+ {id:"t2",date:"2026-09-09",who:"Nhất Nam Digital",type:"Phí mở hồ sơ (5 hồ sơ)",amount:2500000},
+ {id:"t3",date:"2026-09-08",who:"Sao Kim Software",type:"Phí đăng JD",amount:1500000},
+ {id:"t4",date:"2026-09-05",who:"Sao Kim Software",type:"Phí mở hồ sơ (3 hồ sơ)",amount:1500000},
+ {id:"t5",date:"2026-09-02",who:"Nhất Nam Digital",type:"Phí đăng JD",amount:1500000},
+ {id:"t6",date:"2026-08-28",who:"CloudViet Solutions",type:"Phí mở hồ sơ (8 hồ sơ)",amount:4000000},
+ {id:"t7",date:"2026-08-21",who:"VinaPay JSC",type:"Phí đăng JD",amount:1500000},
+ {id:"t8",date:"2026-08-14",who:"Momo Lab",type:"Gói Recruiter Pro (tháng)",amount:6000000},
+ {id:"t9",date:"2026-08-06",who:"FPT Software",type:"Phí mở hồ sơ (10 hồ sơ)",amount:5000000},
+ {id:"t10",date:"2026-07-30",who:"VNG Data Platform",type:"Phí đăng JD",amount:1500000}
+];
+const REVENUE_6M=[{m:"T4",v:9.5},{m:"T5",v:14},{m:"T6",v:11.5},{m:"T7",v:18},{m:"T8",v:16.5},{m:"T9",v:8.5}]; /* triệu VND */
+const SEED_LOGS=[
+ ["candidate","Đăng nhập",0],["candidate","Tạo phòng học Frontend",0],["candidate","Hoàn thành test đầu vào (8 câu)",0],
+ ["candidate","AI gợi ý roadmap Frontend",1850],["candidate","Trả lời bài tập e1: đúng",0],["candidate","Ôn flashcard f5: Tốt",0],
+ ["candidate","AI tạo CV nháp",2400],["candidate","AI đánh giá CV: 68/100",1720],["candidate","Xem match JD j1: 74%",0],
+ ["candidate","Mock interview j1 – điểm 7.2",6900],["candidate","Nhận đề xuất cải thiện: Testing",0],
+ ["lecturer","Thêm học phần m14",0],["lecturer","Thêm bài tập e16 (tags: automation, testing)",0],["lecturer","Cập nhật lộ trình base Backend",0],
+ ["recruiter","Đăng JD j4 DevOps Engineer",0],["recruiter","Tìm ứng viên cho j4",950],["recruiter","Mời phỏng vấn u4",0],
+ ["admin","Xem báo cáo token tuần",0],["admin","Đối soát giao dịch t6",0],["system","Crawler TopCV: +3 JD mới",0]
+];
+/* Kịch bản mock interview theo career */
+const INTERVIEW_QS={
+ fe:[{q:"Hãy kể về một lần bạn tối ưu hiệu năng render trong React. Tình huống là gì và bạn đã làm gì?",kw:["memo","usememo","usecallback","re-render","key","lazy","profiler","virtual"]},
+     {q:"Bạn xử lý lỗi gọi API thất bại trên UI như thế nào để người dùng không bị mất dữ liệu?",kw:["retry","toast","loading","error","state","optimistic","catch","fallback"]},
+     {q:"Mô tả cách bạn tổ chức CSS trong dự án lớn để nhiều người cùng làm không xung đột.",kw:["module","bem","tailwind","token","variable","component","scope","design system"]}],
+ be:[{q:"Kể về một API bạn từng thiết kế. Bạn chọn cấu trúc endpoint và mã lỗi thế nào?",kw:["rest","endpoint","status","401","404","validation","schema","version"]},
+     {q:"Một truy vấn SQL chạy chậm trên production. Bạn chẩn đoán và xử lý ra sao?",kw:["explain","index","n+1","join","cache","analyze","plan","slow"]},
+     {q:"Bạn đảm bảo an toàn cho API (xác thực, phân quyền, rate limit) như thế nào?",kw:["jwt","oauth","token","role","rate","limit","https","hash"]}],
+ mobile:[{q:"Kể về một màn hình danh sách dài bạn từng tối ưu trên mobile.",kw:["flatlist","recycler","lazy","virtual","memo","image","cache","pagination"]},
+     {q:"Bạn quản lý state toàn cục và đồng bộ offline như thế nào?",kw:["redux","zustand","store","offline","sync","queue","persist","cache"]},
+     {q:"Quy trình bạn phát hành một bản build lên store gồm những bước gì?",kw:["build","testflight","release","version","signing","ci","fastlane","review"]}],
+ devops:[{q:"Kể về một sự cố production bạn từng xử lý. Bạn phát hiện và khôi phục thế nào?",kw:["alert","log","rollback","monitor","grafana","prometheus","incident","postmortem"]},
+     {q:"Bạn thiết kế pipeline CI/CD cho một service như thế nào?",kw:["build","test","image","registry","deploy","stage","canary","artifact"]},
+     {q:"Bạn cấu hình Kubernetes để service tự scale và tự phục hồi ra sao?",kw:["hpa","replica","liveness","readiness","limit","request","deployment","autoscale"]}],
+ data:[{q:"Kể về một phân tích bạn từng làm dẫn đến quyết định kinh doanh cụ thể.",kw:["sql","dashboard","insight","metric","cohort","funnel","a/b","kết luận"]},
+     {q:"Dữ liệu đầu vào bẩn và thiếu. Bạn làm sạch và kiểm tra chất lượng như thế nào?",kw:["null","duplicate","outlier","validate","pandas","schema","impute","clean"]},
+     {q:"Bạn trình bày kết quả phân tích cho người không chuyên kỹ thuật thế nào?",kw:["biểu đồ","chart","story","đơn giản","kết luận","hành động","dashboard","insight"]}],
+ qa:[{q:"Kể về một bug nghiêm trọng bạn từng tìm ra. Bạn tái hiện và báo cáo thế nào?",kw:["reproduce","step","log","severity","priority","jira","evidence","regression"]},
+     {q:"Bạn thiết kế bộ test case cho tính năng thanh toán như thế nào?",kw:["boundary","equivalence","negative","edge","happy","matrix","risk","checklist"]},
+     {q:"Bạn xử lý flaky test trong pipeline automation thế nào?",kw:["retry","wait","locator","isolate","mock","data","timeout","stable"]}]
+};
+const CV_TEMPLATES={
+ fe:{title:"Frontend Developer",exp:"Xây dựng dashboard quản lý đơn hàng bằng React, giảm 40% thời gian tải nhờ code-splitting\nViết 120+ unit test với Jest và React Testing Library, coverage 85%\nTriển khai design system dùng CSS variables, dùng chung cho 3 sản phẩm"},
+ be:{title:"Backend Developer",exp:"Thiết kế REST API với FastAPI phục vụ 2.000 request/phút\nTối ưu truy vấn PostgreSQL, giảm thời gian báo cáo từ 12s xuống 1.5s\nĐóng gói dịch vụ bằng Docker, CI chạy test tự động mỗi PR"},
+ mobile:{title:"Mobile Developer",exp:"Phát triển app React Native 50k người dùng, crash-free 99.5%\nTối ưu FlatList giảm 60% thời gian cuộn danh sách 1.000 phần tử\nQuản lý state với Redux Toolkit, hỗ trợ offline sync"},
+ devops:{title:"DevOps Engineer",exp:"Vận hành cụm Kubernetes 12 node trên AWS, uptime 99.9%\nXây pipeline GitHub Actions rút thời gian deploy từ 40 phút xuống 8 phút\nThiết lập giám sát Prometheus/Grafana, giảm 70% thời gian phát hiện sự cố"},
+ data:{title:"Data Analyst",exp:"Xây dashboard doanh thu theo kênh, phục vụ 5 team vận hành\nPhân tích cohort phát hiện churn tăng 15% ở nhóm khách mới, đề xuất chương trình giữ chân\nViết pipeline Pandas làm sạch 2 triệu dòng dữ liệu mỗi ngày"},
+ qa:{title:"QA Engineer",exp:"Thiết kế 300+ test case cho module thanh toán, phát hiện 45 bug trước release\nXây bộ automation Playwright 150 kịch bản, chạy 15 phút trong CI\nGiảm 30% bug production sau khi áp dụng regression checklist"}
+};
+/* ===== CORE ===== */
+const KEY="devroom-demo-v1";
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const uid=()=>Math.random().toString(36).slice(2,8);
+const today=()=>new Date().toISOString().slice(0,10);
+const fmtVND=n=>n.toLocaleString("vi-VN")+" ₫";
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const careerOf=id=>CAREERS.find(c=>c.id===id);
+const modOf=id=>S.modules.find(m=>m.id===id);
+const prof=t=>Math.round(clamp((t-1000)/800,0,1)*100);
+const ROLE_NAMES={candidate:"Candidate",lecturer:"Lecturer",recruiter:"Recruiter",admin:"Admin",system:"System"};
+const SRC={crawl:["Crawl","gray"],agent:["Agent web search","purple"],recruiter:["Recruiter","blue"]};
+const STAGES=["Đã nộp","Sơ loại","Phỏng vấn","Offer"];
+
+let S=null;
+function seed(){
+  const fe={id:"r1",career:"fe",name:"Phòng Frontend",created:"2026-09-03",tested:true,theta:{js:1524,react:1502,css:1562,http:1176,testing:1048,git:1490},answered:{js:2,react:1,css:2,http:1,testing:1,git:1}};
+  const be={id:"r2",career:"be",name:"Phòng Backend",created:"2026-09-08",tested:false,theta:{},answered:{}};
+  const baseTs=Date.now()-1000*60*60*30;
+  return {
+    rooms:[fe,be],activeRoom:"r1",
+    roadmap:{r1:[{mid:"m5",status:"todo"},{mid:"m1",status:"done"},{mid:"m3",status:"done"},{mid:"m2",status:"doing"},{mid:"m4",status:"todo"},{mid:"m6",status:"todo"}]},
+    suggestions:[{id:"s1",roomId:"r1",mid:"m4",reason:"Match JD j1 Frontend Developer: thiếu HTTP/REST (proficiency 22).",src:"matching",status:"pending"}],
+    exDone:{},sm2:{},
+    cv:{name:"Nguyễn Văn An",title:"Frontend Developer",skills:"JavaScript, React, CSS, Git",github:"",exp:"Làm dự án web bán hàng cho môn học bằng React\nViết một số unit test với Jest\nDùng Git để làm việc nhóm 4 người"},
+    cvScore:null,
+    jds:JDS.map(j=>({...j})),apps:[{jdId:"j3",stage:1,date:"2026-09-06"}],
+    interviews:[],realInterviews:[{id:"ri1",date:"2026-09-07",company:"Hưng Thịnh Tech",result:"Chờ kết quả",asked:"Closure là gì; sự khác nhau giữa flex và grid; đã dùng Git rebase chưa",self:"Trả lời ổn phần CSS, hơi lúng túng ở closure."}],
+    modules:MODULES.map(m=>({...m})),exercises:EXERCISES.map(e=>({...e})),base:JSON.parse(JSON.stringify(BASE_ROADMAPS)),
+    invited:["u4"],transactions:TRANSACTIONS.map(t=>({...t})),
+    logs:SEED_LOGS.map((l,i)=>({ts:new Date(baseTs+i*1000*60*83).toISOString(),role:l[0],action:l[1],tokens:l[2]})),
+    role:"candidate",chat:[],learnTab:"daily",codeId:"c1",code:{},quiz:null,iv:null,ivSel:null
+  };
+}
+function load(){try{const r=localStorage.getItem(KEY);if(r)return JSON.parse(r)}catch(e){}return null}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function reset(){try{localStorage.removeItem(KEY)}catch(e){}S=seed();save();location.hash="#/candidate/rooms";route();toast("Đã reset và seed lại dữ liệu demo")}
+function log(action,tokens=0){S.logs.push({ts:new Date().toISOString(),role:S.role,action,tokens});save()}
+function toast(msg){const t=document.createElement("div");t.className="toast";t.textContent=msg;$("#toasts").appendChild(t);setTimeout(()=>t.remove(),3200)}
+function modal(html,onMount){const r=$("#modalRoot");r.innerHTML=`<div class="modal-bg" data-a="closeModal"><div class="modal">${html}</div></div>`;if(onMount)onMount(r)}
+function closeModal(){$("#modalRoot").innerHTML=""}
+const room=()=>S.rooms.find(r=>r.id===S.activeRoom)||S.rooms[0];
+const roomProf=r=>{const c=careerOf(r.career);const o={};c.skills.forEach(s=>o[s]=r.tested?prof(r.theta[s]??1200):0);return o};
+const roomProgress=r=>{const rm=S.roadmap[r.id]||[];if(!rm.length)return 0;return Math.round(rm.filter(x=>x.status==="done").length/rm.length*100)};
+const skillsPassed=r=>{const p=roomProf(r);return Object.values(p).filter(v=>v>=60).length};
+function cvSkillIds(){const txt=(S.cv.skills||"").toLowerCase();return Object.keys(SKILLS).filter(k=>{const n=SKILLS[k].toLowerCase();return txt.includes(n.split(/[\/ (]/)[0].toLowerCase())||txt.includes(k)})}
+function mySkillSet(){const r=room();const p=roomProf(r);const set=new Set(cvSkillIds());Object.keys(p).forEach(k=>{if(p[k]>=60)set.add(k)});return set}
+function myVector(){const r=room();const p=roomProf(r);const v={};Object.keys(p).forEach(k=>v[k]=p[k]/100);cvSkillIds().forEach(k=>{v[k]=Math.max(v[k]||0,.6)});return v}
+/* % match = 0.7·skill_match + 0.3·cosine */
+function matchJD(jd){
+  const have=mySkillSet();const v=myVector();
+  const inter=jd.skills.filter(s=>have.has(s));const sm=inter.length/jd.skills.length;
+  const keys=new Set([...Object.keys(v),...jd.skills]);let dot=0,a=0,b=0;
+  keys.forEach(k=>{const x=v[k]||0,y=jd.skills.includes(k)?1:0;dot+=x*y;a+=x*x;b+=y*y});
+  const cos=(a&&b)?dot/Math.sqrt(a*b):0;
+  return {pct:Math.round((0.7*sm+0.3*cos)*100),have:inter,gap:jd.skills.filter(s=>!have.has(s)),sm,cos};
+}
+/* Elo / CAT */
+function kFor(n){return n<3?64:n<6?32:16}
+function expected(theta,d){return 1/(1+Math.pow(10,(d-theta)/400))}
+function pickQuestion(r,asked){
+  const c=careerOf(r.career);const cnt={};c.skills.forEach(s=>cnt[s]=r.answered[s]||0);
+  const order=[...c.skills].sort((a,b)=>cnt[a]-cnt[b]);
+  for(const s of order){const th=r.theta[s]??1200;const pool=QBANK.map((q,i)=>({q,i})).filter(x=>x.q.s===s&&!asked.includes(x.i));if(pool.length){pool.sort((x,y)=>Math.abs(x.q.d-th)-Math.abs(y.q.d-th));return pool[0].i}}
+  return -1;
+}
+function eloUpdate(r,qi,correct,n){const q=QBANK[qi];const th=r.theta[q.s]??1200;const E=expected(th,q.d);const K=kFor(n);const nt=Math.round(th+K*((correct?1:0)-E));r.theta[q.s]=nt;r.answered[q.s]=(r.answered[q.s]||0)+1;return {E,K,from:th,to:nt}}
+/* SM-2 */
+function sm2(card,q){const c=card||{ef:2.5,interval:0,reps:0};let {ef,interval,reps}=c;
+  if(q<3){reps=0;interval=1}else{interval=reps===0?1:reps===1?6:Math.round(interval*ef);reps++}
+  ef=Math.max(1.3,ef+(0.1-(5-q)*(0.08+(5-q)*0.02)));
+  const due=new Date();due.setDate(due.getDate()+interval);
+  return {ef:+ef.toFixed(2),interval,reps,due:due.toISOString().slice(0,10)}}
+/* suggestions */
+function addSuggestion(roomId,mid,reason,src){if(S.suggestions.some(s=>s.roomId===roomId&&s.mid===mid&&s.status==="pending"))return false;S.suggestions.push({id:"s"+uid(),roomId,mid,reason,src,status:"pending"});return true}
+function suggestFromGap(roomId,gapSkills,src,ctx){let n=0;gapSkills.forEach(s=>{const m=S.modules.find(m=>m.skills.includes(s));if(m&&!(S.roadmap[roomId]||[]).some(x=>x.mid===m.id)){if(addSuggestion(roomId,m.id,`${ctx}: thiếu ${SKILLS[s]}.`,src))n++}});return n}
+function ensureRoadmap(r){if(S.roadmap[r.id])return;const base=S.base[r.career]||[];const p=roomProf(r);const list=base.map(mid=>({mid,status:"todo"}));
+  Object.keys(p).filter(s=>p[s]<50).forEach(s=>{const m=S.modules.find(m=>m.skills.includes(s));if(m&&!list.some(x=>x.mid===m.id))list.unshift({mid:m.id,status:"todo"})});
+  S.roadmap[r.id]=list}
+/* router */
+const NAV={
+  candidate:[["Con đường học"],["rooms","Phòng học","1"],["test","Test đầu vào","2"],["roadmap","Roadmap học","3"],["learn","Học (adaptive)","4"],["Con đường sự nghiệp"],["cv","CV","5"],["jobs","Việc làm","6"],["interview","Mock interview","7"],["real","Đánh giá real interview","8"]],
+  lecturer:[["Thiết kế"],["modules","Học phần",""],["exercises","Bài tập",""],["base","Lộ trình base",""]],
+  recruiter:[["Tuyển dụng"],["post","Đăng JD",""],["search","Tìm ứng viên",""]],
+  admin:[["Vận hành"],["logs","Logging & Tracking",""],["money","Quản lý tiền",""]]
+};
+function route(){
+  let [,role,page]=(location.hash||"#/candidate/rooms").split("/");
+  if(!NAV[role]){role="candidate"}
+  const pages=NAV[role].filter(x=>x.length>1).map(x=>x[0]);if(!pages.includes(page))page=pages[0];
+  S.role=role;$("#app").dataset.role=role;
+  $$("#roleSeg button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.role===role)));
+  $("#side").innerHTML=NAV[role].map(x=>x.length===1?`<div class="grp">${x[0]}</div>`:`<a href="#/${role}/${x[0]}" class="${x[0]===page?"on":""}"><span class="n">${x[2]}</span>${x[1]}</a>`).join("");
+  $("#fab").hidden=role!=="candidate";if(role!=="candidate")$("#panel").hidden=true;
+  const fn=PAGES[role+"/"+page];$("#main").innerHTML=fn?fn():`<div class="empty">Chưa có trang</div>`;
+  $("#main").className="main"+(["cv","jobs","interview","real"].includes(page)&&role==="candidate"?" path-career":"");
+  if(MOUNT[role+"/"+page])MOUNT[role+"/"+page]();
+  window.scrollTo(0,0);save();
+}
+function head(eyebrow,title,sub,right=""){return `<div class="page-head"><div><div class="eyebrow">${eyebrow}</div><h1>${title}</h1>${sub?`<p class="sub">${sub}</p>`:""}</div><div class="row">${right}</div></div>`}
+function bar(v,cls=""){return `<div class="progress ${cls}"><i style="width:${clamp(v,0,100)}%"></i></div>`}
+function profCls(v){return v>=60?"good":v>=40?"warn":"bad"}
+function skillTable(p){return `<div class="stack">${Object.keys(p).map(s=>`<div class="row" style="gap:12px"><span style="width:130px;font-weight:500">${SKILLS[s]}</span><div style="flex:1">${bar(p[s],profCls(p[s]))}</div><span class="num" style="width:36px;text-align:right">${p[s]}</span>${p[s]<60?`<span class="badge bad">gap</span>`:`<span class="badge good">đạt</span>`}</div>`).join("")}</div>`}
+const PAGES={},MOUNT={},ACT={closeModal};
+document.addEventListener("click",e=>{
+  const el=e.target.closest("[data-a]");if(!el)return;
+  if(el.dataset.a==="closeModal"&&e.target!==el)return;
+  const fn=ACT[el.dataset.a];if(fn){e.preventDefault();fn(el,e)}
+});
+/* ===== CANDIDATE · con đường học ===== */
+PAGES["candidate/rooms"]=()=>head("Con đường học · 1","Phòng học","Mỗi phòng = 1 career. Test đầu vào, roadmap và bài tập tính theo phòng đang hoạt động.",`<button class="btn primary" data-a="newRoom">+ Tạo phòng mới</button>`)+
+ `<div class="grid g3">${S.rooms.map(r=>{const c=careerOf(r.career);const on=r.id===S.activeRoom;return `<div class="card room ${on?"on":""}" data-a="pickRoom" data-id="${r.id}">
+   <div class="row between"><span class="career">${c.name}</span>${on?`<span class="badge teal">Đang hoạt động</span>`:""}</div>
+   <h3 style="margin:6px 0 10px">${esc(r.name)}</h3>
+   <div class="row between"><span class="pct">${roomProgress(r)}%</span><span class="sub">${skillsPassed(r)}/${c.skills.length} skill đã đạt</span></div>
+   ${bar(roomProgress(r))}
+   <div class="row between" style="margin-top:10px"><span class="m sub">${r.tested?"Đã test đầu vào":"Chưa test đầu vào"}</span><span class="sub">Tạo ${r.created}</span></div></div>`}).join("")}</div>`;
+ACT.newRoom=()=>modal(`<h2>Tạo phòng học</h2><div class="stack" style="margin-top:12px">
+ <label class="f">Career<select class="select" id="nrCareer">${CAREERS.map(c=>`<option value="${c.id}">${c.name}</option>`).join("")}</select></label>
+ <label class="f">Tên phòng<input class="input" id="nrName" placeholder="VD: Phòng DevOps"></label>
+ <div class="row" style="justify-content:flex-end"><button class="btn" data-a="closeModal">Hủy</button><button class="btn primary" data-a="createRoom">Tạo phòng</button></div></div>`);
+ACT.createRoom=()=>{const career=$("#nrCareer").value;const name=$("#nrName").value.trim()||("Phòng "+careerOf(career).name);const r={id:"r"+uid(),career,name,created:today(),tested:false,theta:{},answered:{}};S.rooms.push(r);S.activeRoom=r.id;S.quiz=null;log(`Tạo phòng học ${careerOf(career).name}`);closeModal();toast("Đã tạo phòng, làm test đầu vào để bắt đầu");location.hash="#/candidate/test";route()};
+ACT.pickRoom=el=>{S.activeRoom=el.dataset.id;S.quiz=null;log(`Chọn phòng ${room().name}`);route()};
+
+PAGES["candidate/test"]=()=>{const r=room();const c=careerOf(r.career);const q=S.quiz&&S.quiz.roomId===r.id?S.quiz:null;
+ const top=head("Con đường học · 2","Test đầu vào",`Phòng <b>${esc(r.name)}</b> · ${c.skills.length} skill · Elo theo skill, CAT chọn câu gần θ, K 64→32→16 (demo 8 câu)`);
+ if(q&&!q.done){const qq=QBANK[q.cur];const th=r.theta[qq.s]??1200;const a=q.answer;
+  return top+`<div class="card raised" style="max-width:720px"><div class="row between"><span class="badge teal">Câu ${q.idx+1}/8</span><span class="row"><span class="badge">${SKILLS[qq.s]}</span><span class="theta">d=${qq.d} · θ=${th}</span></span></div>
+  ${bar((q.idx+(a?1:0))/8*100)}<h2 style="margin:14px 0 12px">${esc(qq.q)}</h2>
+  <div class="stack">${qq.o.map((o,i)=>`<div class="opt ${a?(i===qq.a?"ok":i===a.pick?"ko":""):""}" ${a?"":`data-a="answer" data-i="${i}"`}><span class="k">${"ABCD"[i]}</span><span>${esc(o)}</span></div>`).join("")}</div>
+  ${a?`<div class="note" style="margin-top:12px">${a.correct?"Đúng.":"Sai."} E = ${a.upd.E.toFixed(2)} · K = ${a.upd.K} · θ<sub>${SKILLS[qq.s]}</sub> ${a.upd.from} → <b>${a.upd.to}</b></div><div class="row" style="justify-content:flex-end;margin-top:12px"><button class="btn primary" data-a="nextQ">${q.idx>=7?"Xem kết quả":"Câu tiếp"}</button></div>`:""}</div>`}
+ if(!r.tested)return top+`<div class="card" style="max-width:720px"><h2>Đánh giá năng lực hiện tại</h2><p class="sub" style="margin:8px 0 14px">Mỗi skill bắt đầu ở θ = 1200. Hệ thống chọn câu có độ khó gần θ nhất, cập nhật θ' = θ + K(S − E) với E = 1/(1+10^((d−θ)/400)). Kết thúc: proficiency 0–100 = (θ − 1000)/800.</p>
+  <div class="chips" style="margin-bottom:16px">${c.skills.map(s=>`<span class="chip">${SKILLS[s]}</span>`).join("")}</div><button class="btn primary" data-a="startQuiz">Bắt đầu test (8 câu)</button></div>`;
+ const p=roomProf(r);const gap=Object.keys(p).filter(s=>p[s]<60);
+ return top+`<div class="grid g2"><div class="card"><h2>Proficiency theo skill</h2><p class="sub" style="margin-bottom:12px">p = clamp((θ − 1000)/800, 0, 1) × 100 · ngưỡng đạt 60</p>${skillTable(p)}</div>
+ <div class="stack"><div class="card"><h2>Skill-gap</h2><p class="sub" style="margin-bottom:10px">${gap.length?"Skill dưới ngưỡng, AI dùng để gợi ý roadmap:":"Không có gap. Tốt."}</p><div class="chips">${gap.map(s=>`<span class="chip gap">${SKILLS[s]} · ${p[s]}</span>`).join("")}</div></div>
+ <div class="card"><h2>θ hiện tại</h2><div class="kv" style="margin-top:8px">${c.skills.map(s=>`<dt>${SKILLS[s]}</dt><dd class="num">${r.theta[s]??1200} <span class="sub">(${r.answered[s]||0} câu)</span></dd>`).join("")}</div></div>
+ <div class="row"><a class="btn primary" href="#/candidate/roadmap">Xem roadmap gợi ý</a><button class="btn" data-a="startQuiz">Làm lại test</button></div></div></div>`};
+ACT.startQuiz=()=>{const r=room();r.theta={};r.answered={};r.tested=false;careerOf(r.career).skills.forEach(s=>r.theta[s]=1200);S.quiz={roomId:r.id,asked:[],idx:0,cur:pickQuestion(r,[]),answer:null};log("Bắt đầu test đầu vào");route()};
+ACT.answer=el=>{const q=S.quiz;const r=room();const qq=QBANK[q.cur];const pick=+el.dataset.i;const correct=pick===qq.a;const upd=eloUpdate(r,q.cur,correct,q.idx);q.answer={pick,correct,upd};q.asked.push(q.cur);save();route()};
+ACT.nextQ=()=>{const q=S.quiz;const r=room();q.idx++;if(q.idx>=8){q.done=true;r.tested=true;delete S.roadmap[r.id];ensureRoadmap(r);log("Hoàn thành test đầu vào (8 câu)");log("AI gợi ý roadmap từ lộ trình base + gap",1850);toast("Đã có kết quả. Roadmap gợi ý được tạo.")}else{q.cur=pickQuestion(r,q.asked);q.answer=null}route()};
+
+PAGES["candidate/roadmap"]=()=>{const r=room();if(!r.tested)return head("Con đường học · 3","Roadmap học")+`<div class="empty">Phòng <b>${esc(r.name)}</b> chưa test đầu vào. <a href="#/candidate/test">Làm test</a> để AI gợi ý roadmap.</div>`;
+ ensureRoadmap(r);const list=S.roadmap[r.id];const sug=S.suggestions.filter(s=>s.roomId===r.id&&s.status==="pending");const st={todo:["Chưa học",""],doing:["Đang học","warn"],done:["Xong","good"]};
+ return head("Con đường học · 3","Roadmap học",`AI chỉ gợi ý: lộ trình base ${careerOf(r.career).name} của Lecturer + skill-gap. Bạn tự thêm hoặc bỏ học phần.`,`<button class="btn" data-a="openCatalog">+ Thêm học phần</button>`)+
+ `<div class="card" style="border-color:var(--purple)"><div class="row between"><h2>Hộp đề xuất cải thiện <span class="badge purple">${sug.length}</span></h2><span class="sub">Sinh từ JD matching và mock interview</span></div>
+ ${sug.length?`<div class="list" style="margin-top:6px">${sug.map(s=>`<div><div class="grow"><div class="t">${esc(modOf(s.mid).name)}</div><div class="m">${esc(s.reason)} <span class="badge ${s.src==="matching"?"orange":"purple"}">${s.src==="matching"?"JD matching":"Mock interview"}</span></div></div><button class="btn sm primary" data-a="acceptSug" data-id="${s.id}">Nhận</button><button class="btn sm ghost" data-a="dismissSug" data-id="${s.id}">Bỏ qua</button></div>`).join("")}</div>`:`<p class="sub" style="margin-top:8px">Chưa có đề xuất mới.</p>`}</div>
+ <div class="card"><div class="row between" style="margin-bottom:6px"><h2>Lộ trình của bạn · ${roomProgress(r)}% hoàn thành</h2><span class="sub">${list.filter(x=>x.status==="done").length}/${list.length} học phần</span></div>${bar(roomProgress(r))}
+ <div class="list" style="margin-top:8px">${list.map((x,i)=>{const m=modOf(x.mid);return `<div><span class="num sub" style="width:22px">${i+1}</span><div class="grow"><div class="t">${esc(m.name)}</div><div class="m">${m.skills.map(s=>SKILLS[s]).join(" · ")} · ${m.hours}h</div></div>
+  <span class="badge ${st[x.status][1]}">${st[x.status][0]}</span><select class="select" style="width:auto;padding:3px 6px" data-mid="${x.mid}" onchange="ACT.setStatus(this)">${Object.keys(st).map(k=>`<option value="${k}" ${k===x.status?"selected":""}>${st[k][0]}</option>`).join("")}</select><button class="btn sm ghost" data-a="dropMod" data-mid="${x.mid}" title="Bỏ học phần">✕</button></div>`}).join("")}</div></div>`};
+ACT.setStatus=el=>{const r=room();const x=S.roadmap[r.id].find(x=>x.mid===el.dataset.mid);x.status=el.value;log(`Cập nhật học phần ${x.mid}: ${el.value}`);route()};
+ACT.dropMod=el=>{const r=room();S.roadmap[r.id]=S.roadmap[r.id].filter(x=>x.mid!==el.dataset.mid);log(`Bỏ học phần ${el.dataset.mid}`);route()};
+ACT.openCatalog=()=>{const r=room();const have=new Set(S.roadmap[r.id].map(x=>x.mid));modal(`<h2>Catalog học phần</h2><p class="sub" style="margin-bottom:10px">Học phần do Lecturer thiết kế.</p><div class="list">${S.modules.filter(m=>!have.has(m.id)).map(m=>`<div><div class="grow"><div class="t">${esc(m.name)}</div><div class="m">${careerOf(m.career).name} · ${m.skills.map(s=>SKILLS[s]).join(", ")} · ${m.hours}h</div></div><button class="btn sm" data-a="addMod" data-mid="${m.id}">Thêm</button></div>`).join("")||`<div class="empty">Đã thêm hết.</div>`}</div>`)};
+ACT.addMod=el=>{const r=room();S.roadmap[r.id].push({mid:el.dataset.mid,status:"todo"});log(`Tự thêm học phần ${el.dataset.mid}`);closeModal();toast("Đã thêm vào roadmap");route()};
+ACT.acceptSug=el=>{const s=S.suggestions.find(x=>x.id===el.dataset.id);s.status="accepted";const r=room();if(!S.roadmap[r.id].some(x=>x.mid===s.mid))S.roadmap[r.id].unshift({mid:s.mid,status:"todo"});log(`Nhận đề xuất: ${modOf(s.mid).name}`);toast("Đã chèn lên đầu roadmap");route()};
+ACT.dismissSug=el=>{const s=S.suggestions.find(x=>x.id===el.dataset.id);s.status="dismissed";log(`Bỏ qua đề xuất: ${modOf(s.mid).name}`);route()};
+
+/* ----- Học adaptive ----- */
+const exElo=e=>900+e.diff*180;
+function dailySet(r){const c=careerOf(r.career);const sk=new Set(c.skills);const pool=S.exercises.filter(e=>e.tags.some(t=>sk.has(t)));const th=e=>{const s=e.tags.find(t=>sk.has(t));return r.theta[s]??1200};
+ let pick=pool.filter(e=>Math.abs(exElo(e)-th(e))<=100);if(pick.length<5)pick=pool.filter(e=>Math.abs(exElo(e)-th(e))<=250);if(pick.length<5)pick=pool;return pick.slice(0,5)}
+PAGES["candidate/learn"]=()=>{const r=room();const c=careerOf(r.career);const t=S.learnTab;
+ return head("Con đường học · 4","Học (Adaptive learning)",`Phòng <b>${esc(r.name)}</b> · bài tập chọn theo dải Elo ±100 và tag · flashcard SM-2 · sandbox chạy JavaScript`)+
+ `<div class="tabs">${[["daily","Bài tập hôm nay"],["flash","Flashcard"],["code","Code sandbox"]].map(x=>`<button aria-selected="${t===x[0]}" data-a="learnTab" data-t="${x[0]}">${x[1]}</button>`).join("")}</div>`+(t==="daily"?daily(r,c):t==="flash"?flash(r,c):sandbox())};
+ACT.learnTab=el=>{S.learnTab=el.dataset.t;route()};
+function daily(r,c){const set=dailySet(r);const sk=new Set(c.skills);const TYPE={mcq:"Trắc nghiệm",code:"Code",flashcard:"Flashcard",essay:"Tự luận"};
+ return `<div class="note ai" style="margin-bottom:14px"><b>AI chọn bài</b> · tag ∩ skill của career, độ khó (900 + diff×180) trong dải θ ±100. Đúng/sai cập nhật θ ngay.</div><div class="grid g2">${set.map(e=>{const s=e.tags.find(t=>sk.has(t));const th=r.theta[s]??1200;const d=S.exDone[e.id];
+  let body="";if(e.type==="mcq"){const q=QBANK.map((q,i)=>({q,i})).filter(x=>x.q.s===s).sort((a,b)=>Math.abs(a.q.d-th)-Math.abs(b.q.d-th))[0];if(q){body=`<p style="margin:8px 0">${esc(q.q.q)}</p><div class="stack">${q.q.o.map((o,i)=>`<div class="opt ${d?(i===q.q.a?"ok":i===d.pick?"ko":""):""}" ${d?"":`data-a="exAnswer" data-e="${e.id}" data-q="${q.i}" data-i="${i}"`}><span class="k">${"ABCD"[i]}</span><span>${esc(o)}</span></div>`).join("")}</div>`}}
+  else body=`<p class="sub" style="margin:8px 0">${e.type==="code"?"Làm trong sandbox rồi tự chấm.":e.type==="essay"?"Viết câu trả lời ra giấy/ghi chú rồi tự chấm.":"Ôn ở tab Flashcard rồi tự chấm."}</p>${d?"":`<div class="row"><button class="btn sm" data-a="exSelf" data-e="${e.id}" data-s="${s}" data-ok="1">Tự chấm: Đúng</button><button class="btn sm" data-a="exSelf" data-e="${e.id}" data-s="${s}" data-ok="0">Tự chấm: Sai</button></div>`}`;
+  return `<div class="card"><div class="row between"><span class="badge">${TYPE[e.type]}</span><span class="theta">Elo ${exElo(e)} · θ<sub>${SKILLS[s]}</sub> ${th}</span></div><h3 style="margin-top:8px">${esc(e.name)}</h3><div class="chips" style="margin-top:6px">${e.tags.map(t=>`<span class="chip">#${t}</span>`).join("")}</div>${body}${d?`<div class="note" style="margin-top:8px">${d.correct?"Đúng":"Sai"} · θ ${d.from} → <b>${d.to}</b></div>`:""}</div>`}).join("")}</div>`}
+function exUpd(r,s,d,correct){const th=r.theta[s]??1200;const E=expected(th,d);const K=kFor(r.answered[s]||0);const to=Math.round(th+K*((correct?1:0)-E));r.theta[s]=to;r.answered[s]=(r.answered[s]||0)+1;return {from:th,to}}
+ACT.exAnswer=el=>{const r=room();const q=QBANK[+el.dataset.q];const pick=+el.dataset.i;const correct=pick===q.a;const u=exUpd(r,q.s,q.d,correct);S.exDone[el.dataset.e]={pick,correct,...u};log(`Trả lời bài tập ${el.dataset.e}: ${correct?"đúng":"sai"}`);route()};
+ACT.exSelf=el=>{const r=room();const e=S.exercises.find(x=>x.id===el.dataset.e);const correct=el.dataset.ok==="1";const u=exUpd(r,el.dataset.s,exElo(e),correct);S.exDone[e.id]={correct,...u};log(`Tự chấm bài tập ${e.id}: ${correct?"đúng":"sai"}`);route()};
+function flash(r,c){const sk=new Set(c.skills);const cards=FLASHCARDS.filter(f=>sk.has(f.s));const td=today();const due=cards.filter(f=>!S.sm2[f.id]||S.sm2[f.id].due<=td);const cur=due[0];
+ const stat=`<div class="row" style="margin-bottom:12px"><span class="badge teal">${due.length} thẻ đến hạn</span><span class="sub">${cards.length} thẻ cho ${c.name} · SM-2: EF khởi tạo 2.5, interval 1 → 6 → ×EF</span></div>`;
+ if(!cur)return stat+`<div class="empty">Hết thẻ đến hạn hôm nay. Lịch ôn:<div class="chips" style="justify-content:center;margin-top:10px">${cards.map(f=>`<span class="chip">${esc(f.front.slice(0,28))}… · ${S.sm2[f.id].due}</span>`).join("")}</div></div>`;
+ const m=S.sm2[cur.id];const pv=q=>sm2(m,q).interval;
+ return stat+`<div style="max-width:560px"><div class="flash" id="flash" onclick="this.classList.toggle('flipped')"><div class="in"><div class="face">${esc(cur.front)}</div><div class="face back">${esc(cur.back)}</div></div></div>
+ <p class="sub" style="text-align:center;margin:8px 0 12px">Bấm thẻ để lật · ${SKILLS[cur.s]} · ${m?`EF ${m.ef} · lần ${m.reps}`:"thẻ mới"}</p>
+ <div class="sm2">${[[1,"Quên"],[3,"Khó"],[4,"Tốt"],[5,"Dễ"]].map(x=>`<button class="btn" data-a="grade" data-f="${cur.id}" data-q="${x[0]}">${x[1]}<small>${pv(x[0])} ngày</small></button>`).join("")}</div></div>`}
+ACT.grade=el=>{const f=el.dataset.f;const q=+el.dataset.q;const n=sm2(S.sm2[f],q);S.sm2[f]=n;log(`Ôn flashcard ${f}: q=${q}`);toast(`Ôn lại sau ${n.interval} ngày (EF ${n.ef})`);route()};
+function sandbox(){const p=CODE_PROBLEMS.find(x=>x.id===S.codeId);const code=S.code[p.id]??p.starter;const res=S.codeRes&&S.codeRes.id===p.id?S.codeRes:null;
+ return `<div class="grid g2"><div class="card"><div class="row between"><select class="select" style="width:auto" onchange="ACT.pickProb(this)">${CODE_PROBLEMS.map(x=>`<option value="${x.id}" ${x.id===p.id?"selected":""}>${x.title}</option>`).join("")}</select><span class="badge ${p.diff==="Dễ"?"good":"warn"}">${p.diff}</span></div>
+ <h2 style="margin:12px 0 6px">${esc(p.title)}</h2><p>${esc(p.desc)}</p><div class="divider"></div><h4>Test case</h4><div class="cases" style="margin-top:6px">${p.tests.map((t,i)=>`<div><span class="st ${res?(res.r[i].ok?"ok":"ko"):""}">${res?(res.r[i].ok?"PASS":"FAIL"):"#"+(i+1)}</span><span style="flex:1;word-break:break-all">${esc(p.fn)}(${t.args.map(a=>JSON.stringify(a)).join(", ")}) → ${esc(JSON.stringify(t.want))}${res&&!res.r[i].ok?` <span class="ko">· nhận: ${esc(res.r[i].got)}</span>`:""}</span></div>`).join("")}</div>
+ ${res?`<div class="note" style="margin-top:10px">${res.pass}/${p.tests.length} test pass${res.pass===p.tests.length?" · Hoàn thành":""}</div>`:""}</div>
+ <div class="card"><div class="row between" style="margin-bottom:8px"><span class="badge">JavaScript</span><span class="sub">Chạy bằng <code>new Function</code> trong trình duyệt</span></div><textarea class="textarea code" id="code" spellcheck="false">${esc(code)}</textarea>
+ <div class="row" style="margin-top:10px"><button class="btn primary" data-a="runCode">▶ Chạy</button><button class="btn ghost" data-a="resetCode">Đặt lại đề</button></div></div></div>`}
+ACT.pickProb=el=>{S.codeId=el.value;S.codeRes=null;route()};
+ACT.resetCode=()=>{delete S.code[S.codeId];S.codeRes=null;route()};
+ACT.runCode=()=>{const p=CODE_PROBLEMS.find(x=>x.id===S.codeId);const src=$("#code").value;S.code[p.id]=src;const r=p.tests.map(t=>{try{const fn=new Function(src+"\nreturn "+p.fn+";")();const got=fn(...JSON.parse(JSON.stringify(t.args)));const ok=JSON.stringify(got)===JSON.stringify(t.want);return {ok,got:JSON.stringify(got)}}catch(e){return {ok:false,got:"Lỗi: "+e.message}}});
+ const pass=r.filter(x=>x.ok).length;S.codeRes={id:p.id,r,pass};if(pass===p.tests.length){const rm=room();if(careerOf(rm.career).skills.includes(p.skill)){const u=exUpd(rm,p.skill,p.diff==="Dễ"?1250:1500,true);toast(`Pass hết. θ JavaScript ${u.from} → ${u.to}`)}}
+ log(`Chạy sandbox ${p.title}: ${pass}/${p.tests.length} pass`);route()};
+/* ===== CANDIDATE · con đường sự nghiệp ===== */
+function targetJD(){const r=room();const inC=S.jds.filter(j=>j.career===r.career);return (inC.length?inC:S.jds).map(j=>({j,m:matchJD(j)})).sort((a,b)=>b.m.pct-a.m.pct)[0].j}
+function cvEval(){const cv=S.cv;const bullets=(cv.exp||"").split("\n").map(s=>s.trim()).filter(Boolean);const tips=[];let sc=40;
+ if(cv.name&&cv.title)sc+=10;else tips.push("Điền đầy đủ họ tên và vị trí mục tiêu.");
+ const withNum=bullets.filter(b=>/\d/.test(b)).length;sc+=Math.min(18,withNum*6);if(withNum<bullets.length)tips.push(`${bullets.length-withNum} bullet kinh nghiệm chưa có số liệu (%, số người dùng, thời gian). Thêm con số đo được.`);
+ const long=bullets.filter(b=>b.length>140).length;sc-=long*5;if(long)tips.push(`${long} bullet dài hơn 140 ký tự. Rút gọn còn 1 ý/bullet.`);
+ if(bullets.length>=3)sc+=8;else tips.push("Nên có ít nhất 3 bullet kinh nghiệm/dự án.");
+ if(/github\.com\//i.test(cv.github||""))sc+=8;else tips.push("Thiếu link GitHub. Recruiter IT gần như luôn xem code.");
+ const nSk=(cv.skills||"").split(",").map(s=>s.trim()).filter(Boolean).length;if(nSk>=4)sc+=6;else tips.push("Liệt kê ít nhất 4 kỹ năng cụ thể (framework, DB, công cụ).");
+ const jd=targetJD();const have=new Set(cvSkillIds());const miss=jd.skills.filter(s=>!have.has(s));sc-=miss.length*4;if(miss.length)tips.push(`So với JD mục tiêu "${jd.title}" (${jd.company}), CV chưa nhắc tới: ${miss.map(s=>SKILLS[s]).join(", ")}.`);
+ if(!/[A-Za-z]/.test(cv.title||""))tips.push("Vị trí mục tiêu nên ghi bằng tên chuẩn thị trường (VD: Frontend Developer).");
+ return {score:clamp(Math.round(sc),0,100),tips,jd}}
+PAGES["candidate/cv"]=()=>{const cv=S.cv;const ev=S.cvScore;const bullets=(cv.exp||"").split("\n").map(s=>s.trim()).filter(Boolean);
+ return head("Con đường sự nghiệp · 5","CV","AI tạo CV từ phòng học hoặc tự viết. AI đánh giá theo rule, gợi ý sửa theo JD mục tiêu.",`<button class="btn" data-a="cvGen">AI tạo CV từ phòng học</button><button class="btn primary" data-a="cvEval">AI đánh giá</button>`)+
+ `<div class="grid g2"><div class="stack"><div class="card"><div class="stack">
+  <label class="f">Họ tên<input class="input" id="cvName" value="${esc(cv.name)}" oninput="ACT.cvInput(this,'name')"></label>
+  <label class="f">Vị trí mục tiêu<input class="input" id="cvTitle" value="${esc(cv.title)}" oninput="ACT.cvInput(this,'title')"></label>
+  <label class="f">Kỹ năng (phân cách bằng dấu phẩy)<input class="input" id="cvSkills" value="${esc(cv.skills)}" oninput="ACT.cvInput(this,'skills')"></label>
+  <label class="f">GitHub<input class="input" id="cvGithub" value="${esc(cv.github)}" placeholder="https://github.com/…" oninput="ACT.cvInput(this,'github')"></label>
+  <label class="f">Kinh nghiệm / dự án (mỗi dòng 1 bullet)<textarea class="textarea" id="cvExp" oninput="ACT.cvInput(this,'exp')">${esc(cv.exp)}</textarea></label></div></div>
+  ${ev?`<div class="card"><div class="row between"><h2>Điểm CV</h2><span class="score-big" style="color:var(--${ev.score>=75?"good":ev.score>=50?"warn":"bad"})">${ev.score}<span style="font-size:16px;color:var(--muted)">/100</span></span></div>${bar(ev.score,profCls(ev.score))}<p class="sub" style="margin:8px 0 10px">JD mục tiêu: ${esc(ev.jd.title)} · ${esc(ev.jd.company)}</p>
+   ${ev.tips.length?`<ul style="margin:0;padding-left:18px;display:grid;gap:6px">${ev.tips.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>`:`<p>Không có gợi ý sửa. CV ổn.</p>`}</div>`:""}</div>
+ <div class="cv-prev"><h2>${esc(cv.name)||"Họ tên"}</h2><div style="color:var(--accent);font-weight:600">${esc(cv.title)||"Vị trí mục tiêu"}</div>${cv.github?`<div class="sub mono">${esc(cv.github)}</div>`:""}
+  <div class="sec">Kỹ năng</div><div class="chips">${(cv.skills||"").split(",").map(s=>s.trim()).filter(Boolean).map(s=>`<span class="chip">${esc(s)}</span>`).join("")||"<span class='sub'>—</span>"}</div>
+  <div class="sec">Kinh nghiệm & dự án</div>${bullets.length?`<ul>${bullets.map(b=>`<li>${esc(b)}</li>`).join("")}</ul>`:"<span class='sub'>—</span>"}
+  <div class="sec">Năng lực từ DevRoom</div><div class="chips">${Object.entries(roomProf(room())).filter(x=>x[1]>=60).map(x=>`<span class="chip have">${SKILLS[x[0]]} ${x[1]}</span>`).join("")||"<span class='sub'>Chưa có skill đạt ngưỡng</span>"}</div></div></div>`};
+ACT.cvInput=(el,k)=>{S.cv[k]=el.value;S.cvScore=null;save()};
+ACT.cvGen=()=>{const r=room();const t=CV_TEMPLATES[r.career];const p=roomProf(r);S.cv.title=t.title;S.cv.exp=t.exp;S.cv.skills=Object.keys(p).filter(s=>p[s]>=45).map(s=>SKILLS[s]).join(", ")||careerOf(r.career).skills.map(s=>SKILLS[s]).join(", ");S.cv.github=S.cv.github||"https://github.com/"+(S.cv.name||"devroom").toLowerCase().replace(/[^a-z]/g,"");S.cvScore=null;log("AI tạo CV nháp từ phòng học",2400);toast("Đã điền CV mẫu từ phòng học. Sửa lại cho đúng thực tế.");route()};
+ACT.cvEval=()=>{S.cvScore=cvEval();log(`AI đánh giá CV: ${S.cvScore.score}/100`,1720);route()};
+
+/* ----- Việc làm ----- */
+PAGES["candidate/jobs"]=()=>{const f=S.jobFilter||"all";const list=S.jds.filter(j=>f==="all"||j.career===f).map(j=>({j,m:matchJD(j)})).sort((a,b)=>b.m.pct-a.m.pct);
+ return head("Con đường sự nghiệp · 6","Việc làm","% match = 0.7 · skill_match + 0.3 · cosine. Skill của bạn = proficiency ≥ 60 ở phòng đang chọn hoặc có trong CV.",`<select class="select" style="width:auto" onchange="ACT.jobFilter(this)"><option value="all">Tất cả career</option>${CAREERS.map(c=>`<option value="${c.id}" ${f===c.id?"selected":""}>${c.name}</option>`).join("")}</select>`)+
+ `<div class="grid g2">${list.map(({j,m})=>{const ap=S.apps.find(a=>a.jdId===j.id);return `<div class="card jd"><div><div class="row" style="gap:6px"><span class="badge ${SRC[j.src][1]}">${SRC[j.src][0]}</span><span class="badge">${j.level}</span><span class="sub">${esc(j.from)}</span></div>
+  <h3 style="margin:8px 0 2px">${esc(j.title)}</h3><div class="sub">${esc(j.company)} · ${esc(j.city)} · <span class="num">${j.salary[0]}–${j.salary[1]} triệu</span></div>
+  <p style="margin:8px 0;font-size:13px">${esc(j.desc)}</p><div class="chips">${j.skills.map(s=>`<span class="chip ${m.have.includes(s)?"have":"gap"}">${SKILLS[s]}</span>`).join("")}</div>
+  <div class="row" style="margin-top:10px">${ap?`<span class="badge good">${STAGES[ap.stage]}</span>`:`<button class="btn sm primary" data-a="apply" data-id="${j.id}">Ứng tuyển</button>`}${m.gap.length?`<button class="btn sm" data-a="sugFromJD" data-id="${j.id}">Tạo đề xuất cải thiện lộ trình</button>`:""}</div></div>
+  <div class="match" style="color:var(--${m.pct>=70?"good":m.pct>=45?"warn":"bad"})">${m.pct}%<small>skill ${Math.round(m.sm*100)}% · cos ${m.cos.toFixed(2)}</small><small>gap: ${m.gap.length}</small></div></div>`}).join("")}</div>
+ <div class="card" style="margin-top:18px"><h2 style="margin-bottom:10px">Theo dõi ứng tuyển</h2><div class="kanban">${STAGES.map((st,i)=>`<div class="kcol"><h4>${st}<span>${S.apps.filter(a=>a.stage===i).length}</span></h4>${S.apps.filter(a=>a.stage===i).map(a=>{const j=S.jds.find(x=>x.id===a.jdId);return `<div class="kcard"><div class="t">${esc(j.title)}</div><div class="m">${esc(j.company)} · nộp ${a.date}</div><div class="row" style="gap:4px"><button class="btn sm ghost" data-a="move" data-id="${j.id}" data-d="-1" ${i===0?"disabled":""}>←</button><button class="btn sm ghost" data-a="move" data-id="${j.id}" data-d="1" ${i===3?"disabled":""}>→</button></div></div>`}).join("")}</div>`).join("")}</div></div>`};
+ACT.jobFilter=el=>{S.jobFilter=el.value;route()};
+ACT.apply=el=>{S.apps.push({jdId:el.dataset.id,stage:0,date:today()});const j=S.jds.find(x=>x.id===el.dataset.id);log(`Ứng tuyển ${j.title} (${j.company})`);toast("Đã nộp hồ sơ");route()};
+ACT.move=el=>{const a=S.apps.find(x=>x.jdId===el.dataset.id);a.stage=clamp(a.stage+ +el.dataset.d,0,3);log(`Ứng tuyển ${a.jdId} → ${STAGES[a.stage]}`);route()};
+ACT.sugFromJD=el=>{const j=S.jds.find(x=>x.id===el.dataset.id);const m=matchJD(j);const n=suggestFromGap(room().id,m.gap,"matching",`Match JD ${j.id} ${j.title} (${m.pct}%)`);log(`Tạo đề xuất cải thiện từ JD ${j.id}: ${n} học phần`,620);toast(n?`Đã đẩy ${n} đề xuất vào hộp đề xuất ở Roadmap`:"Không có học phần mới để đề xuất (đã có trong roadmap hoặc đang chờ)");route()};
+
+/* ----- Mock interview ----- */
+const SAMPLE_ANS={fe:["Trong dự án dashboard, bảng 2.000 dòng bị giật khi lọc. Tôi dùng React Profiler tìm ra component hàng re-render toàn bộ, bọc bằng React.memo, chuyển filter sang useMemo và thêm key ổn định. Kết quả thời gian render giảm từ 800ms xuống 120ms.","Tôi giữ dữ liệu form trong state, khi API lỗi thì hiện toast kèm nút thử lại và không xóa dữ liệu. Với thao tác nhỏ tôi dùng optimistic update rồi rollback khi catch lỗi.","Tôi dùng CSS Modules cho component, design token bằng CSS variables cho màu và spacing, đặt tên theo BEM trong module. Mỗi PR có checklist không dùng style global."],
+ be:["Tôi thiết kế API đơn hàng theo REST: /orders, /orders/{id}. Dùng schema Pydantic để validate, trả 400 khi sai dữ liệu, 404 khi không tìm thấy, 401/403 cho xác thực và quyền. Có version /v1 để nâng cấp sau.","Tôi chạy EXPLAIN ANALYZE, phát hiện seq scan trên bảng orders 2 triệu dòng, thêm index composite (customer_id, created_at) và gộp N+1 bằng join. Query giảm từ 6s xuống 200ms.","Tôi dùng JWT access token ngắn hạn kèm refresh token, phân quyền theo role ở middleware, rate limit bằng Redis 100 request/phút, bắt buộc HTTPS và hash mật khẩu bằng bcrypt."]};
+function starScore(a,kw,diff){const L=a.length;const t=a.toLowerCase();const hits=kw.filter(k=>t.includes(k)).length;const has=re=>re.test(t);
+ let s=has(/dự án|khi |lúc |tình huống|trong |hồi /)?Math.min(5,2+Math.floor(L/120)):Math.min(2,Math.floor(L/100));
+ let tt=has(/mục tiêu|cần |yêu cầu|nhiệm vụ|phải |bài toán/)?Math.min(5,3+Math.floor(L/200)):Math.min(2,Math.floor(L/150));
+ let ac=Math.min(5,1+hits);let r=has(/\d/)&&has(/giảm|tăng|kết quả|còn|xuống|lên|đạt/)?5:has(/kết quả|giảm|tăng/)?3:L>150?2:1;
+ const k=diff==="Khó"?.8:diff==="Dễ"?1.1:1;return {S:clamp(Math.round(s*k),0,5),T:clamp(Math.round(tt*k),0,5),A:clamp(Math.round(ac*k),0,5),R:clamp(Math.round(r*k),0,5)}}
+PAGES["candidate/interview"]=()=>{const iv=S.iv;const top=head("Con đường sự nghiệp · 7","AI Mock interview","Người phỏng vấn AI theo kịch bản career, 3 câu chính + follow-up nếu trả lời ngắn. STT/TTS tiếng Việt là mock.");
+ if(!iv){const hist=S.interviews.slice().reverse();return top+`<div class="grid g2"><div class="card"><h2>Thiết lập buổi phỏng vấn</h2><div class="stack" style="margin-top:12px">
+  <label class="f">Mục tiêu<select class="select" id="ivTarget"><optgroup label="Theo JD">${S.jds.map(j=>`<option value="jd:${j.id}">${esc(j.title)} · ${esc(j.company)}</option>`).join("")}</optgroup><optgroup label="Theo phòng học">${S.rooms.map(r=>`<option value="room:${r.id}" ${r.id===S.activeRoom?"selected":""}>${esc(r.name)}</option>`).join("")}</optgroup></select></label>
+  <label class="f">Độ khó<select class="select" id="ivDiff"><option>Dễ</option><option selected>Trung bình</option><option>Khó</option></select></label>
+  <button class="btn primary" data-a="ivStart">Bắt đầu phỏng vấn</button></div></div>
+  <div class="card"><h2>Lịch sử</h2>${hist.length?`<div class="list">${hist.map(h=>`<div><div class="grow"><div class="t">${esc(h.target)}</div><div class="m">${h.date} · ${h.diff} · yếu: ${h.weak.map(s=>SKILLS[s]).join(", ")||"—"}</div></div><span class="score-big" style="font-size:22px">${h.score}</span></div>`).join("")}</div>`:`<p class="sub" style="margin-top:8px">Chưa có buổi nào.</p>`}</div></div>`}
+ const chat=`<div class="chat" id="ivChat">${iv.msgs.map(m=>`<div class="msg ${m.who}"><div class="who">${m.who==="ai"?"Người phỏng vấn AI":"Bạn"}</div>${esc(m.text)}</div>`).join("")}</div>`;
+ if(iv.done){const sc=iv.answers;const tot=iv.score;return top+`<div class="grid g2"><div class="card"><div class="row between"><h2>${esc(iv.target)}</h2><span class="badge">${iv.diff}</span></div>${chat}<div class="row" style="margin-top:10px"><button class="btn" data-a="ivEnd">Phỏng vấn buổi khác</button></div></div>
+  <div class="stack"><div class="card"><div class="row between"><h2>Scorecard STAR</h2><span class="score-big" style="color:var(--${tot>=7.5?"good":tot>=5?"warn":"bad"})">${tot}<span style="font-size:14px;color:var(--muted)">/10</span></span></div>
+   ${sc.map((a,i)=>`<div style="margin-top:12px"><div class="sub" style="margin-bottom:4px">Câu ${i+1} · ${esc(a.q.slice(0,60))}…</div><div class="star">${["S","T","A","R"].map(k=>`<div><b>${a.star[k]}</b><small>${{S:"Situation",T:"Task",A:"Action",R:"Result"}[k]}</small></div>`).join("")}</div></div>`).join("")}
+   <p class="sub" style="margin-top:12px">Rule-based: độ dài, từ ngữ bối cảnh/mục tiêu, từ khóa kỹ thuật, con số kết quả.</p></div>
+   <div class="card"><h2>Skill yếu → đề xuất</h2><div class="chips" style="margin:8px 0">${iv.weak.map(s=>`<span class="chip gap">${SKILLS[s]}</span>`).join("")||"<span class='sub'>Không phát hiện skill yếu</span>"}</div><p class="sub">${iv.nSug} đề xuất đã đẩy vào hộp đề xuất ở <a href="#/candidate/roadmap">Roadmap</a>.</p></div></div></div>`}
+ return top+`<div class="card" style="max-width:760px"><div class="row between"><h2>${esc(iv.target)}</h2><span class="row"><span class="badge">${iv.diff}</span><span class="badge teal">Câu ${Math.min(iv.qi+1,3)}/3${iv.fu?" · follow-up":""}</span></span></div>${chat}
+  <div class="divider"></div><textarea class="textarea" id="ivAns" placeholder="Trả lời theo STAR: tình huống → nhiệm vụ → hành động → kết quả…" style="min-height:80px"></textarea><div id="ivMic" class="sub" style="min-height:18px;margin-top:4px"></div>
+  <div class="row" style="margin-top:8px"><button class="btn primary" data-a="ivSend">Gửi câu trả lời</button><button class="btn" data-a="ivMic">🎤 Nói (STT mock)</button><button class="btn" data-a="ivTTS">🔈 Nghe câu hỏi</button><button class="btn ghost" data-a="ivEnd">Kết thúc</button></div></div>`};
+MOUNT["candidate/interview"]=()=>{const c=$("#ivChat");if(c)c.scrollTop=c.scrollHeight};
+ACT.ivStart=()=>{const v=$("#ivTarget").value;const diff=$("#ivDiff").value;let career,target,gap=[];if(v.startsWith("jd:")){const j=S.jds.find(x=>x.id===v.slice(3));career=j.career;target=j.title+" · "+j.company;gap=matchJD(j).gap}else{const r=S.rooms.find(x=>x.id===v.slice(5));career=r.career;target=r.name;const p=roomProf(r);gap=Object.keys(p).filter(s=>p[s]<60)}
+ const qs=INTERVIEW_QS[career];S.iv={career,target,diff,gap,qi:0,fu:false,msgs:[{who:"ai",text:`Chào bạn, tôi là người phỏng vấn cho vị trí ${target}. Chúng ta có 3 câu hỏi. ${qs[0].q}`}],answers:[]};log(`Bắt đầu mock interview: ${target} (${diff})`,900);route()};
+ACT.ivSend=()=>{const iv=S.iv;const a=$("#ivAns").value.trim();if(!a)return;const qs=INTERVIEW_QS[iv.career];iv.msgs.push({who:"me",text:a});
+ if(iv.fu){iv.answers[iv.answers.length-1].a+=" "+a;iv.fu=false}else iv.answers.push({q:qs[iv.qi].q,a});
+ const cur=iv.answers[iv.answers.length-1];
+ if(a.length<60&&!iv.fuUsed){iv.fu=true;iv.fuUsed=true;iv.msgs.push({who:"ai",text:"Bạn có thể nói cụ thể hơn không? Tình huống đó là gì, bạn đã làm gì và kết quả đo được ra sao?"});log("AI follow-up",700)}
+ else{cur.star=starScore(cur.a,qs[iv.qi].kw,iv.diff);iv.qi++;if(iv.qi<3)iv.msgs.push({who:"ai",text:qs[iv.qi].q});else ivFinish(iv)}
+ save();route()};
+function ivFinish(iv){iv.done=true;const sum=iv.answers.reduce((t,a)=>t+a.star.S+a.star.T+a.star.A+a.star.R,0);iv.score=+(sum/(iv.answers.length*20)*10).toFixed(1);
+ const c=careerOf(iv.career);const worst=iv.answers.map((a,i)=>({i,t:a.star.S+a.star.T+a.star.A+a.star.R})).sort((x,y)=>x.t-y.t)[0].i;iv.weak=[...new Set([...(iv.gap.slice(0,2)),c.skills[worst]])].slice(0,3);
+ iv.nSug=suggestFromGap(room().id,iv.weak,"interview",`Mock interview ${iv.target} (${iv.score}/10)`);iv.msgs.push({who:"ai",text:`Cảm ơn bạn. Buổi phỏng vấn kết thúc. Điểm tổng ${iv.score}/10. Xem scorecard bên phải.`});
+ S.interviews.push({date:today(),target:iv.target,diff:iv.diff,score:iv.score,weak:iv.weak});log(`Mock interview ${iv.target} – điểm ${iv.score}`,6900);if(iv.nSug)toast(`Đã tạo ${iv.nSug} đề xuất cải thiện lộ trình từ skill yếu`)}
+ACT.ivEnd=()=>{S.iv=null;route()};
+ACT.ivMic=()=>{const iv=S.iv;const m=$("#ivMic");m.textContent="Đang nghe… (STT tiếng Việt mock)";setTimeout(()=>{const list=SAMPLE_ANS[iv.career]||SAMPLE_ANS.fe;$("#ivAns").value=list[Math.min(iv.qi,2)];m.textContent="Đã chuyển giọng nói thành văn bản (mock).";log("STT mock: nhận câu trả lời",350)},1500)};
+ACT.ivTTS=()=>{const iv=S.iv;const last=iv.msgs.filter(m=>m.who==="ai").pop();try{if(!("speechSynthesis" in window))throw 0;const u=new SpeechSynthesisUtterance(last.text);u.lang="vi-VN";speechSynthesis.cancel();speechSynthesis.speak(u);toast("Đang đọc câu hỏi (TTS trình duyệt, mock)")}catch(e){toast("Trình duyệt không hỗ trợ TTS – mock bỏ qua")}log("TTS mock: đọc câu hỏi",200)};
+
+/* ----- Real interview ----- */
+PAGES["candidate/real"]=()=>head("Con đường sự nghiệp · 8","Đánh giá real interview","Optional. Ghi lại sau buổi phỏng vấn thật với Recruiter để AI đối chiếu với mock.")+
+ `<div class="grid g2"><div class="card"><div class="stack"><label class="f">Công ty<input class="input" id="riCo" placeholder="VD: Sao Kim Software"></label>
+ <label class="f">Kết quả<select class="select" id="riRes"><option>Chờ kết quả</option><option>Qua vòng</option><option>Offer</option><option>Trượt</option></select></label>
+ <label class="f">Câu hỏi bị hỏi<textarea class="textarea" id="riQ" placeholder="Mỗi câu 1 dòng"></textarea></label>
+ <label class="f">Tự đánh giá<textarea class="textarea" id="riSelf" style="min-height:60px" placeholder="Phần nào ổn, phần nào lúng túng?"></textarea></label><div><button class="btn primary" data-a="riSave">Lưu đánh giá</button></div></div></div>
+ <div class="card"><h2>Lịch sử</h2><div class="list">${S.realInterviews.slice().reverse().map(r=>`<div><div class="grow"><div class="t">${esc(r.company)} <span class="badge ${r.result==="Offer"?"good":r.result==="Trượt"?"bad":""}">${r.result}</span></div><div class="m">${r.date} · Hỏi: ${esc(r.asked)}</div><div class="m">${esc(r.self)}</div></div></div>`).join("")||`<p class="sub">Chưa có.</p>`}</div></div></div>`;
+ACT.riSave=()=>{const co=$("#riCo").value.trim();if(!co){toast("Nhập tên công ty");return}S.realInterviews.push({id:"ri"+uid(),date:today(),company:co,result:$("#riRes").value,asked:$("#riQ").value.trim(),self:$("#riSelf").value.trim()});log(`Ghi đánh giá real interview: ${co}`);toast("Đã lưu");route()};
+
+/* ----- Trợ lý AI ----- */
+const QUICK=["Bước tiếp theo của tôi?","CV tôi thiếu gì?","Việc nào hợp tôi nhất?"];
+function aiReply(q){const t=q.toLowerCase();const r=room();const p=roomProf(r);const gap=Object.keys(p).filter(s=>p[s]<60);const rm=S.roadmap[r.id]||[];const nxt=rm.find(x=>x.status!=="done");
+ if(/roadmap|lộ trình|bước tiếp|tiếp theo|học gì/.test(t))return nxt?`Ở ${r.name}, học phần kế tiếp là "${modOf(nxt.mid).name}" (${modOf(nxt.mid).hours}h). Gap hiện tại: ${gap.map(s=>SKILLS[s]).join(", ")||"không có"}. Hộp đề xuất đang có ${S.suggestions.filter(s=>s.roomId===r.id&&s.status==="pending").length} đề xuất chờ bạn quyết.`:`${r.name} chưa có roadmap. Làm test đầu vào trước, tôi sẽ gợi ý lộ trình từ base của Lecturer.`;
+ if(/cv|hồ sơ/.test(t)){const e=cvEval();return `CV hiện ${e.score}/100. ${e.tips[0]||"Không có gợi ý lớn."}${e.tips[1]?" "+e.tips[1]:""}`}
+ if(/việc|job|jd|match|ứng tuyển/.test(t)){const b=S.jds.map(j=>({j,m:matchJD(j)})).sort((a,b)=>b.m.pct-a.m.pct)[0];return `Hợp nhất lúc này: "${b.j.title}" tại ${b.j.company} – match ${b.m.pct}%. Thiếu: ${b.m.gap.map(s=>SKILLS[s]).join(", ")||"không"}. Vào Việc làm để tạo đề xuất cải thiện từ gap.`}
+ if(/phỏng vấn|interview|star/.test(t)){const h=S.interviews.slice(-1)[0];return h?`Buổi mock gần nhất (${h.target}) được ${h.score}/10, yếu ở ${h.weak.map(s=>SKILLS[s]).join(", ")}. Luyện thêm phần Result: nêu con số đo được.`:`Bạn chưa mock interview. Chọn JD mục tiêu, độ khó Trung bình, trả lời theo STAR – tôi chấm từng câu.`;}
+ if(/flashcard|thẻ|ôn/.test(t)){const td=today();const n=FLASHCARDS.filter(f=>careerOf(r.career).skills.includes(f.s)&&(!S.sm2[f.id]||S.sm2[f.id].due<=td)).length;return `Hôm nay có ${n} thẻ đến hạn ở ${r.name}. Ôn đều mỗi ngày, SM-2 sẽ giãn dần khoảng cách.`}
+ if(/elo|điểm|năng lực|skill/.test(t))return `Proficiency ở ${r.name}: ${Object.keys(p).map(s=>`${SKILLS[s]} ${p[s]}`).join(", ")}.`;
+ return `Tôi là trợ lý riêng của bạn ở ${r.name}. Hỏi tôi về roadmap, CV, việc làm, phỏng vấn hoặc flashcard. (Demo: câu trả lời đóng gói theo từ khóa.)`}
+function renderPanel(){$("#panelTitle").textContent="Trợ lý AI · "+room().name;const c=$("#panelChat");c.innerHTML=(S.chat.length?S.chat:[{who:"ai",text:`Xin chào ${S.cv.name||"bạn"}. Tôi đang theo dõi ${room().name}. Cần gì cứ hỏi.`}]).map(m=>`<div class="msg ${m.who}">${esc(m.text)}</div>`).join("");c.scrollTop=c.scrollHeight;$("#panelQuick").innerHTML=QUICK.map(q=>`<button class="btn sm" data-a="quick" data-q="${esc(q)}">${esc(q)}</button>`).join("")}
+function askAI(q){S.chat.push({who:"me",text:q});S.chat.push({who:"ai",text:aiReply(q)});log(`Trợ lý AI: "${q.slice(0,40)}"`,420);renderPanel()}
+ACT.quick=el=>askAI(el.dataset.q);
+/* ===== LECTURER ===== */
+const skillOpts=sel=>Object.keys(SKILLS).map(k=>`<option value="${k}" ${sel&&sel.includes(k)?"selected":""}>${SKILLS[k]}</option>`).join("");
+PAGES["lecturer/modules"]=()=>head("Lecturer · Thiết kế","Học phần","Module theo từng career. Học phần xuất hiện trong catalog và roadmap gợi ý của Candidate.")+
+ `<div class="grid" style="grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)"><div class="card table-wrap"><table><thead><tr><th>Tên</th><th>Career</th><th>Skill</th><th class="num">Giờ</th></tr></thead><tbody>${S.modules.map(m=>`<tr><td><b>${esc(m.name)}</b><div class="sub mono">${m.id}</div></td><td><span class="badge green">${careerOf(m.career).name}</span></td><td>${m.skills.map(s=>SKILLS[s]).join(", ")}</td><td class="num">${m.hours}</td></tr>`).join("")}</tbody></table></div>
+ <div class="card"><h2>Thêm học phần</h2><div class="stack" style="margin-top:10px"><label class="f">Tên<input class="input" id="mName" placeholder="VD: TypeScript cho React"></label><label class="f">Career<select class="select" id="mCareer">${CAREERS.map(c=>`<option value="${c.id}">${c.name}</option>`).join("")}</select></label>
+ <label class="f">Skill liên quan (giữ Ctrl/Cmd để chọn nhiều)<select class="select" id="mSkills" multiple size="6">${skillOpts()}</select></label><label class="f">Thời lượng (giờ)<input class="input" id="mHours" type="number" value="8" min="1"></label><div><button class="btn primary" data-a="addModule">Thêm học phần</button></div></div></div></div>`;
+ACT.addModule=()=>{const name=$("#mName").value.trim();const skills=$$("#mSkills option:checked").map(o=>o.value);if(!name||!skills.length){toast("Cần tên và ít nhất 1 skill");return}const m={id:"m"+uid(),name,career:$("#mCareer").value,skills,hours:+$("#mHours").value||8};S.modules.push(m);log(`Thêm học phần ${m.id}: ${name}`);toast("Đã thêm. Candidate thấy trong catalog.");route()};
+PAGES["lecturer/exercises"]=()=>{const TYPE={mcq:"Trắc nghiệm",code:"Code",flashcard:"Flashcard",essay:"Tự luận"};return head("Lecturer · Thiết kế","Bài tập","Nhiều thể loại, gắn tag. AI dùng tag ∩ skill-gap và dải Elo để chọn bài cho từng Candidate.")+
+ `<div class="note ai" style="margin-bottom:14px"><b>Cách AI dùng tag</b> · độ khó 1–5 quy ra Elo 900 + diff×180; bài được chọn khi tag trùng skill của career và Elo trong dải θ ±100.</div>
+ <div class="grid" style="grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)"><div class="card table-wrap"><table><thead><tr><th>Tên</th><th>Thể loại</th><th>Tag</th><th class="num">Độ khó</th></tr></thead><tbody>${S.exercises.map(e=>`<tr><td><b>${esc(e.name)}</b></td><td><span class="badge">${TYPE[e.type]}</span></td><td><div class="chips">${e.tags.map(t=>`<span class="chip">#${esc(t)}</span>`).join("")}</div></td><td class="num">${e.diff} <span class="sub">(${900+e.diff*180})</span></td></tr>`).join("")}</tbody></table></div>
+ <div class="card"><h2>Thêm bài tập</h2><div class="stack" style="margin-top:10px"><label class="f">Tên<input class="input" id="eName" placeholder="VD: Viết custom hook useFetch"></label><label class="f">Thể loại<select class="select" id="eType">${Object.keys(TYPE).map(k=>`<option value="${k}">${TYPE[k]}</option>`).join("")}</select></label>
+ <label class="f">Tag (phân cách bằng dấu phẩy, dùng id skill: js, react, sql…)<input class="input" id="eTags" placeholder="react, hooks"></label><label class="f">Độ khó 1–5<input class="input" id="eDiff" type="number" min="1" max="5" value="3"></label><div><button class="btn primary" data-a="addExercise">Thêm bài tập</button></div></div></div></div>`};
+ACT.addExercise=()=>{const name=$("#eName").value.trim();const tags=$("#eTags").value.split(",").map(s=>s.trim().toLowerCase()).filter(Boolean);if(!name||!tags.length){toast("Cần tên và ít nhất 1 tag");return}const e={id:"e"+uid(),name,type:$("#eType").value,tags,diff:clamp(+$("#eDiff").value||3,1,5)};S.exercises.push(e);log(`Thêm bài tập ${e.id} (tags: ${tags.join(", ")})`);toast("Đã thêm bài tập");route()};
+PAGES["lecturer/base"]=()=>{const c=S.baseCareer||"fe";const list=S.base[c]||[];return head("Lecturer · Thiết kế","Lộ trình base","Roadmap mẫu cho từng career. AI lấy làm khung rồi chèn học phần theo gap của Candidate.",`<select class="select" style="width:auto" onchange="ACT.baseCareer(this)">${CAREERS.map(x=>`<option value="${x.id}" ${x.id===c?"selected":""}>${x.name}</option>`).join("")}</select>`)+
+ `<div class="grid" style="grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)"><div class="card"><h2 style="margin-bottom:6px">${careerOf(c).name} · ${list.length} học phần · ${list.reduce((t,m)=>t+(modOf(m)?.hours||0),0)}h</h2>
+ <div class="list">${list.map((mid,i)=>{const m=modOf(mid);return `<div><span class="num sub" style="width:22px">${i+1}</span><div class="grow"><div class="t">${esc(m?m.name:mid)}</div><div class="m">${m?m.skills.map(s=>SKILLS[s]).join(" · "):""}</div></div><button class="btn sm ghost" data-a="baseMove" data-i="${i}" data-d="-1" ${i===0?"disabled":""}>↑</button><button class="btn sm ghost" data-a="baseMove" data-i="${i}" data-d="1" ${i===list.length-1?"disabled":""}>↓</button><button class="btn sm ghost" data-a="baseDel" data-i="${i}">✕</button></div>`}).join("")||`<div class="empty">Chưa có lộ trình base cho ${careerOf(c).name}. Thêm học phần bên phải.</div>`}</div></div>
+ <div class="card"><h2>Thêm vào lộ trình</h2><div class="list" style="margin-top:6px">${S.modules.filter(m=>!list.includes(m.id)).map(m=>`<div><div class="grow"><div class="t">${esc(m.name)}</div><div class="m">${careerOf(m.career).name} · ${m.hours}h</div></div><button class="btn sm" data-a="baseAdd" data-mid="${m.id}">Thêm</button></div>`).join("")}</div></div></div>`};
+ACT.baseCareer=el=>{S.baseCareer=el.value;route()};
+ACT.baseMove=el=>{const c=S.baseCareer||"fe";const l=S.base[c];const i=+el.dataset.i,j=i+ +el.dataset.d;[l[i],l[j]]=[l[j],l[i]];log(`Sắp xếp lộ trình base ${c}`);route()};
+ACT.baseDel=el=>{const c=S.baseCareer||"fe";S.base[c].splice(+el.dataset.i,1);log(`Xóa học phần khỏi lộ trình base ${c}`);route()};
+ACT.baseAdd=el=>{const c=S.baseCareer||"fe";(S.base[c]=S.base[c]||[]).push(el.dataset.mid);log(`Thêm ${el.dataset.mid} vào lộ trình base ${c}`);route()};
+
+/* ===== RECRUITER ===== */
+PAGES["recruiter/post"]=()=>head("Recruiter · Tuyển dụng","Đăng JD","Nguồn ③ cho JD matching. JD xuất hiện ngay trong Việc làm của Candidate với nguồn Recruiter.")+
+ `<div class="grid" style="grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)"><div class="card"><div class="stack"><label class="f">Tiêu đề<input class="input" id="jTitle" placeholder="VD: Senior React Developer"></label><label class="f">Công ty<input class="input" id="jCo" placeholder="VD: CloudViet Solutions"></label>
+ <div class="grid g2"><label class="f">Career<select class="select" id="jCareer">${CAREERS.map(c=>`<option value="${c.id}">${c.name}</option>`).join("")}</select></label><label class="f">Level<select class="select" id="jLevel"><option>Fresher</option><option>Junior</option><option selected>Middle</option><option>Senior</option></select></label></div>
+ <label class="f">Skill yêu cầu (giữ Ctrl/Cmd để chọn nhiều)<select class="select" id="jSkills" multiple size="6">${skillOpts()}</select></label>
+ <div class="grid g2"><label class="f">Lương từ (triệu)<input class="input" id="jS1" type="number" value="20"></label><label class="f">đến (triệu)<input class="input" id="jS2" type="number" value="30"></label></div>
+ <label class="f">Mô tả<textarea class="textarea" id="jDesc" style="min-height:70px"></textarea></label><div class="row between"><span class="sub">Phí đăng JD: 1.500.000 ₫ (ghi vào Quản lý tiền)</span><button class="btn primary" data-a="postJD">Đăng JD</button></div></div></div>
+ <div class="card"><h2>JD đã đăng (nguồn Recruiter)</h2><div class="list">${S.jds.filter(j=>j.src==="recruiter").slice().reverse().map(j=>`<div><div class="grow"><div class="t">${esc(j.title)}</div><div class="m">${esc(j.company)} · ${j.level} · ${j.salary[0]}–${j.salary[1]} triệu · ${S.apps.filter(a=>a.jdId===j.id).length} hồ sơ</div><div class="chips" style="margin-top:4px">${j.skills.map(s=>`<span class="chip">${SKILLS[s]}</span>`).join("")}</div></div></div>`).join("")}</div></div></div>`;
+ACT.postJD=()=>{const title=$("#jTitle").value.trim();const company=$("#jCo").value.trim();const skills=$$("#jSkills option:checked").map(o=>o.value);if(!title||!company||!skills.length){toast("Cần tiêu đề, công ty và ít nhất 1 skill");return}
+ const j={id:"j"+uid(),title,company,career:$("#jCareer").value,level:$("#jLevel").value,salary:[+$("#jS1").value||0,+$("#jS2").value||0],skills,src:"recruiter",from:"Recruiter · "+company,city:"Việt Nam",desc:$("#jDesc").value.trim()||"Đăng bởi Recruiter trên DevRoom."};
+ S.jds.push(j);S.transactions.unshift({id:"t"+uid(),date:today(),who:company,type:"Phí đăng JD",amount:1500000});log(`Đăng JD ${j.id} ${title}`);toast("Đã đăng. Candidate thấy JD trong Việc làm.");route()};
+function candMatch(u,jd){const have=Object.keys(u.skills).filter(s=>u.skills[s]>=60);const inter=jd.skills.filter(s=>have.includes(s));const sm=inter.length/jd.skills.length;const keys=new Set([...Object.keys(u.skills),...jd.skills]);let dot=0,a=0,b=0;keys.forEach(k=>{const x=(u.skills[k]||0)/100,y=jd.skills.includes(k)?1:0;dot+=x*y;a+=x*x;b+=y*y});const cos=(a&&b)?dot/Math.sqrt(a*b):0;return Math.round((0.7*sm+0.3*cos)*100)}
+const avgElo=u=>Math.round(Object.values(u.skills).reduce((t,p)=>t+(1000+p/100*800),0)/Object.keys(u.skills).length);
+PAGES["recruiter/search"]=()=>{const jid=S.searchJD||S.jds.find(j=>j.src==="recruiter").id;const jd=S.jds.find(j=>j.id===jid);const rows=CANDIDATES.map(u=>({u,m:candMatch(u,jd)})).sort((a,b)=>b.m-a.m);
+ return head("Recruiter · Tuyển dụng","Tìm ứng viên","Ứng viên đã match, xếp theo % match với JD. Elo trung bình và điểm mock lấy từ DevRoom.",`<select class="select" style="width:auto;max-width:320px" onchange="ACT.searchJD(this)">${S.jds.map(j=>`<option value="${j.id}" ${j.id===jid?"selected":""}>${esc(j.title)} · ${esc(j.company)}</option>`).join("")}</select>`)+
+ `<div class="card table-wrap"><div class="row" style="margin-bottom:10px"><span class="sub">Yêu cầu:</span><div class="chips">${jd.skills.map(s=>`<span class="chip">${SKILLS[s]}</span>`).join("")}</div></div>
+ <table><thead><tr><th>Ứng viên</th><th>Career</th><th class="num">% match</th><th class="num">Elo TB</th><th class="num">Mock</th><th>Xác thực</th><th></th></tr></thead><tbody>${rows.map(({u,m})=>`<tr><td><b>${esc(u.name)}</b></td><td>${careerOf(u.career).name}</td><td class="num" style="color:var(--${m>=70?"good":m>=45?"warn":"bad"});font-weight:600">${m}%</td><td class="num">${avgElo(u)}</td><td class="num">${u.mock.toFixed(1)}</td><td>${u.verified?`<span class="badge good">Verified</span>`:`<span class="badge">Chưa</span>`}</td><td>${S.invited.includes(u.id)?`<span class="badge blue">Đã mời</span>`:`<button class="btn sm primary" data-a="invite" data-id="${u.id}">Mời phỏng vấn</button>`}</td></tr>`).join("")}</tbody></table>
+ <p class="sub" style="margin-top:10px">Mở hồ sơ tính phí 500.000 ₫/hồ sơ (ghi vào Quản lý tiền khi mời).</p></div>`};
+ACT.searchJD=el=>{S.searchJD=el.value;log(`Tìm ứng viên cho ${el.value}`,950);route()};
+ACT.invite=el=>{const u=CANDIDATES.find(x=>x.id===el.dataset.id);S.invited.push(u.id);const jd=S.jds.find(j=>j.id===(S.searchJD||S.jds.find(j=>j.src==="recruiter").id));S.transactions.unshift({id:"t"+uid(),date:today(),who:jd.company,type:"Phí mở hồ sơ (1 hồ sơ)",amount:500000});log(`Mời phỏng vấn ${u.id} ${u.name} cho ${jd.id}`);toast(`Đã gửi lời mời phỏng vấn thật tới ${u.name}`);route()};
+
+/* ===== ADMIN ===== */
+PAGES["admin/logs"]=()=>{const f=S.logFilter||"all";const rows=S.logs.filter(l=>f==="all"||l.role===f).slice().reverse();const tok=S.logs.reduce((t,l)=>t+l.tokens,0);const cost=tok/1e6*2;
+ return head("Admin · Vận hành","Logging & Tracking","Log hệ thống, hành vi người dùng, chi phí token AI. Token là số giả lập theo từng hành động.",`<select class="select" style="width:auto" onchange="ACT.logFilter(this)"><option value="all">Tất cả vai trò</option>${Object.keys(ROLE_NAMES).map(r=>`<option value="${r}" ${f===r?"selected":""}>${ROLE_NAMES[r]}</option>`).join("")}</select>`)+
+ `<div class="grid g4" style="margin-bottom:14px"><div class="card stat"><div class="lbl">Tổng dòng log</div><div class="val">${S.logs.length}</div></div><div class="card stat"><div class="lbl">Hành động gọi AI</div><div class="val">${S.logs.filter(l=>l.tokens>0).length}</div></div><div class="card stat"><div class="lbl">Tổng token AI (giả)</div><div class="val">${tok.toLocaleString("vi-VN")}</div></div><div class="card stat"><div class="lbl">Chi phí ước tính · $2/1M</div><div class="val">$${cost.toFixed(4)}</div></div></div>
+ <div class="card table-wrap"><table><thead><tr><th>Thời gian</th><th>Vai trò</th><th>Hành động</th><th class="num">Token AI</th></tr></thead><tbody>${rows.map(l=>`<tr><td class="mono sub" style="white-space:nowrap">${l.ts.slice(0,16).replace("T"," ")}</td><td><span class="badge ${{candidate:"teal",lecturer:"green",recruiter:"blue",admin:"gray",system:"purple"}[l.role]||""}">${ROLE_NAMES[l.role]||l.role}</span></td><td>${esc(l.action)}</td><td class="num">${l.tokens?l.tokens.toLocaleString("vi-VN"):"<span class='sub'>—</span>"}</td></tr>`).join("")}</tbody></table></div>`};
+ACT.logFilter=el=>{S.logFilter=el.value;route()};
+PAGES["admin/money"]=()=>{const m=today().slice(0,7);const month=S.transactions.filter(t=>t.date.startsWith(m));const rev=month.reduce((t,x)=>t+x.amount,0);const jdFee=month.filter(t=>t.type.includes("đăng JD")).reduce((t,x)=>t+x.amount,0);const openFee=month.filter(t=>t.type.includes("mở hồ sơ")).reduce((t,x)=>t+x.amount,0);
+ const data=REVENUE_6M.map(d=>({...d}));data[5].v=+(rev/1e6).toFixed(1);const W=560,H=200,pad=32,bw=52;const max=Math.max(...data.map(d=>d.v))*1.15;const sy=v=>H-pad-(v/max)*(H-2*pad);const ticks=[0,Math.round(max/2),Math.round(max)];
+ const chart=`<svg class="bars" viewBox="0 0 ${W} ${H}" role="img" aria-label="Doanh thu 6 tháng">${ticks.map(t=>`<line x1="${pad+8}" x2="${W-8}" y1="${sy(t)}" y2="${sy(t)}"/><text x="${pad}" y="${sy(t)+4}" text-anchor="end">${t}</text>`).join("")}${data.map((d,i)=>{const x=pad+24+i*((W-pad-40)/6);return `<rect x="${x}" y="${sy(d.v)}" width="${bw}" height="${H-pad-sy(d.v)}" rx="3" ${i===5?'opacity=".55"':""}/><text x="${x+bw/2}" y="${sy(d.v)-6}" text-anchor="middle" style="fill:var(--ink)">${d.v}</text><text x="${x+bw/2}" y="${H-pad+16}" text-anchor="middle">${d.m}</text>`}).join("")}</svg>`;
+ return head("Admin · Vận hành","Quản lý tiền","Doanh thu, thanh toán, đối soát. Hiện chỉ có nguồn thu từ Recruiter.")+
+ `<div class="grid g3" style="margin-bottom:14px"><div class="card stat"><div class="lbl">Doanh thu tháng ${m.slice(5)}/${m.slice(0,4)}</div><div class="val">${fmtVND(rev)}</div></div><div class="card stat"><div class="lbl">Phí đăng JD</div><div class="val">${fmtVND(jdFee)}</div></div><div class="card stat"><div class="lbl">Phí mở hồ sơ</div><div class="val">${fmtVND(openFee)}</div></div></div>
+ <div class="grid" style="grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)"><div class="card"><div class="row between"><h2>Doanh thu 6 tháng</h2><span class="sub">triệu VND · tháng hiện tại chưa chốt</span></div>${chart}
+ <div class="note warn" style="margin-top:10px;background:var(--warn-soft)"><b>Doanh thu từ Lecturer: chưa chốt mô hình.</b> Câu hỏi mở trong báo cáo – Lecturer có thu phí thiết kế học phần hay chia sẻ doanh thu không.</div></div>
+ <div class="card table-wrap"><h2 style="margin-bottom:8px">Giao dịch</h2><table><thead><tr><th>Ngày</th><th>Recruiter</th><th>Loại</th><th class="num">Số tiền</th></tr></thead><tbody>${S.transactions.map(t=>`<tr><td class="mono sub">${t.date}</td><td>${esc(t.who)}</td><td>${esc(t.type)}</td><td class="num">${fmtVND(t.amount)}</td></tr>`).join("")}</tbody></table></div></div>`};
+
+/* ===== BOOT ===== */
+S=load()||seed();
+if(!S.rooms){S=seed()}
+$("#btnReset").addEventListener("click",reset);
+$$("#roleSeg button").forEach(b=>b.addEventListener("click",()=>{location.hash="#/"+b.dataset.role+"/"+NAV[b.dataset.role].filter(x=>x.length>1)[0][0]}));
+$("#fab").addEventListener("click",()=>{const p=$("#panel");p.hidden=!p.hidden;if(!p.hidden){renderPanel();$("#panelInput").focus()}});
+$("#panelClose").addEventListener("click",()=>{$("#panel").hidden=true});
+$("#panelForm").addEventListener("submit",e=>{e.preventDefault();const v=$("#panelInput").value.trim();if(!v)return;$("#panelInput").value="";askAI(v)});
+window.addEventListener("hashchange",route);
+route();
+</script>
