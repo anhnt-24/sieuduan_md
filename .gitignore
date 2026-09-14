@@ -7,3 +7,6 @@ venv/
 .env
 .env.*
 !.env.example
+
+# Ban sao luu tai khoan Claude, chua token
+*.cswap*
