@@ -2,8 +2,6 @@
 
 Nền tảng học thích ứng, luyện phỏng vấn và kết nối việc làm cho lập trình viên.
 
-Sinh viên thực hiện: …………………… · Giảng viên hướng dẫn: ……………………
-
 ## 1. Giới thiệu
 
 Sinh viên ngành công nghệ thông tin thường học dàn trải, không xác định được kỹ năng còn thiếu so với yêu cầu tuyển dụng, thiếu môi trường luyện phỏng vấn có phản hồi, và viết CV không khớp mô tả công việc. Về phía nhà tuyển dụng, việc sàng lọc dựa trên CV dạng văn bản không phản ánh năng lực thật.
