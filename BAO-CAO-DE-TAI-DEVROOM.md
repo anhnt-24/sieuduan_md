@@ -22,7 +22,7 @@ Hệ thống có bốn vai trò: Candidate học và tìm việc; Lecturer thi�
 
 ### 3.1 Học thích ứng
 
-Lõi này đo năng lực từng kỹ năng, gợi ý lộ trình và giao bài đúng độ khó. Mô hình ngôn ngữ sinh câu hỏi theo kỹ năng và độ khó, chấm, và dựa vào kết quả các câu trước để điều chỉnh câu sau; sau 15–20 câu trả về điểm năng lực 0–100 và danh sách kỹ năng thiếu. Roadmap được gợi ý từ catalog học phần của Lecturer, người học tự thêm bớt; bài tập hằng ngày chọn theo kỹ năng thiếu, có chấm và gợi ý; code chạy trong sandbox cô lập. Đề xuất bổ sung: thuật toán Elo kết hợp test thích ứng để đo năng lực không tốn token, đồ thị tiên quyết để xếp lộ trình, SM-2 cho lịch ôn.
+Lõi này đo năng lực từng kỹ năng, gợi ý lộ trình và giao bài đúng độ khó. Mô hình ngôn ngữ sinh câu hỏi theo kỹ năng và độ khó, chấm, và dựa vào kết quả các câu trước để điều chỉnh câu sau; sau 15–20 câu trả về điểm năng lực 0–100 và danh sách kỹ năng thiếu. Roadmap được gợi ý từ catalog học phần của Lecturer, người học tự thêm bớt; bài tập hằng ngày chọn theo kỹ năng thiếu, có chấm và gợi ý; code chạy trong sandbox cô lập.
 
 ### 3.2 Phỏng vấn thử với AI
 
