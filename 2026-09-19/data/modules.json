@@ -1,0 +1,140 @@
+{
+  "modules": [
+    {
+      "id": "m1",
+      "code": "m_js_core",
+      "career_id": "C_fe",
+      "name": "JavaScript nền tảng",
+      "hours": 12,
+      "skill_ids": [
+        "S_js"
+      ],
+      "status": "published",
+      "content": [
+        "Kiểu dữ liệu, ép kiểu, so sánh == và ===",
+        "Scope, hoisting, closure",
+        "this, prototype, class",
+        "Promise, async/await, event loop",
+        "ES module và công cụ build cơ bản"
+      ]
+    },
+    {
+      "id": "m3",
+      "code": "m_css_lay",
+      "career_id": "C_fe",
+      "name": "CSS layout & responsive",
+      "hours": 8,
+      "skill_ids": [
+        "S_css"
+      ],
+      "status": "published",
+      "content": [
+        "Box model và box-sizing",
+        "Cascade và specificity",
+        "Flexbox",
+        "CSS Grid, auto-fill và auto-fit",
+        "Responsive: media query, đơn vị tương đối, mobile-first"
+      ]
+    },
+    {
+      "id": "m2",
+      "code": "m_react",
+      "career_id": "C_fe",
+      "name": "React & hooks",
+      "hours": 16,
+      "skill_ids": [
+        "S_react",
+        "S_js"
+      ],
+      "status": "published",
+      "content": [
+        "JSX, component, props",
+        "useState và cập nhật state theo hàng đợi",
+        "useEffect, dependency và cleanup",
+        "key và reconciliation khi render danh sách",
+        "Custom hook, useMemo, useCallback"
+      ]
+    },
+    {
+      "id": "m4",
+      "code": "m_http",
+      "career_id": "C_fe",
+      "name": "HTTP & REST API",
+      "hours": 6,
+      "skill_ids": [
+        "S_http"
+      ],
+      "status": "published",
+      "content": [
+        "Method, status code, header",
+        "REST và thiết kế endpoint",
+        "Xác thực: 401 và 403, refresh token",
+        "CORS và preflight",
+        "Caching: Cache-Control, ETag, 304"
+      ]
+    },
+    {
+      "id": "m5",
+      "code": "m_testing",
+      "career_id": "C_fe",
+      "name": "Unit test với Jest",
+      "hours": 10,
+      "skill_ids": [
+        "S_testing",
+        "S_js"
+      ],
+      "status": "published",
+      "content": [
+        "Test pyramid, cấu trúc Arrange-Act-Assert",
+        "Matcher của Jest",
+        "Test code bất đồng bộ",
+        "Mock hàm, module và timer",
+        "Test component với React Testing Library"
+      ]
+    },
+    {
+      "id": "m6",
+      "code": "m_git",
+      "career_id": "C_fe",
+      "name": "Git làm việc nhóm",
+      "hours": 6,
+      "skill_ids": [
+        "S_git"
+      ],
+      "status": "published",
+      "content": [
+        "Commit, branch, switch",
+        "fetch, pull, merge",
+        "rebase và force-with-lease",
+        "revert và reset",
+        "Quy trình pull request và code review"
+      ]
+    }
+  ],
+  "module_prerequisites": [
+    {
+      "module_id": "m2",
+      "requires_id": "m1"
+    },
+    {
+      "module_id": "m5",
+      "requires_id": "m1"
+    }
+  ],
+  "base_roadmaps": [
+    {
+      "id": "BR_fe_v1",
+      "career_id": "C_fe",
+      "version": 1,
+      "is_current": true,
+      "module_ids": [
+        "m1",
+        "m3",
+        "m2",
+        "m4",
+        "m5",
+        "m6"
+      ]
+    }
+  ]
+}

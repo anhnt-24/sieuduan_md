@@ -1,0 +1,129 @@
+{
+  "careers": [
+    {
+      "id": "C_fe",
+      "code": "fe",
+      "name_vi": "Lập trình Frontend"
+    }
+  ],
+  "skills": [
+    {
+      "id": "S_grp_lang",
+      "code": "web_programming_languages",
+      "name_en": "Web programming languages",
+      "name_vi": "Ngôn ngữ lập trình web",
+      "parent_id": null,
+      "embedding": null
+    },
+    {
+      "id": "S_grp_ui",
+      "code": "web_markup_styling",
+      "name_en": "Web markup and styling",
+      "name_vi": "Dựng giao diện web (markup và style)",
+      "parent_id": null,
+      "embedding": null
+    },
+    {
+      "id": "S_js",
+      "code": "javascript",
+      "name_en": "JavaScript",
+      "name_vi": "JavaScript",
+      "parent_id": "S_grp_lang",
+      "embedding": null
+    },
+    {
+      "id": "S_react",
+      "code": "react",
+      "name_en": "React",
+      "name_vi": "React",
+      "parent_id": null,
+      "embedding": null
+    },
+    {
+      "id": "S_css",
+      "code": "css",
+      "name_en": "CSS",
+      "name_vi": "CSS",
+      "parent_id": "S_grp_ui",
+      "embedding": null
+    },
+    {
+      "id": "S_http",
+      "code": "http",
+      "name_en": "HTTP",
+      "name_vi": "HTTP và REST API",
+      "parent_id": null,
+      "embedding": null
+    },
+    {
+      "id": "S_testing",
+      "code": "testing",
+      "name_en": "Testing",
+      "name_vi": "Kiểm thử phần mềm",
+      "parent_id": null,
+      "embedding": null
+    },
+    {
+      "id": "S_git",
+      "code": "git",
+      "name_en": "Git",
+      "name_vi": "Quản lý phiên bản với Git",
+      "parent_id": null,
+      "embedding": null
+    },
+    {
+      "id": "S_ts",
+      "code": "typescript",
+      "name_en": "TypeScript",
+      "name_vi": "TypeScript",
+      "parent_id": "S_grp_lang",
+      "embedding": null
+    },
+    {
+      "id": "S_html",
+      "code": "html",
+      "name_en": "HTML",
+      "name_vi": "HTML",
+      "parent_id": "S_grp_ui",
+      "embedding": null
+    }
+  ],
+  "career_skills": [
+    {
+      "career_id": "C_fe",
+      "skill_id": "S_js",
+      "weight": 3,
+      "is_core": true
+    },
+    {
+      "career_id": "C_fe",
+      "skill_id": "S_react",
+      "weight": 3,
+      "is_core": true
+    },
+    {
+      "career_id": "C_fe",
+      "skill_id": "S_css",
+      "weight": 2,
+      "is_core": true
+    },
+    {
+      "career_id": "C_fe",
+      "skill_id": "S_http",
+      "weight": 2,
+      "is_core": true
+    },
+    {
+      "career_id": "C_fe",
+      "skill_id": "S_testing",
+      "weight": 2,
+      "is_core": false
+    },
+    {
+      "career_id": "C_fe",
+      "skill_id": "S_git",
+      "weight": 1,
+      "is_core": false
+    }
+  ]
+}

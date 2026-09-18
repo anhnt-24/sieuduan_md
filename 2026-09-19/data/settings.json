@@ -1,0 +1,128 @@
+[
+  {
+    "key": "elo_init_theta",
+    "value": 1200,
+    "updated_by": null
+  },
+  {
+    "key": "elo_scale",
+    "value": 400,
+    "updated_by": null
+  },
+  {
+    "key": "elo_k_schedule",
+    "value": {
+      "k": [
+        64,
+        32,
+        16
+      ],
+      "n_below": [
+        3,
+        6
+      ]
+    },
+    "updated_by": null
+  },
+  {
+    "key": "elo_kq_question",
+    "value": {
+      "k_q": 8,
+      "min_attempts": 30
+    },
+    "updated_by": null
+  },
+  {
+    "key": "elo_d_init",
+    "value": {
+      "base": 900,
+      "per_difficulty": 180
+    },
+    "updated_by": null
+  },
+  {
+    "key": "elo_p_mapping",
+    "value": {
+      "theta_min": 1000,
+      "theta_span": 800
+    },
+    "updated_by": null
+  },
+  {
+    "key": "guess_floor_g",
+    "value": 0.25,
+    "updated_by": null
+  },
+  {
+    "key": "pass_threshold_p",
+    "value": 60,
+    "updated_by": null
+  },
+  {
+    "key": "cat_min_q",
+    "value": 15,
+    "updated_by": null
+  },
+  {
+    "key": "cat_max_q",
+    "value": 20,
+    "updated_by": null
+  },
+  {
+    "key": "cat_stop_delta",
+    "value": {
+      "abs_delta_theta_lt": 20,
+      "consecutive_same_skill": 3
+    },
+    "updated_by": null
+  },
+  {
+    "key": "cat_min_per_skill",
+    "value": 2,
+    "updated_by": null
+  },
+  {
+    "key": "srs_intervals",
+    "value": [
+      1,
+      3,
+      7,
+      14,
+      30
+    ],
+    "updated_by": null
+  },
+  {
+    "key": "match_weights",
+    "value": {
+      "w_skill": 0.7,
+      "w_cos": 0.3
+    },
+    "updated_by": null
+  },
+  {
+    "key": "prefilter_top_k",
+    "value": 30,
+    "updated_by": null
+  },
+  {
+    "key": "iv_low_conf_threshold",
+    "value": 0.6,
+    "updated_by": null
+  },
+  {
+    "key": "iv_low_conf_variance",
+    "value": 1.0,
+    "updated_by": null
+  },
+  {
+    "key": "iv_max_follow_up",
+    "value": 2,
+    "updated_by": null
+  },
+  {
+    "key": "bias_max_delta",
+    "value": 5,
+    "updated_by": null
+  }
+]

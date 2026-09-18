@@ -1,0 +1,335 @@
+[
+  {
+    "id": "CV_01",
+    "user_id": "00000000-0000-4000-8000-000000000001",
+    "origin": "upload",
+    "storage_key": "cv/samples/cv_01.pdf",
+    "parse_status": "parsed",
+    "extracted": {
+      "full_name": "Ứng viên Mẫu 1",
+      "headline": "Frontend Engineer",
+      "contact": {
+        "email": "ungvien1@example.com",
+        "phone": "0900000001",
+        "links": [
+          "https://example.com/portfolio/ungvien-1"
+        ]
+      },
+      "years_total": 5.5,
+      "page_count": 2,
+      "ats_flags": [],
+      "education": [
+        "Kỹ sư Công nghệ thông tin, Trường Đại học Mẫu, 2020"
+      ],
+      "skills": [
+        {
+          "skill_id": "S_js",
+          "raw": "JavaScript",
+          "years": 5.5,
+          "level": "advanced",
+          "evidence": "JavaScript"
+        },
+        {
+          "skill_id": "S_ts",
+          "raw": "TypeScript",
+          "years": 3,
+          "level": "advanced",
+          "evidence": "TypeScript"
+        },
+        {
+          "skill_id": "S_react",
+          "raw": "ReactJS",
+          "years": 4,
+          "level": "advanced",
+          "evidence": "ReactJS"
+        },
+        {
+          "skill_id": "S_css",
+          "raw": "SCSS",
+          "years": 5,
+          "level": "advanced",
+          "evidence": "SCSS"
+        },
+        {
+          "skill_id": "S_html",
+          "raw": "HTML5",
+          "years": 5.5,
+          "level": "advanced",
+          "evidence": "HTML5"
+        },
+        {
+          "skill_id": "S_http",
+          "raw": "REST API",
+          "years": 4,
+          "level": "working",
+          "evidence": "REST API"
+        },
+        {
+          "skill_id": "S_testing",
+          "raw": "Jest",
+          "years": 3,
+          "level": "working",
+          "evidence": "Jest"
+        },
+        {
+          "skill_id": "S_git",
+          "raw": "GitLab",
+          "years": 5,
+          "level": "working",
+          "evidence": "GitLab"
+        },
+        {
+          "skill_id": null,
+          "raw": "Figma",
+          "years": null,
+          "level": null,
+          "evidence": "Figma"
+        }
+      ],
+      "experiences": [
+        {
+          "title": "Senior Frontend Developer",
+          "company": "Công ty Mẫu X",
+          "from": "2023-03",
+          "to": null,
+          "bullets": [
+            {
+              "text": "Chuyển 40 màn hình quản trị từ JavaScript sang TypeScript, giảm 30% lỗi runtime báo về Sentry",
+              "has_metric": true
+            },
+            {
+              "text": "Dựng bộ test Jest và React Testing Library, nâng coverage từ 35% lên 78%",
+              "has_metric": true
+            },
+            {
+              "text": "Hướng dẫn 3 thành viên junior qua code review hằng tuần",
+              "has_metric": true
+            }
+          ]
+        },
+        {
+          "title": "Frontend Developer",
+          "company": "Công ty Mẫu Y",
+          "from": "2020-07",
+          "to": "2023-02",
+          "bullets": [
+            {
+              "text": "Tối ưu tải trang sản phẩm bằng code splitting, LCP giảm từ 4,1 s xuống 2,3 s",
+              "has_metric": true
+            },
+            {
+              "text": "Tích hợp REST API thanh toán, xử lý retry và trạng thái lỗi cho người dùng",
+              "has_metric": false
+            }
+          ]
+        }
+      ]
+    },
+    "skill_ids": [
+      "S_js",
+      "S_ts",
+      "S_react",
+      "S_css",
+      "S_html",
+      "S_http",
+      "S_testing",
+      "S_git"
+    ],
+    "embedding": null,
+    "score": 94
+  },
+  {
+    "id": "CV_02",
+    "user_id": "00000000-0000-4000-8000-000000000002",
+    "origin": "builder",
+    "storage_key": "cv/samples/cv_02.pdf",
+    "parse_status": "parsed",
+    "extracted": {
+      "full_name": "Ứng viên Mẫu 2",
+      "headline": "Frontend Developer",
+      "contact": {
+        "email": "ungvien2@example.com",
+        "phone": "0900000002",
+        "links": []
+      },
+      "years_total": 2,
+      "page_count": 1,
+      "ats_flags": [
+        "two_columns"
+      ],
+      "education": [
+        "Cử nhân Kỹ thuật phần mềm, Trường Đại học Mẫu, 2024"
+      ],
+      "skills": [
+        {
+          "skill_id": "S_react",
+          "raw": "React.js",
+          "years": 2,
+          "level": "working",
+          "evidence": "React.js"
+        },
+        {
+          "skill_id": "S_js",
+          "raw": "JavaScript",
+          "years": 2,
+          "level": "working",
+          "evidence": "JavaScript"
+        },
+        {
+          "skill_id": "S_css",
+          "raw": "CSS3",
+          "years": 2,
+          "level": "working",
+          "evidence": "CSS3"
+        },
+        {
+          "skill_id": "S_html",
+          "raw": "HTML",
+          "years": 2,
+          "level": "working",
+          "evidence": "HTML"
+        },
+        {
+          "skill_id": "S_git",
+          "raw": "GitHub",
+          "years": 2,
+          "level": "basic",
+          "evidence": "GitHub"
+        },
+        {
+          "skill_id": null,
+          "raw": "Bootstrap",
+          "years": 1,
+          "level": "working",
+          "evidence": "Bootstrap"
+        }
+      ],
+      "experiences": [
+        {
+          "title": "Frontend Developer",
+          "company": "Công ty Mẫu Z",
+          "from": "2024-08",
+          "to": null,
+          "bullets": [
+            {
+              "text": "Xây 12 trang landing page responsive bằng React.js và CSS3",
+              "has_metric": true
+            },
+            {
+              "text": "Làm component form đăng ký dùng chung cho nhiều trang",
+              "has_metric": false
+            },
+            {
+              "text": "Sửa lỗi hiển thị trên Safari theo báo cáo từ khách hàng",
+              "has_metric": false
+            }
+          ]
+        }
+      ]
+    },
+    "skill_ids": [
+      "S_react",
+      "S_js",
+      "S_css",
+      "S_html",
+      "S_git"
+    ],
+    "embedding": null,
+    "score": 78
+  },
+  {
+    "id": "CV_03",
+    "user_id": "00000000-0000-4000-8000-000000000003",
+    "origin": "ai_generated",
+    "storage_key": "cv/samples/cv_03.pdf",
+    "parse_status": "parsed",
+    "extracted": {
+      "full_name": "Ứng viên Mẫu 3",
+      "headline": "Sinh viên mới tốt nghiệp CNTT",
+      "contact": {
+        "email": "ungvien3@example.com",
+        "phone": null,
+        "links": []
+      },
+      "years_total": 0.5,
+      "page_count": 1,
+      "ats_flags": [
+        "table",
+        "photo"
+      ],
+      "education": [
+        "Cử nhân Công nghệ thông tin, Trường Đại học Mẫu, 2026"
+      ],
+      "skills": [
+        {
+          "skill_id": null,
+          "raw": "Python",
+          "years": 1,
+          "level": "working",
+          "evidence": "Python"
+        },
+        {
+          "skill_id": null,
+          "raw": "SQL",
+          "years": 1,
+          "level": "working",
+          "evidence": "SQL"
+        },
+        {
+          "skill_id": "S_html",
+          "raw": "HTML5",
+          "years": 0.5,
+          "level": "basic",
+          "evidence": "HTML5"
+        },
+        {
+          "skill_id": "S_css",
+          "raw": "CSS",
+          "years": 0.5,
+          "level": "basic",
+          "evidence": "CSS"
+        },
+        {
+          "skill_id": "S_js",
+          "raw": "JavaScript",
+          "years": 0.5,
+          "level": "basic",
+          "evidence": "JavaScript"
+        },
+        {
+          "skill_id": "S_git",
+          "raw": "Git",
+          "years": 1,
+          "level": "basic",
+          "evidence": "Git"
+        }
+      ],
+      "experiences": [
+        {
+          "title": "Thực tập sinh Backend",
+          "company": "Công ty Mẫu W",
+          "from": "2026-01",
+          "to": "2026-06",
+          "bullets": [
+            {
+              "text": "Viết script Python đọc dữ liệu bán hàng và xuất báo cáo Excel",
+              "has_metric": false
+            },
+            {
+              "text": "Làm trang giới thiệu cá nhân bằng HTML, CSS và JavaScript",
+              "has_metric": false
+            }
+          ]
+        }
+      ]
+    },
+    "skill_ids": [
+      "S_html",
+      "S_css",
+      "S_js",
+      "S_git"
+    ],
+    "embedding": null,
+    "score": 61
+  }
+]

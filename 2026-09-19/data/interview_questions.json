@@ -1,0 +1,212 @@
+[
+  {
+    "id": "IQ_01",
+    "career_id": "C_fe",
+    "skill_id": "S_js",
+    "difficulty": "easy",
+    "kind": "technical",
+    "body": "Giải thích sự khác nhau giữa `var`, `let` và `const`. Trong code mới bạn dùng cái nào?",
+    "key_points": [
+      "`var` có function scope, `let`/`const` có block scope",
+      "Hoisting: `var` được khởi tạo `undefined`, `let`/`const` nằm trong temporal dead zone đến dòng khai báo",
+      "`const` cấm gán lại nhưng không làm object bất biến",
+      "Mặc định dùng `const`, dùng `let` khi cần gán lại, tránh `var`"
+    ],
+    "code_problem_id": null,
+    "source": "bank",
+    "review_status": "approved"
+  },
+  {
+    "id": "IQ_02",
+    "career_id": "C_fe",
+    "skill_id": "S_js",
+    "difficulty": "hard",
+    "kind": "technical",
+    "body": "Giải thích event loop của trình duyệt (call stack, microtask, macrotask). Vì sao một vòng lặp đồng bộ nặng làm UI đơ và bạn xử lý thế nào?",
+    "key_points": [
+      "JavaScript chạy một luồng trên call stack; task tiếp theo chỉ chạy khi stack rỗng",
+      "Microtask (Promise, queueMicrotask) được xả hết trước macrotask kế tiếp (setTimeout, sự kiện)",
+      "Trình duyệt chỉ vẽ lại giữa các task nên long task (> 50 ms) chặn render và input",
+      "Cách xử lý: chia nhỏ công việc (setTimeout, requestIdleCallback), chuyển sang Web Worker",
+      "Đo bằng tab Performance để tìm long task trước khi tối ưu"
+    ],
+    "code_problem_id": null,
+    "source": "llm",
+    "review_status": "approved"
+  },
+  {
+    "id": "IQ_03",
+    "career_id": "C_fe",
+    "skill_id": "S_react",
+    "difficulty": "medium",
+    "kind": "technical",
+    "body": "Khi nào một component React re-render? Làm sao tránh re-render thừa?",
+    "key_points": [
+      "Re-render khi state của nó đổi, khi component cha re-render, khi giá trị context đang dùng đổi",
+      "`React.memo` bỏ qua render khi props không đổi (so sánh nông)",
+      "`useMemo`/`useCallback` giữ tham chiếu ổn định cho props là object, hàm",
+      "Đặt state gần nơi dùng (colocate), tách context theo tần suất thay đổi",
+      "Đo bằng React Profiler trước khi tối ưu"
+    ],
+    "code_problem_id": null,
+    "source": "llm",
+    "review_status": "approved"
+  },
+  {
+    "id": "IQ_04",
+    "career_id": "C_fe",
+    "skill_id": "S_css",
+    "difficulty": "easy",
+    "kind": "technical",
+    "body": "Flexbox và CSS Grid khác nhau thế nào? Khi nào dùng cái nào?",
+    "key_points": [
+      "Flexbox bố cục một chiều (hàng hoặc cột), Grid bố cục hai chiều",
+      "Flexbox để nội dung quyết định kích thước; Grid để layout quyết định vị trí",
+      "Ví dụ: thanh điều hướng, nhóm nút dùng Flexbox; bố cục trang, lưới thẻ dùng Grid",
+      "Có thể kết hợp: Grid cho khung trang, Flexbox bên trong từng ô"
+    ],
+    "code_problem_id": null,
+    "source": "bank",
+    "review_status": "approved"
+  },
+  {
+    "id": "IQ_05",
+    "career_id": "C_fe",
+    "skill_id": "S_http",
+    "difficulty": "medium",
+    "kind": "technical",
+    "body": "Trình bày cơ chế HTTP caching với `Cache-Control`, `ETag` và mã 304. Bạn cấu hình cache cho file build của một SPA thế nào?",
+    "key_points": [
+      "`Cache-Control: max-age` cho phép dùng bản cache không hỏi lại server trong thời hạn",
+      "`no-cache` vẫn lưu nhưng phải xác thực lại; `no-store` không lưu",
+      "`ETag` + `If-None-Match` để xác thực lại; không đổi thì server trả 304 không kèm body",
+      "Asset có hash trong tên: `max-age` dài + `immutable`; `index.html`: `no-cache`"
+    ],
+    "code_problem_id": null,
+    "source": "llm",
+    "review_status": "approved"
+  },
+  {
+    "id": "IQ_06",
+    "career_id": "C_fe",
+    "skill_id": "S_testing",
+    "difficulty": "medium",
+    "kind": "technical",
+    "body": "Bạn viết test cho component React thế nào để test không vỡ khi refactor code bên trong?",
+    "key_points": [
+      "Test hành vi người dùng thấy, không test state hay hàm nội bộ",
+      "Truy vấn theo vai trò và nhãn (`getByRole`, `getByLabelText`) thay vì class hay test id",
+      "Mock ở biên mạng (MSW) thay vì mock module nội bộ",
+      "Chờ bất đồng bộ bằng `findBy*`/`waitFor`",
+      "Phủ các trạng thái loading, lỗi, rỗng"
+    ],
+    "code_problem_id": null,
+    "source": "llm",
+    "review_status": "approved"
+  },
+  {
+    "id": "IQ_07",
+    "career_id": "C_fe",
+    "skill_id": "S_git",
+    "difficulty": "medium",
+    "kind": "technical",
+    "body": "Phân biệt `git merge` và `git rebase`. Team của bạn nên dùng mỗi lệnh khi nào?",
+    "key_points": [
+      "merge giữ nguyên lịch sử và tạo merge commit, không viết lại commit cũ",
+      "rebase chép lại commit lên base mới, lịch sử thẳng, hash commit đổi",
+      "Không rebase branch đã chia sẻ trừ khi cả team thống nhất; nếu phải thì dùng `--force-with-lease`",
+      "Thực tế: rebase branch cá nhân lên `main` trước khi mở PR, gộp vào `main` qua PR (merge hoặc squash)"
+    ],
+    "code_problem_id": null,
+    "source": "llm",
+    "review_status": "approved"
+  },
+  {
+    "id": "IQ_08",
+    "career_id": "C_fe",
+    "skill_id": "S_js",
+    "difficulty": "medium",
+    "kind": "code",
+    "body": "Viết hàm `groupBy(arr, keyFn)` trả về object gom các phần tử theo khóa do `keyFn` sinh ra. Ví dụ `groupBy([1.2, 1.8, 2.1], Math.floor)` → `{ 1: [1.2, 1.8], 2: [2.1] }`. Nêu độ phức tạp.",
+    "key_points": [
+      "Duyệt một lần, độ phức tạp O(n)",
+      "Khởi tạo mảng khi gặp khóa mới, không ghi đè nhóm đã có",
+      "Không sửa mảng đầu vào; mảng rỗng trả `{}`",
+      "Biết `Object.groupBy` (ES2024) hoặc dùng `Map` khi khóa không phải chuỗi"
+    ],
+    "code_problem_id": null,
+    "source": "llm",
+    "review_status": "approved"
+  },
+  {
+    "id": "IQ_09",
+    "career_id": "C_fe",
+    "skill_id": "S_react",
+    "difficulty": "hard",
+    "kind": "code",
+    "body": "Viết custom hook `useFetch(url)` trả về `{ data, error, loading }`. Yêu cầu: gọi lại khi `url` đổi, hủy request cũ khi `url` đổi hoặc component unmount, không để response cũ ghi đè response mới.",
+    "key_points": [
+      "`useEffect` phụ thuộc `[url]`, reset loading và error khi url đổi",
+      "Dùng `AbortController`, gọi `abort()` trong cleanup",
+      "Bỏ qua `AbortError`, không ghi nó thành lỗi hiển thị",
+      "Kiểm tra `res.ok`, ném lỗi với response không phải 2xx",
+      "Giải thích race condition giữa hai request và cách abort ngăn nó"
+    ],
+    "code_problem_id": null,
+    "source": "llm",
+    "review_status": "approved"
+  },
+  {
+    "id": "IQ_10",
+    "career_id": "C_fe",
+    "skill_id": null,
+    "difficulty": "easy",
+    "kind": "behavioral",
+    "body": "Kể về một lần bạn nhận góp ý code review mà bạn không đồng ý. Bạn đã xử lý thế nào?",
+    "key_points": [
+      "Situation/Task: bối cảnh PR, góp ý cụ thể, vai trò của bạn",
+      "Action: hỏi rõ lý do của người review trước khi phản hồi",
+      "Action: đưa bằng chứng (tài liệu, số đo, ví dụ) và thảo luận trực tiếp thay vì tranh luận dài trong comment",
+      "Result: kết quả cụ thể (sửa theo góp ý hoặc thống nhất cách khác) và điều rút ra"
+    ],
+    "code_problem_id": null,
+    "source": "bank",
+    "review_status": "approved"
+  },
+  {
+    "id": "IQ_11",
+    "career_id": "C_fe",
+    "skill_id": null,
+    "difficulty": "medium",
+    "kind": "behavioral",
+    "body": "Kể về một lần dự án có nguy cơ trễ deadline. Bạn đã làm gì?",
+    "key_points": [
+      "Situation/Task: phạm vi, deadline, phần việc bạn chịu trách nhiệm",
+      "Action: báo rủi ro sớm cho người liên quan, kèm số liệu tiến độ",
+      "Action: đề xuất cắt phạm vi hoặc đổi ưu tiên, chia nhỏ việc",
+      "Result: kết quả đo được (giao đúng hạn phần nào, trễ bao lâu)",
+      "Bài học áp dụng cho lần sau (ước lượng, theo dõi tiến độ)"
+    ],
+    "code_problem_id": null,
+    "source": "bank",
+    "review_status": "approved"
+  },
+  {
+    "id": "IQ_12",
+    "career_id": "C_fe",
+    "skill_id": null,
+    "difficulty": "hard",
+    "kind": "behavioral",
+    "body": "Kể về một bug nghiêm trọng trên production mà bạn trực tiếp xử lý.",
+    "key_points": [
+      "Situation/Task: bug gì, ảnh hưởng bao nhiêu người dùng, vai trò của bạn",
+      "Action: giảm thiệt hại trước (rollback, feature flag) rồi mới tìm nguyên nhân",
+      "Action: tìm nguyên nhân gốc bằng log, tái hiện, viết test tái hiện trước khi sửa",
+      "Result: số liệu sau khi sửa (thời gian khắc phục, số lỗi giảm)",
+      "Postmortem không đổ lỗi, biện pháp phòng ngừa (test hồi quy, cảnh báo)"
+    ],
+    "code_problem_id": null,
+    "source": "llm",
+    "review_status": "approved"
+  }
+]

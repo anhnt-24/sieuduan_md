@@ -1,0 +1,237 @@
+{
+  "jd_postings": [
+    {
+      "id": "JD_01",
+      "source": "crawl",
+      "source_url": "https://example.com/jobs/fe-junior-001",
+      "recruiter_id": null,
+      "title": "Junior Frontend Developer (ReactJS)",
+      "company": "Công ty Mẫu A",
+      "career_id": "C_fe",
+      "level": "junior",
+      "description": "Công ty Mẫu A (dữ liệu giả lập) tuyển Junior Frontend Developer cho web thương mại điện tử.\nYêu cầu:\n- 0–1 năm kinh nghiệm hoặc sinh viên năm cuối CNTT.\n- Nắm vững JavaScript, HTML5, CSS3; dựng giao diện responsive từ thiết kế.\n- Đã làm dự án cá nhân hoặc thực tập với ReactJS.\n- Biết dùng Git để làm việc nhóm.\nƯu tiên: từng gọi REST API và xử lý trạng thái loading, lỗi.",
+      "embedding": null,
+      "content_hash": "bbca83f9e7bc25bd",
+      "duplicate_of": null,
+      "dup_method": null,
+      "status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "JD_02",
+      "source": "crawl",
+      "source_url": "https://example.com/jobs/fe-middle-002",
+      "recruiter_id": null,
+      "title": "Frontend Engineer (React.js)",
+      "company": "Công ty Mẫu B",
+      "career_id": "C_fe",
+      "level": "middle",
+      "description": "Công ty Mẫu B (dữ liệu giả lập) tuyển Frontend Engineer cho sản phẩm SaaS quản lý bán hàng.\nYêu cầu:\n- Tối thiểu 2 năm kinh nghiệm React.js, thành thạo hooks và quản lý state.\n- JavaScript vững, hiểu bất đồng bộ và event loop.\n- Tích hợp RESTful API: xử lý lỗi, loading, phân trang, cache phía client.\n- Viết unit test bằng Jest cho component và hàm tiện ích.\n- Responsive design, tương thích nhiều trình duyệt.\n- Dùng Git theo quy trình pull request và code review.\nƯu tiên: TypeScript.",
+      "embedding": null,
+      "content_hash": "c6a5b06faae9f4c1",
+      "duplicate_of": null,
+      "dup_method": null,
+      "status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "JD_03",
+      "source": "agent",
+      "source_url": "https://example.com/careers/senior-frontend-003",
+      "recruiter_id": null,
+      "title": "Senior Frontend Engineer (React/TypeScript)",
+      "company": "Công ty Mẫu C",
+      "career_id": "C_fe",
+      "level": "senior",
+      "description": "Công ty Mẫu C (dữ liệu giả lập) tuyển Senior Frontend Engineer dẫn dắt đội web.\nYêu cầu:\n- Tối thiểu 5 năm phát triển frontend, trong đó 3 năm với React.\n- Thành thạo TypeScript (tối thiểu 2 năm) và JavaScript ES6+.\n- Xây dựng chiến lược kiểm thử: unit và integration test với React Testing Library.\n- Hiểu sâu HTTP: caching, CORS, tối ưu số request.\n- Tổ chức CSS cho design system bằng SCSS.\n- Review code, hướng dẫn thành viên junior, làm việc trên GitLab.",
+      "embedding": null,
+      "content_hash": "19df0ef19f19e39d",
+      "duplicate_of": null,
+      "dup_method": null,
+      "status": "approved",
+      "reviewed_by": null
+    }
+  ],
+  "jd_skills": [
+    {
+      "jd_id": "JD_01",
+      "skill_id": "S_js",
+      "raw_name": "JavaScript",
+      "is_required": true,
+      "weight": 3,
+      "years_min": null,
+      "map_method": "exact"
+    },
+    {
+      "jd_id": "JD_01",
+      "skill_id": "S_react",
+      "raw_name": "ReactJS",
+      "is_required": true,
+      "weight": 3,
+      "years_min": null,
+      "map_method": "alias"
+    },
+    {
+      "jd_id": "JD_01",
+      "skill_id": "S_css",
+      "raw_name": "CSS3",
+      "is_required": true,
+      "weight": 2,
+      "years_min": null,
+      "map_method": "alias"
+    },
+    {
+      "jd_id": "JD_01",
+      "skill_id": "S_html",
+      "raw_name": "HTML5",
+      "is_required": true,
+      "weight": 1,
+      "years_min": null,
+      "map_method": "alias"
+    },
+    {
+      "jd_id": "JD_01",
+      "skill_id": "S_git",
+      "raw_name": "Git",
+      "is_required": true,
+      "weight": 1,
+      "years_min": null,
+      "map_method": "exact"
+    },
+    {
+      "jd_id": "JD_01",
+      "skill_id": "S_http",
+      "raw_name": "REST API",
+      "is_required": false,
+      "weight": 1,
+      "years_min": null,
+      "map_method": "alias"
+    },
+    {
+      "jd_id": "JD_02",
+      "skill_id": "S_react",
+      "raw_name": "React.js",
+      "is_required": true,
+      "weight": 3,
+      "years_min": 2,
+      "map_method": "alias"
+    },
+    {
+      "jd_id": "JD_02",
+      "skill_id": "S_js",
+      "raw_name": "JavaScript",
+      "is_required": true,
+      "weight": 2,
+      "years_min": null,
+      "map_method": "exact"
+    },
+    {
+      "jd_id": "JD_02",
+      "skill_id": "S_http",
+      "raw_name": "RESTful API",
+      "is_required": true,
+      "weight": 2,
+      "years_min": null,
+      "map_method": "alias"
+    },
+    {
+      "jd_id": "JD_02",
+      "skill_id": "S_testing",
+      "raw_name": "Jest",
+      "is_required": true,
+      "weight": 2,
+      "years_min": null,
+      "map_method": "alias"
+    },
+    {
+      "jd_id": "JD_02",
+      "skill_id": "S_css",
+      "raw_name": "Responsive design",
+      "is_required": true,
+      "weight": 2,
+      "years_min": null,
+      "map_method": "alias"
+    },
+    {
+      "jd_id": "JD_02",
+      "skill_id": "S_git",
+      "raw_name": "Git",
+      "is_required": true,
+      "weight": 1,
+      "years_min": null,
+      "map_method": "exact"
+    },
+    {
+      "jd_id": "JD_02",
+      "skill_id": "S_ts",
+      "raw_name": "TypeScript",
+      "is_required": false,
+      "weight": 1,
+      "years_min": null,
+      "map_method": "exact"
+    },
+    {
+      "jd_id": "JD_03",
+      "skill_id": "S_react",
+      "raw_name": "React",
+      "is_required": true,
+      "weight": 3,
+      "years_min": 3,
+      "map_method": "exact"
+    },
+    {
+      "jd_id": "JD_03",
+      "skill_id": "S_ts",
+      "raw_name": "TypeScript",
+      "is_required": true,
+      "weight": 3,
+      "years_min": 2,
+      "map_method": "exact"
+    },
+    {
+      "jd_id": "JD_03",
+      "skill_id": "S_js",
+      "raw_name": "ES6+",
+      "is_required": true,
+      "weight": 3,
+      "years_min": null,
+      "map_method": "alias"
+    },
+    {
+      "jd_id": "JD_03",
+      "skill_id": "S_testing",
+      "raw_name": "React Testing Library",
+      "is_required": true,
+      "weight": 2,
+      "years_min": null,
+      "map_method": "alias"
+    },
+    {
+      "jd_id": "JD_03",
+      "skill_id": "S_http",
+      "raw_name": "HTTP",
+      "is_required": true,
+      "weight": 2,
+      "years_min": null,
+      "map_method": "exact"
+    },
+    {
+      "jd_id": "JD_03",
+      "skill_id": "S_css",
+      "raw_name": "SCSS",
+      "is_required": true,
+      "weight": 2,
+      "years_min": null,
+      "map_method": "alias"
+    },
+    {
+      "jd_id": "JD_03",
+      "skill_id": "S_git",
+      "raw_name": "GitLab",
+      "is_required": true,
+      "weight": 1,
+      "years_min": null,
+      "map_method": "alias"
+    }
+  ]
+}

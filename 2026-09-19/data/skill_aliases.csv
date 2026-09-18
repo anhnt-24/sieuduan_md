@@ -1,0 +1,53 @@
+id,skill_id,alias,source
+1,S_js,JS,admin
+2,S_js,ECMAScript,admin
+3,S_js,ES6,admin
+4,S_js,ES6+,admin
+5,S_js,ES2015,llm
+6,S_js,Vanilla JS,llm
+7,S_js,Java Script,llm
+8,S_js,JavaScript ES6,llm
+9,S_react,ReactJS,admin
+10,S_react,React.js,admin
+11,S_react,React JS,admin
+12,S_react,React Hooks,lecturer
+13,S_react,JSX,llm
+14,S_react,React 18,llm
+15,S_react,React 19,llm
+16,S_css,CSS3,admin
+17,S_css,SCSS,admin
+18,S_css,Sass,admin
+19,S_css,Tailwind CSS,admin
+20,S_css,Tailwind,llm
+21,S_css,Flexbox,lecturer
+22,S_css,CSS Grid,lecturer
+23,S_css,Responsive design,llm
+24,S_css,CSS-in-JS,llm
+25,S_http,REST,admin
+26,S_http,REST API,admin
+27,S_http,RESTful,admin
+28,S_http,RESTful API,admin
+29,S_http,HTTPS,admin
+30,S_http,Web API,llm
+31,S_http,Fetch API,lecturer
+32,S_http,Axios,llm
+33,S_http,AJAX,llm
+34,S_testing,Unit test,admin
+35,S_testing,Unit testing,admin
+36,S_testing,Jest,admin
+37,S_testing,Vitest,llm
+38,S_testing,React Testing Library,lecturer
+39,S_testing,Kiểm thử,lecturer
+40,S_testing,TDD,llm
+41,S_testing,Integration test,llm
+42,S_git,GitHub,admin
+43,S_git,GitLab,admin
+44,S_git,Bitbucket,llm
+45,S_git,Version control,admin
+46,S_git,Git flow,lecturer
+47,S_git,Pull request,llm
+48,S_git,Quản lý mã nguồn,lecturer
+49,S_ts,TS,admin
+50,S_ts,TSX,llm
+51,S_html,HTML5,admin
+52,S_html,Semantic HTML,lecturer

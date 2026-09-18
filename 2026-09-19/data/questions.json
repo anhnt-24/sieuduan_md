@@ -1,0 +1,1051 @@
+{
+  "questions": [
+    {
+      "id": "Q_js_1",
+      "skill_id": "S_js",
+      "kind": "mcq",
+      "stem": "Từ khóa nào khai báo biến có block scope và không cho phép gán lại (reassign)?",
+      "answer_key": null,
+      "explanation": "`const` có block scope như `let` nhưng không cho gán lại; thuộc tính của object khai báo bằng `const` vẫn sửa được. `var` có function scope.",
+      "difficulty": 1,
+      "elo_d": 1080,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "4716ea08273db075",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_js_2",
+      "skill_id": "S_js",
+      "kind": "mcq",
+      "stem": "Kết quả của `'5' == 5` và `'5' === 5` lần lượt là gì?",
+      "answer_key": null,
+      "explanation": "`==` ép chuỗi '5' về số 5 rồi mới so sánh nên trả true. `===` so sánh cả kiểu, string khác number nên trả false.",
+      "difficulty": 2,
+      "elo_d": 1260,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "0e3c5c5730626719",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_js_3",
+      "skill_id": "S_js",
+      "kind": "mcq",
+      "stem": "Đoạn code sau in ra gì?\n```js\nfor (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 0);\n}\n```",
+      "answer_key": null,
+      "explanation": "`var` có function scope nên ba callback dùng chung một biến `i`, và khi chúng chạy thì vòng lặp đã kết thúc với `i = 3`. Đổi sang `let` sẽ tạo binding mới mỗi vòng và in 0 1 2.",
+      "difficulty": 3,
+      "elo_d": 1440,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "ed605f8a04543b01",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_js_4",
+      "skill_id": "S_js",
+      "kind": "code",
+      "stem": "Ô tìm kiếm gọi API mỗi lần gõ phím khiến server quá tải. Viết hàm `debounce(fn, wait)` trả về hàm mới: chỉ gọi `fn` sau khi đã qua `wait` ms kể từ lần gọi cuối, dùng đối số của lần gọi cuối và giữ nguyên `this`.",
+      "answer_key": {
+        "reference_solution": "function debounce(fn, wait) {\n  let timer = null;\n  return function (...args) {\n    clearTimeout(timer);\n    timer = setTimeout(() => fn.apply(this, args), wait);\n  };\n}",
+        "tests": [
+          "wait = 300, gọi 3 lần trong 100 ms → fn chạy đúng 1 lần, 300 ms sau lần gọi thứ 3",
+          "fn nhận đối số của lần gọi cuối cùng",
+          "Gọi dạng obj.search('a') → this bên trong fn là obj",
+          "Hai lần gọi cách nhau hơn wait → fn chạy 2 lần"
+        ]
+      },
+      "explanation": "Mỗi lần gọi xóa timer cũ và đặt timer mới nên chỉ lần gọi cuối được thực thi. Hàm trả về phải là `function` thường để nhận đúng `this`, rồi chuyển tiếp bằng `fn.apply(this, args)`.",
+      "difficulty": 4,
+      "elo_d": 1620,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "09cd3e5dd621dc15",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_js_5",
+      "skill_id": "S_js",
+      "kind": "mcq",
+      "stem": "Khi gỡ lỗi luồng khởi tạo trang, bạn gặp đoạn code sau. Thứ tự log trong console là gì?\n```js\nconsole.log('A');\nsetTimeout(() => console.log('B'), 0);\nPromise.resolve().then(() => console.log('C'));\n(async () => {\n  console.log('D');\n  await null;\n  console.log('E');\n})();\nconsole.log('F');\n```",
+      "answer_key": null,
+      "explanation": "Code đồng bộ chạy trước: A, D (thân hàm async chạy đồng bộ tới `await` đầu tiên), F. Sau đó microtask được xả theo thứ tự đăng ký là C rồi E; macrotask của setTimeout (B) chạy cuối.",
+      "difficulty": 5,
+      "elo_d": 1800,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "2728dd5bb1625a47",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_react_1",
+      "skill_id": "S_react",
+      "kind": "mcq",
+      "stem": "Hook nào dùng để lưu state trong function component?",
+      "answer_key": null,
+      "explanation": "`useState` trả về cặp [giá trị, hàm cập nhật] và gây re-render khi state đổi. `useRef` giữ giá trị qua các lần render nhưng không gây re-render.",
+      "difficulty": 1,
+      "elo_d": 1080,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "9ce1bb9f55e8165f",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_react_2",
+      "skill_id": "S_react",
+      "kind": "mcq",
+      "stem": "`useEffect(() => { ... }, [])` với mảng phụ thuộc rỗng chạy khi nào?",
+      "answer_key": null,
+      "explanation": "Mảng phụ thuộc rỗng nghĩa là effect không phụ thuộc giá trị nào nên chỉ chạy sau mount. Ở StrictMode khi dev, React cố ý chạy mount → cleanup → mount thêm một lần để lộ effect thiếu cleanup.",
+      "difficulty": 2,
+      "elo_d": 1260,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "97205ced2029975c",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_react_3",
+      "skill_id": "S_react",
+      "kind": "short",
+      "stem": "Vì sao dùng index của mảng làm `key` khi render danh sách có thể gây bug? Nêu một tình huống cụ thể và cách sửa.",
+      "answer_key": {
+        "reference": "key giúp React ghép phần tử cũ với phần tử mới khi reconcile. Dùng index thì khi chèn, xóa hoặc sắp xếp lại (nhất là ở đầu danh sách), cùng một key trỏ sang dữ liệu khác; React tái sử dụng nhầm instance nên state nội bộ (input không controlled, checkbox, focus) bị gắn sang dòng khác. Ví dụ: danh sách todo có ô input, xóa dòng đầu thì nội dung đang gõ nhảy sang dòng kế tiếp. Sửa: dùng id ổn định, duy nhất từ dữ liệu; không dùng Math.random() khi render.",
+        "rubric": [
+          "Nêu vai trò của key trong reconciliation",
+          "Chỉ ra lỗi khi chèn, xóa hoặc sắp xếp lại",
+          "Có ví dụ cụ thể về state bị gắn nhầm dòng",
+          "Đề xuất key ổn định từ dữ liệu, không dùng random"
+        ]
+      },
+      "explanation": "Index chỉ an toàn khi danh sách tĩnh, không sắp xếp và từng dòng không có state riêng; còn lại cần key gắn với dữ liệu.",
+      "difficulty": 3,
+      "elo_d": 1440,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "3ccc7fb99004f94b",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_react_4",
+      "skill_id": "S_react",
+      "kind": "mcq",
+      "stem": "`count` đang là 0. Sau một lần click, `count` hiển thị giá trị nào?\n```jsx\nconst [count, setCount] = useState(0);\nfunction handleClick() {\n  setCount(count + 1);\n  setCount(count + 1);\n  setCount(c => c + 1);\n}\n```",
+      "answer_key": null,
+      "explanation": "Trong một lần render, `count` là hằng 0 nên hai lệnh đầu đều đặt state thành 1. Updater `c => c + 1` nhận giá trị mới nhất trong hàng đợi (1) nên kết quả là 2.",
+      "difficulty": 4,
+      "elo_d": 1620,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "15cf38a1c24e608b",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_react_5",
+      "skill_id": "S_react",
+      "kind": "code",
+      "stem": "Component đếm giây dưới đây dừng ở 1 và rò rỉ interval. Sửa lại để: (1) đếm đúng mỗi giây, (2) dọn interval khi unmount, (3) nhận prop `running`; khi `running` là false thì dừng đếm và giữ nguyên giá trị, bật lại thì đếm tiếp.\n```jsx\nfunction Timer() {\n  const [sec, setSec] = useState(0);\n  useEffect(() => {\n    setInterval(() => setSec(sec + 1), 1000);\n  }, []);\n  return <span>{sec}</span>;\n}\n```",
+      "answer_key": {
+        "reference_solution": "function Timer({ running }) {\n  const [sec, setSec] = useState(0);\n  useEffect(() => {\n    if (!running) return;\n    const id = setInterval(() => setSec(s => s + 1), 1000);\n    return () => clearInterval(id);\n  }, [running]);\n  return <span>{sec}</span>;\n}",
+        "tests": [
+          "running = true, fake timers tiến 3000 ms → hiển thị 3",
+          "Đổi running = false ở giây 3, tiến thêm 2000 ms → vẫn 3",
+          "Bật lại running = true, tiến 1000 ms → 4",
+          "Unmount → jest.getTimerCount() === 0"
+        ]
+      },
+      "explanation": "Callback của interval giữ `sec` của lần render đầu (stale closure) nên luôn đặt state thành 1; updater `s => s + 1` tránh lỗi này. Effect phải trả cleanup `clearInterval` và phụ thuộc `running` để dừng và chạy lại đúng lúc.",
+      "difficulty": 5,
+      "elo_d": 1800,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "fc3495c463f05763",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_css_1",
+      "skill_id": "S_css",
+      "kind": "mcq",
+      "stem": "Khai báo nào biến một phần tử thành flex container?",
+      "answer_key": null,
+      "explanation": "`display: flex` tạo flex container và các con trực tiếp trở thành flex item. `flex: 1` là thuộc tính đặt trên item, không phải container.",
+      "difficulty": 1,
+      "elo_d": 1080,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "019a25d6f1ad74d2",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_css_2",
+      "skill_id": "S_css",
+      "kind": "mcq",
+      "stem": "Phần tử có `width: 200px; padding: 20px; border: 5px solid;` và `box-sizing` để mặc định. Chiều rộng hiển thị tính cả border là bao nhiêu?",
+      "answer_key": null,
+      "explanation": "Mặc định `box-sizing: content-box` nên `width` chỉ là phần nội dung: 200 + 2×20 + 2×5 = 250px. Với `border-box` kết quả là 200px.",
+      "difficulty": 2,
+      "elo_d": 1260,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "000b64a4433caa66",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_css_3",
+      "skill_id": "S_css",
+      "kind": "mcq",
+      "stem": "Với HTML `<nav id=\"nav\" class=\"menu\"><a class=\"link\" href=\"#\">Home</a></nav>` và CSS dưới đây, link có màu gì khi KHÔNG hover?\n```css\n#nav a { color: red; }\n.menu .link { color: blue; }\na.link:hover { color: green; }\n```",
+      "answer_key": null,
+      "explanation": "`#nav a` có specificity (1,0,1), cao hơn `.menu .link` (0,2,0) vì một ID thắng mọi số lượng class. Luật `:hover` chỉ áp dụng khi đang hover.",
+      "difficulty": 3,
+      "elo_d": 1440,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "0cd34232c8db10ee",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_css_4",
+      "skill_id": "S_css",
+      "kind": "short",
+      "stem": "Modal dùng `position: fixed; inset: 0;` nhưng không phủ toàn màn hình mà bị giới hạn trong một card, dù z-index rất cao. Card cha có `transform: translateY(-4px)` khi hover. Giải thích nguyên nhân và nêu 2 cách sửa.",
+      "answer_key": {
+        "reference": "Tổ tiên có transform (hoặc filter, perspective, will-change: transform, contain: paint) trở thành containing block cho con cháu position: fixed, nên inset: 0 tính theo card chứ không theo viewport. transform còn tạo stacking context mới nên z-index của modal chỉ so trong phạm vi card. Cách sửa: (1) render modal ra ngoài cây DOM của card, gắn vào body (React createPortal); (2) bỏ transform khỏi tổ tiên, làm hiệu ứng hover bằng thuộc tính khác hoặc đặt transform lên phần tử con không chứa modal.",
+        "rubric": [
+          "transform ở tổ tiên tạo containing block cho position: fixed",
+          "transform tạo stacking context nên z-index bị giới hạn trong card",
+          "Cách sửa bằng portal ra body",
+          "Cách sửa bằng bỏ hoặc dời transform khỏi tổ tiên"
+        ]
+      },
+      "explanation": "Theo spec CSS, `transform` khác `none` biến phần tử thành containing block cho con cháu `fixed`; lỗi hay gặp với modal lồng trong card có animation.",
+      "difficulty": 4,
+      "elo_d": 1620,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "40ae87b30667bb16",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_css_5",
+      "skill_id": "S_css",
+      "kind": "mcq",
+      "stem": "Trang danh sách sản phẩm cần lưới thẻ: mỗi thẻ rộng tối thiểu 220px; số cột tự đổi theo chiều rộng container mà không dùng media query; phần dư chia đều cho các cột; khi bộ lọc chỉ còn 2 thẻ trên màn hình rộng thì 2 thẻ vẫn giữ độ rộng cột như bình thường, không bị kéo giãn hết hàng. Giá trị `grid-template-columns` nào đáp ứng đủ?",
+      "answer_key": null,
+      "explanation": "`auto-fill` giữ các track rỗng nên 2 thẻ không bị giãn, còn `auto-fit` gộp track rỗng về 0 khiến 2 thẻ chiếm hết hàng. `220px` cố định không chia phần dư; `repeat(4, …)` không tự đổi số cột.",
+      "difficulty": 5,
+      "elo_d": 1800,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "06c572860fa1f961",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_http_1",
+      "skill_id": "S_http",
+      "kind": "mcq",
+      "stem": "Mã trạng thái HTTP nào nghĩa là không tìm thấy tài nguyên (Not Found)?",
+      "answer_key": null,
+      "explanation": "404 Not Found báo server không tìm thấy tài nguyên theo URL. 200 là thành công, 301 là chuyển hướng vĩnh viễn, 500 là lỗi phía server.",
+      "difficulty": 1,
+      "elo_d": 1080,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "42809c2574fc9886",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_http_2",
+      "skill_id": "S_http",
+      "kind": "mcq",
+      "stem": "Method HTTP nào là idempotent (gửi nhiều lần cho kết quả trên server như gửi một lần) nhưng KHÔNG safe (có thay đổi dữ liệu)?",
+      "answer_key": null,
+      "explanation": "`PUT` ghi đè tài nguyên bằng cùng nội dung nên lặp lại không đổi kết quả, nhưng vẫn sửa dữ liệu. `GET` và `HEAD` vừa safe vừa idempotent; `POST` không idempotent.",
+      "difficulty": 2,
+      "elo_d": 1260,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "009ff7d56e32d0ea",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_http_3",
+      "skill_id": "S_http",
+      "kind": "short",
+      "stem": "Phân biệt mã 401 và 403. Frontend nên xử lý mỗi mã như thế nào?",
+      "answer_key": {
+        "reference": "401 Unauthorized: request chưa được xác thực hoặc thông tin xác thực không hợp lệ, hết hạn (thiếu token, token hết hạn). Frontend thử refresh token một lần rồi gửi lại; vẫn 401 thì xóa phiên và chuyển tới trang đăng nhập. 403 Forbidden: server biết người dùng là ai nhưng họ không có quyền với tài nguyên. Frontend báo không có quyền hoặc ẩn chức năng, không đăng xuất, không retry vì gửi lại vẫn bị từ chối.",
+        "rubric": [
+          "401 = chưa xác thực, token thiếu, sai hoặc hết hạn",
+          "403 = đã xác thực nhưng không đủ quyền",
+          "401: refresh token rồi retry một lần, thất bại thì về trang đăng nhập",
+          "403: báo không có quyền, không retry, không đăng xuất"
+        ]
+      },
+      "explanation": "401 trả lời câu hỏi 'bạn là ai', 403 trả lời 'bạn được làm gì'; xử lý nhầm gây vòng lặp đăng nhập hoặc lộ chức năng không được phép.",
+      "difficulty": 3,
+      "elo_d": 1440,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "fad7565ecf63e948",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_http_4",
+      "skill_id": "S_http",
+      "kind": "short",
+      "stem": "Frontend chạy ở `https://app.example.com` gọi:\n```js\nfetch('https://api.example.com/orders', {\n  method: 'POST',\n  headers: { 'Content-Type': 'application/json', Authorization: 'Bearer <token>' },\n  body: JSON.stringify(order)\n});\n```\nGọi bằng Postman thì chạy, trên trình duyệt báo lỗi CORS. Giải thích trình duyệt đã làm gì và server cần trả về những header nào.",
+      "answer_key": {
+        "reference": "Request khác origin và không phải simple request (Content-Type application/json, có header Authorization) nên trình duyệt gửi preflight OPTIONS trước. Server phải trả lời OPTIONS với Access-Control-Allow-Origin: https://app.example.com, Access-Control-Allow-Methods có POST, Access-Control-Allow-Headers có Content-Type và Authorization (có thể thêm Access-Control-Max-Age để cache preflight). Response của POST cũng phải có Access-Control-Allow-Origin. Nếu gửi cookie (credentials: 'include') thì cần Access-Control-Allow-Credentials: true và không được dùng '*'. Postman không phải trình duyệt nên không áp dụng CORS; frontend không tự sửa được CORS, trừ khi gọi qua proxy cùng origin.",
+        "rubric": [
+          "Request cross-origin, không phải simple request → trình duyệt gửi preflight OPTIONS",
+          "Access-Control-Allow-Origin đúng origin, không dùng '*' khi có credentials",
+          "Access-Control-Allow-Methods và Access-Control-Allow-Headers gồm Content-Type, Authorization",
+          "Postman không bị CORS vì CORS do trình duyệt thực thi"
+        ]
+      },
+      "explanation": "CORS là cơ chế trình duyệt bảo vệ người dùng: server quyết định origin nào được phép, frontend chỉ đổi được cách gọi (ví dụ proxy cùng origin).",
+      "difficulty": 4,
+      "elo_d": 1620,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "7632951c98fb59d3",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_http_5",
+      "skill_id": "S_http",
+      "kind": "code",
+      "stem": "API danh sách đơn hàng thỉnh thoảng trả 503 hoặc 429 khi tải cao. Viết `fetchWithRetry(url, options = {}, { retries = 3, baseDelay = 300 } = {})` dùng `fetch` với yêu cầu: chỉ retry khi lỗi mạng, 5xx hoặc 429; không retry các 4xx khác và không retry khi request bị abort; chỉ retry method idempotent (GET, HEAD, PUT, DELETE), POST không retry; chờ theo exponential backoff `baseDelay * 2^attempt`, riêng 429 có header `Retry-After` (số giây) thì chờ theo header; hết lượt thì trả response cuối hoặc ném lỗi cuối.",
+      "answer_key": {
+        "reference_solution": "const sleep = (ms) => new Promise((r) => setTimeout(r, ms));\nconst IDEMPOTENT = ['GET', 'HEAD', 'PUT', 'DELETE'];\n\nasync function fetchWithRetry(url, options = {}, { retries = 3, baseDelay = 300 } = {}) {\n  const canRetry = IDEMPOTENT.includes((options.method || 'GET').toUpperCase());\n  for (let attempt = 0; ; attempt++) {\n    let res;\n    try {\n      res = await fetch(url, options);\n    } catch (err) {\n      if (!canRetry || attempt >= retries || err.name === 'AbortError') throw err;\n      await sleep(baseDelay * 2 ** attempt);\n      continue;\n    }\n    const retryable = res.status === 429 || res.status >= 500;\n    if (!retryable || !canRetry || attempt >= retries) return res;\n    const after = Number(res.headers.get('Retry-After'));\n    await sleep(res.status === 429 && after > 0 ? after * 1000 : baseDelay * 2 ** attempt);\n  }\n}",
+        "tests": [
+          "GET: 503, 503, 200 → trả response 200 sau hai lần chờ 300 ms và 600 ms",
+          "GET: 404 → trả ngay, fetch chỉ được gọi 1 lần",
+          "POST: 503 → trả ngay, không retry",
+          "GET: 429 kèm Retry-After: 2 → chờ 2000 ms rồi gọi lại",
+          "GET: lỗi mạng liên tục, retries = 3 → fetch gọi 4 lần rồi ném lỗi cuối",
+          "GET: AbortError → ném ngay, không retry"
+        ]
+      },
+      "explanation": "Retry chỉ an toàn với lỗi tạm thời và method idempotent; retry POST có thể tạo đơn trùng. Backoff lũy thừa và tôn trọng Retry-After tránh dồn thêm tải vào server đang quá tải.",
+      "difficulty": 5,
+      "elo_d": 1800,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "29a13b7dae90d4a9",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_testing_1",
+      "skill_id": "S_testing",
+      "kind": "mcq",
+      "stem": "Trong Jest, matcher nào so sánh bằng sâu (deep equality) hai object?",
+      "answer_key": null,
+      "explanation": "`toEqual` so sánh đệ quy giá trị các thuộc tính. `toBe` dùng `Object.is` nên hai object khác tham chiếu luôn khác nhau.",
+      "difficulty": 1,
+      "elo_d": 1080,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "ee397d53078628a6",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_testing_2",
+      "skill_id": "S_testing",
+      "kind": "mcq",
+      "stem": "Theo mô hình test pyramid, loại test nào nên chiếm số lượng lớn nhất trong dự án?",
+      "answer_key": null,
+      "explanation": "Unit test nhanh, rẻ và khoanh vùng lỗi chính xác nên nằm ở đáy kim tự tháp với số lượng lớn nhất. E2E chậm và dễ flaky nên chỉ phủ các luồng quan trọng.",
+      "difficulty": 2,
+      "elo_d": 1260,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "0f46d36d439ca211",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_testing_3",
+      "skill_id": "S_testing",
+      "kind": "code",
+      "stem": "Hàm `formatPrice(n)` nhận số nguyên không âm và trả chuỗi tiền VND, ví dụ `formatPrice(1500000)` → `'1.500.000 ₫'`. Nếu `n` không phải số nguyên không âm (số âm, số thập phân, NaN, Infinity, chuỗi) thì ném `TypeError`. Viết bộ test Jest (ít nhất 5 case) phủ cả case thường và case biên.",
+      "answer_key": {
+        "reference_solution": "describe('formatPrice', () => {\n  test('định dạng hàng triệu', () => {\n    expect(formatPrice(1500000)).toBe('1.500.000 ₫');\n  });\n  test('số 0', () => {\n    expect(formatPrice(0)).toBe('0 ₫');\n  });\n  test('biên 999 và 1000', () => {\n    expect(formatPrice(999)).toBe('999 ₫');\n    expect(formatPrice(1000)).toBe('1.000 ₫');\n  });\n  test.each([-1, 1.5, NaN, Infinity, '100'])('ném TypeError với %p', (bad) => {\n    expect(() => formatPrice(bad)).toThrow(TypeError);\n  });\n});",
+        "tests": [
+          "Chạy bộ test của ứng viên với bản cài đúng → tất cả pass",
+          "Bản lỗi không chèn dấu chấm hàng nghìn → có test fail",
+          "Bản lỗi dùng dấu phẩy thay dấu chấm → có test fail",
+          "Bản lỗi chấp nhận số âm → có test fail",
+          "Bản lỗi lệch biên, trả '1000 ₫' cho 1000 → có test fail"
+        ]
+      },
+      "explanation": "Bộ test tốt phủ đường thường, giá trị biên (0, 999/1000) và đầu vào không hợp lệ; lời gọi mong đợi ném lỗi phải bọc trong hàm `() => formatPrice(x)`.",
+      "difficulty": 3,
+      "elo_d": 1440,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "ed929e3763f0e798",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_testing_4",
+      "skill_id": "S_testing",
+      "kind": "mcq",
+      "stem": "Test sau luôn PASS, kể cả khi `loadProfile` reject với message khác. Vì sao?\n```js\ntest('báo lỗi khi API trả 500', () => {\n  api.fetchUser = jest.fn().mockRejectedValue(new Error('500'));\n  loadProfile().catch((err) => {\n    expect(err.message).toBe('Không tải được hồ sơ');\n  });\n});\n```",
+      "answer_key": null,
+      "explanation": "Jest chỉ chờ Promise khi test trả về Promise hoặc là hàm async có await. Sửa bằng `await expect(loadProfile()).rejects.toThrow('Không tải được hồ sơ')`, thêm `expect.assertions(1)` để bắt trường hợp không assertion nào chạy.",
+      "difficulty": 4,
+      "elo_d": 1620,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "ccf40b5c6b892af0",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_testing_5",
+      "skill_id": "S_testing",
+      "kind": "short",
+      "stem": "Bộ test form thanh toán (React Testing Library + Jest) chạy trên CI lúc pass lúc fail, chạy local luôn pass. Trình bày cách chẩn đoán và nêu ít nhất 3 nguyên nhân thường gặp kèm cách khắc phục.",
+      "answer_key": {
+        "reference": "Chẩn đoán: tái hiện bằng cách chạy lặp nhiều lần, chạy riêng từng file, đổi thứ tự (--randomize) và chạy song song như CI hoặc --runInBand để so sánh; đọc log của lần fail. Nguyên nhân: (1) rò rỉ state hoặc phụ thuộc thứ tự giữa các test (mock, store, localStorage không reset) → reset trong beforeEach/afterEach, jest.restoreAllMocks(), mỗi test tự dựng dữ liệu; (2) chờ bất đồng bộ sai (getBy ngay sau thao tác async, sleep cứng) → findBy*/waitFor, await userEvent, fake timers khi có debounce; (3) phụ thuộc môi trường (giờ thật, múi giờ, locale, mạng thật) → mock Date, cố định TZ và locale, chặn mạng bằng MSW; (4) CI chậm hơn nên timeout sát → chỉ tăng timeout sau khi loại trừ các nguyên nhân trên. Không coi retry mù hay skip test là cách sửa.",
+        "rubric": [
+          "Có quy trình tái hiện: chạy lặp, chạy riêng lẻ, đổi thứ tự hoặc chế độ song song",
+          "Rò rỉ state, phụ thuộc thứ tự và cách reset, cô lập",
+          "Chờ async sai và cách dùng findBy/waitFor/fake timers",
+          "Phụ thuộc thời gian, múi giờ, mạng và cách mock, cố định",
+          "Không chấp nhận retry mù hay skip làm giải pháp"
+        ]
+      },
+      "explanation": "Test flaky thường do test phụ thuộc vào thứ không kiểm soát (thứ tự, thời gian, mạng); cách sửa là loại bỏ phụ thuộc đó chứ không che bằng retry.",
+      "difficulty": 5,
+      "elo_d": 1800,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "5c13f39891ae7f59",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_git_1",
+      "skill_id": "S_git",
+      "kind": "mcq",
+      "stem": "Lệnh nào tạo branch mới tên `feature/login` và chuyển sang branch đó ngay?",
+      "answer_key": null,
+      "explanation": "`git switch -c` (tương đương `git checkout -b`) vừa tạo vừa chuyển branch. `git branch` chỉ tạo mà không chuyển.",
+      "difficulty": 1,
+      "elo_d": 1080,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "2d3ffd372b268232",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_git_2",
+      "skill_id": "S_git",
+      "kind": "mcq",
+      "stem": "Khác biệt giữa `git fetch` và `git pull` là gì?",
+      "answer_key": null,
+      "explanation": "`fetch` an toàn vì chỉ cập nhật `origin/*`, cho phép xem trước thay đổi. `pull` gộp ngay vào branch hiện tại nên có thể gây conflict.",
+      "difficulty": 2,
+      "elo_d": 1260,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "a9ec40d5cf39f323",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_git_3",
+      "skill_id": "S_git",
+      "kind": "mcq",
+      "stem": "Bạn đã push một commit gây lỗi lên `main` mà cả team dùng chung. Cách hoàn tác an toàn nhất là gì?",
+      "answer_key": null,
+      "explanation": "`git revert` tạo commit mới đảo ngược thay đổi, không viết lại lịch sử nên không làm hỏng bản sao của đồng đội. `reset` kèm force push xóa commit khỏi lịch sử chung.",
+      "difficulty": 3,
+      "elo_d": 1440,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "2d3b60f0bee88c8f",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_git_4",
+      "skill_id": "S_git",
+      "kind": "mcq",
+      "stem": "Branch `feature/cart` đã push lên remote và một đồng nghiệp đang commit tiếp trên branch này. Bạn chạy `git rebase main` trên `feature/cart` rồi muốn đẩy lên. Phương án nào đúng và an toàn nhất?",
+      "answer_key": null,
+      "explanation": "Rebase tạo commit mới với hash mới nên push thường bị từ chối (non-fast-forward). `--force-with-lease` từ chối ghi đè nếu remote có commit mới mà bạn chưa fetch, tránh xóa mất việc của đồng nghiệp; merge bản cũ sẽ nhân đôi commit.",
+      "difficulty": 4,
+      "elo_d": 1620,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "26dd14229e6e0825",
+      "review_status": "approved",
+      "reviewed_by": null
+    },
+    {
+      "id": "Q_git_5",
+      "skill_id": "S_git",
+      "kind": "short",
+      "stem": "Bạn lỡ commit file `.env` chứa API key thanh toán và đã push lên repo public cách đây 2 commit. Trình bày các bước xử lý theo thứ tự ưu tiên và giải thích vì sao chỉ `git revert` hoặc xóa file ở commit mới là chưa đủ.",
+      "answer_key": {
+        "reference": "1) Coi key đã lộ: thu hồi hoặc rotate key ngay ở nhà cung cấp, cập nhật key mới vào nơi lưu secret (biến môi trường CI, secret manager); đây là bước quan trọng nhất vì bot quét repo public trong vài phút. 2) Kiểm tra log sử dụng key trong khoảng bị lộ để phát hiện lạm dụng. 3) Ngừng theo dõi file: git rm --cached .env, thêm .env vào .gitignore, commit .env.example không chứa giá trị thật. 4) Xóa khỏi lịch sử bằng git filter-repo (hoặc BFG), force push, báo team clone lại. 5) Phòng ngừa: bật secret scanning/push protection, pre-commit hook (ví dụ gitleaks). revert hay xóa ở commit mới vẫn để key trong lịch sử, ai cũng checkout lại được.",
+        "rubric": [
+          "Rotate hoặc thu hồi key là bước đầu tiên",
+          "Giải thích revert/xóa ở commit mới vẫn để key trong lịch sử",
+          "git rm --cached và thêm .gitignore",
+          "Viết lại lịch sử (filter-repo/BFG), force push, báo team",
+          "Phòng ngừa: secret scanning, pre-commit hook"
+        ]
+      },
+      "explanation": "Secret đã lên repo public phải coi là đã lộ; dọn lịch sử chỉ giảm phơi nhiễm về sau, không thay được việc rotate key.",
+      "difficulty": 5,
+      "elo_d": 1800,
+      "times_served": 0,
+      "times_correct": 0,
+      "source": "llm_batch",
+      "content_hash": "c7739944171968ee",
+      "review_status": "approved",
+      "reviewed_by": null
+    }
+  ],
+  "question_options": [
+    {
+      "question_id": "Q_js_1",
+      "idx": 0,
+      "content": "var",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_js_1",
+      "idx": 1,
+      "content": "let",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_js_1",
+      "idx": 2,
+      "content": "const",
+      "is_correct": true
+    },
+    {
+      "question_id": "Q_js_1",
+      "idx": 3,
+      "content": "static",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_js_2",
+      "idx": 0,
+      "content": "true, true",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_js_2",
+      "idx": 1,
+      "content": "false, false",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_js_2",
+      "idx": 2,
+      "content": "true, false",
+      "is_correct": true
+    },
+    {
+      "question_id": "Q_js_2",
+      "idx": 3,
+      "content": "false, true",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_js_3",
+      "idx": 0,
+      "content": "0 1 2",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_js_3",
+      "idx": 1,
+      "content": "3 3 3",
+      "is_correct": true
+    },
+    {
+      "question_id": "Q_js_3",
+      "idx": 2,
+      "content": "0 0 0",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_js_3",
+      "idx": 3,
+      "content": "undefined undefined undefined",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_js_5",
+      "idx": 0,
+      "content": "A D F C E B",
+      "is_correct": true
+    },
+    {
+      "question_id": "Q_js_5",
+      "idx": 1,
+      "content": "A F D C E B",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_js_5",
+      "idx": 2,
+      "content": "A D F E C B",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_js_5",
+      "idx": 3,
+      "content": "A D C E F B",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_react_1",
+      "idx": 0,
+      "content": "useEffect",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_react_1",
+      "idx": 1,
+      "content": "useRef",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_react_1",
+      "idx": 2,
+      "content": "useState",
+      "is_correct": true
+    },
+    {
+      "question_id": "Q_react_1",
+      "idx": 3,
+      "content": "useMemo",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_react_2",
+      "idx": 0,
+      "content": "Sau mỗi lần render",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_react_2",
+      "idx": 1,
+      "content": "Một lần sau lần render đầu tiên (mount); cleanup chạy khi unmount",
+      "is_correct": true
+    },
+    {
+      "question_id": "Q_react_2",
+      "idx": 2,
+      "content": "Trước lần render đầu tiên",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_react_2",
+      "idx": 3,
+      "content": "Mỗi khi bất kỳ state nào trong component thay đổi",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_react_4",
+      "idx": 0,
+      "content": "1",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_react_4",
+      "idx": 1,
+      "content": "2",
+      "is_correct": true
+    },
+    {
+      "question_id": "Q_react_4",
+      "idx": 2,
+      "content": "3",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_react_4",
+      "idx": 3,
+      "content": "0",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_css_1",
+      "idx": 0,
+      "content": "position: flex;",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_css_1",
+      "idx": 1,
+      "content": "flex: 1;",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_css_1",
+      "idx": 2,
+      "content": "display: flex;",
+      "is_correct": true
+    },
+    {
+      "question_id": "Q_css_1",
+      "idx": 3,
+      "content": "align-items: flex;",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_css_2",
+      "idx": 0,
+      "content": "200px",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_css_2",
+      "idx": 1,
+      "content": "240px",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_css_2",
+      "idx": 2,
+      "content": "250px",
+      "is_correct": true
+    },
+    {
+      "question_id": "Q_css_2",
+      "idx": 3,
+      "content": "210px",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_css_3",
+      "idx": 0,
+      "content": "red",
+      "is_correct": true
+    },
+    {
+      "question_id": "Q_css_3",
+      "idx": 1,
+      "content": "blue",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_css_3",
+      "idx": 2,
+      "content": "green",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_css_3",
+      "idx": 3,
+      "content": "Màu mặc định của trình duyệt",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_css_5",
+      "idx": 0,
+      "content": "repeat(auto-fit, minmax(220px, 1fr))",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_css_5",
+      "idx": 1,
+      "content": "repeat(auto-fill, minmax(220px, 1fr))",
+      "is_correct": true
+    },
+    {
+      "question_id": "Q_css_5",
+      "idx": 2,
+      "content": "repeat(4, minmax(220px, 1fr))",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_css_5",
+      "idx": 3,
+      "content": "repeat(auto-fill, 220px)",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_http_1",
+      "idx": 0,
+      "content": "200",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_http_1",
+      "idx": 1,
+      "content": "301",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_http_1",
+      "idx": 2,
+      "content": "404",
+      "is_correct": true
+    },
+    {
+      "question_id": "Q_http_1",
+      "idx": 3,
+      "content": "500",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_http_2",
+      "idx": 0,
+      "content": "GET",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_http_2",
+      "idx": 1,
+      "content": "POST",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_http_2",
+      "idx": 2,
+      "content": "PUT",
+      "is_correct": true
+    },
+    {
+      "question_id": "Q_http_2",
+      "idx": 3,
+      "content": "HEAD",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_testing_1",
+      "idx": 0,
+      "content": "toBe",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_testing_1",
+      "idx": 1,
+      "content": "toEqual",
+      "is_correct": true
+    },
+    {
+      "question_id": "Q_testing_1",
+      "idx": 2,
+      "content": "toBeTruthy",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_testing_1",
+      "idx": 3,
+      "content": "toContain",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_testing_2",
+      "idx": 0,
+      "content": "End-to-end test",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_testing_2",
+      "idx": 1,
+      "content": "Integration test",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_testing_2",
+      "idx": 2,
+      "content": "Unit test",
+      "is_correct": true
+    },
+    {
+      "question_id": "Q_testing_2",
+      "idx": 3,
+      "content": "Manual test",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_testing_4",
+      "idx": 0,
+      "content": "`mockRejectedValue` không tạo ra Promise bị reject",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_testing_4",
+      "idx": 1,
+      "content": "Test không `return` hoặc `await` Promise nên Jest kết thúc test trước khi `.catch` chạy; assertion bên trong không được tính",
+      "is_correct": true
+    },
+    {
+      "question_id": "Q_testing_4",
+      "idx": 2,
+      "content": "`toBe` không so sánh được chuỗi có dấu tiếng Việt",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_testing_4",
+      "idx": 3,
+      "content": "Phải gọi `jest.useFakeTimers()` thì `.catch` mới chạy",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_git_1",
+      "idx": 0,
+      "content": "git branch feature/login",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_git_1",
+      "idx": 1,
+      "content": "git switch -c feature/login",
+      "is_correct": true
+    },
+    {
+      "question_id": "Q_git_1",
+      "idx": 2,
+      "content": "git merge feature/login",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_git_1",
+      "idx": 3,
+      "content": "git commit -b feature/login",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_git_2",
+      "idx": 0,
+      "content": "`fetch` tải commit và cập nhật remote-tracking branch nhưng không đổi branch đang làm; `pull` là `fetch` rồi merge (hoặc rebase) vào branch hiện tại",
+      "is_correct": true
+    },
+    {
+      "question_id": "Q_git_2",
+      "idx": 1,
+      "content": "`fetch` đẩy commit lên remote, `pull` kéo commit về",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_git_2",
+      "idx": 2,
+      "content": "`pull` chỉ tải về, `fetch` tải về rồi merge",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_git_2",
+      "idx": 3,
+      "content": "Hai lệnh giống nhau, `pull` là alias của `fetch`",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_git_3",
+      "idx": 0,
+      "content": "`git reset --hard HEAD~1` rồi `git push --force`",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_git_3",
+      "idx": 1,
+      "content": "`git commit --amend` rồi push lại",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_git_3",
+      "idx": 2,
+      "content": "`git revert <sha>` rồi push commit revert",
+      "is_correct": true
+    },
+    {
+      "question_id": "Q_git_3",
+      "idx": 3,
+      "content": "Xóa branch `main` trên remote rồi tạo lại",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_git_4",
+      "idx": 0,
+      "content": "`git push` bình thường vì rebase không đổi hash commit",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_git_4",
+      "idx": 1,
+      "content": "`git push --force` vì lệnh chỉ ghi đè commit của chính bạn",
+      "is_correct": false
+    },
+    {
+      "question_id": "Q_git_4",
+      "idx": 2,
+      "content": "Báo đồng nghiệp trước, dùng `git push --force-with-lease`; đồng nghiệp sau đó đồng bộ lại (ví dụ `git pull --rebase`) thay vì merge bản cũ",
+      "is_correct": true
+    },
+    {
+      "question_id": "Q_git_4",
+      "idx": 3,
+      "content": "`git pull` để merge bản remote vào rồi push, giữ cả hai bản commit",
+      "is_correct": false
+    }
+  ]
+}
